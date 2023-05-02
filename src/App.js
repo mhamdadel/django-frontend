@@ -1,25 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
-
+import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
+import UserGuard from "./components/UserGuard";
+import Home from "./components/pages/Home";
+import Profile from "./components/pages/Profile";
+import Register from "./components/pages/Register";
+import { useEffect } from "react";
+import axios from 'axios';
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <Router>
+            <Routes>
+                <Route path="/" element={<Home />}></Route>
+                <Route path="/register" element={<Register />}></Route>
+                <Route element={<UserGuard />}>
+                    <Route path="/profile" element={<Profile />}></Route>
+                </Route>
+            </Routes>
+        </Router>
+    );
 }
 
 export default App;

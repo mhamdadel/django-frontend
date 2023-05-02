@@ -3,7 +3,8 @@ import FormValidator from "../../validatorClass";
 import axios from "axios";
 class Register extends Component {
     constructor() {
-        super();this.validator = new FormValidator([
+        super();
+        this.validator = new FormValidator([
             {
                 field: "username",
                 method: (value) => /^[a-zA-Z0-9_-]+$/.test(value),
@@ -167,9 +168,9 @@ class Register extends Component {
         return (
             <div className="container">
                 <div className="row">
-                    <div className="col-md-4 col-md-offset-4">
+                    <div className="mx-auto col-md-9 col-md-offset-9">
                         <form className="registrationForm">
-                            <h2>Registration form</h2>
+                            <h2 className="text-center">Registration form</h2>
                             <div
                                 className={
                                     validation.username.isInvalid
@@ -328,7 +329,7 @@ class Register extends Component {
                             </div>
                             <button
                                 onClick={this.handleFormSubmit}
-                                className="btn btn-primary"
+                                className="mt-2 w-25 float-end btn bg-dark text-light"
                             >
                                 {" "}
                                 Register{" "}

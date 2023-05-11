@@ -1,7 +1,7 @@
 import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
 import Home from "./components/pages/Home";
 import Profile from "./components/pages/Profile";
-import Register from "./components/pages/Register";
+import Register from "./components/pages/FuncRegister";
 import Login from "./components/pages/Login";
 import { RequireAuth } from "react-auth-kit";
 function App() {

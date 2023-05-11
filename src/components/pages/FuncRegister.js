@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import FormValidator from "../../validatorClass";
+import FormValidator from "../../registerValidator";
 import axios from "axios";
 function Register() {
     const passwordMatch = (confirmation, state) => state.password === confirmation;
-    let validator = new FormValidator([
+    const validator = new FormValidator([
         {
             field: "username",
             method: (value) => /^[a-zA-Z0-9_-]+$/.test(value),
@@ -122,7 +122,7 @@ function Register() {
         },
     ]);
 
-    let [state, setState] = useState({
+    const [state, setState] = useState({
         username: "",
         first_name: "",
         last_name: "",
@@ -134,7 +134,7 @@ function Register() {
     });
     const [submitted, setSubmitted] = useState(false);
 
-    let validation = submitted ? validator.validate(state) : state.validation;
+    const validation = submitted ? validator.validate(state) : state.validation;
     const handleInputChange = (event) => {
         event.preventDefault();
         setState({
@@ -146,6 +146,7 @@ function Register() {
         event.preventDefault();
         const validation = validator.validate(state);
         setState({
+            ...state,
             validation,
         });
         setSubmitted(true);
@@ -169,7 +170,6 @@ function Register() {
                 <div className="mx-auto col-md-9 col-md-offset-9">
                     <form className="registrationForm">
                         <h2 className="text-center">Registration form</h2>
-                        {console.log(validation)}
                         <div
                             className={
                                 validation.username.isInvalid ? "" : "has-error"
@@ -356,4 +356,5 @@ function Register() {
         </div>
     );
 }
+
 export default Register;

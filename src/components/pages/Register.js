@@ -9,7 +9,8 @@ class Register extends Component {
                 field: "username",
                 method: (value) => /^[a-zA-Z0-9_-]+$/.test(value),
                 validWhen: true,
-                message: "Username can only contain alphanumeric characters, underscores, and hyphens.",
+                message:
+                    "Username can only contain alphanumeric characters, underscores, and hyphens.",
             },
             {
                 field: "first_name",
@@ -157,7 +158,9 @@ class Register extends Component {
                     password: this.state.password,
                     password2: this.state.password_confirmation,
                 })
-                .then((res) => console.log(res))
+                .then((res) => {
+                    console.log(res)
+                })
                 .catch((err) => console.log(err.response.data));
         }
     };

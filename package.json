@@ -11,6 +11,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.4.0",
+    "babylon": "^6.18.0",
     "bootstrap": "^5.2.3",
     "flowbite": "^1.6.5",
     "flowbite-react": "^0.4.4",

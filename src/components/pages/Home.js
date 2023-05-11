@@ -1,9 +1,11 @@
 import React from "react";
+import Navbar from "../common/navbar";
 import Footer from "../common/footer";
 function Home() {
   return (
     <div className="home">
-    {/* <h1>Home Page</h1> */}
+    <Navbar/>
+
     <Footer/>
     </div>
   );

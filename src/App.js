@@ -5,12 +5,10 @@ import Home from "./components/pages/Home";
 import Register from "./components/pages/FuncRegister";
 // import Login from "./components/pages/Login";
 // import { RequireAuth } from "react-auth-kit";
-import Navbar from "./components/common/navbar";
 import OrderDetails from "./components/pages/user/OrderDetails";
 function App() {
     return (
         <div>
-            <Navbar/>
         <Router>
             <Routes>
                 <Route path="/" element={<Home />} />

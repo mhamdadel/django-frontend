@@ -1,0 +1,17 @@
+nav{
+    font-family: Marcellus, serif;
+    box-shadow: 0px 10px 5px -10px #8d8d8d;  
+    margin-bottom: 1%;  
+    padding:10px;
+}
+
+ a{
+    text-decoration: none !important;
+    font-size: 27px;
+    font-weight: bold;
+
+}
+
+ a:hover{
+    color: #9ea18e !important;
+}

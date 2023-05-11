@@ -4,8 +4,11 @@ import Profile from "./components/pages/user/Profile";
 import Register from "./components/pages/FuncRegister";
 import Login from "./components/pages/Login";
 import { RequireAuth } from "react-auth-kit";
+import Navbar from "./components/common/navbar";
 function App() {
     return (
+        <div>
+            <Navbar/>
         <Router>
             <Routes>
                 <Route path="/" element={<Home />} />
@@ -22,6 +25,9 @@ function App() {
                 <Route path="/login" element={<Login />} />
             </Routes>
         </Router>
+
+        </div>
+
     );
 }
 

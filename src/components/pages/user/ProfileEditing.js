@@ -1,4 +1,6 @@
 import './styles/profile.css';
+import React from "react";
+
 function Profile() {
     return (
       <div class="container rounded bg-white mt-5 mb-5">

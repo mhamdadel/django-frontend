@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { useState } from "react";
+import { backendServer } from "../../env";
 // import logo from "../assets/images/logo.png";
 import { useNavigate, Link } from "react-router-dom";
 import { useSignIn } from "react-auth-kit";
@@ -23,7 +24,7 @@ function Login() {
     const loginUser = async () => {
         try {
             const response = await axios.post(
-                "http://localhost:3001/login",
+                backendServer + "/api/auth/login/",
                 {
                     email: userData.email,
                     password: userData.password,
@@ -49,10 +50,13 @@ function Login() {
             navigate("/");
         } catch (error) {
             // return { error: error.message };
+            const MapErrors = error?.response?.data?.non_field_errors?.map(err => {
+                return err;
+            }).join('\n');
             return Swal.fire({
                 icon: "error",
                 title: "Error when login",
-                text: error.message,
+                text: MapErrors
             });
         }
     };

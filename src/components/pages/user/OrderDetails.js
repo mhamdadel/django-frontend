@@ -1,3 +1,4 @@
+import React from "react";
 function OrderDetails() {
     return (
     <section class="h-100 gradient-custom">

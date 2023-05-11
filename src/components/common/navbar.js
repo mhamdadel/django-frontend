@@ -59,26 +59,26 @@ function Navbar() {
           </div>
           <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
             <div className="flex-shrink-0">
-                  <h4 className=''>Ecommerce</h4>
+                  <h4 className='logo'>Ecommerce</h4>
             </div>
             <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
   <div className="flex-shrink-0">
   </div>
   <div className="hidden sm:block sm:ml-6 flex-grow">
     <div className="flex justify-end space-x-4" id='link' >
-      <a href="#" className="text-black px-3 py-2 rounded-md text-base font-medium">
+      <a href="#" className="text-blueGray-600 font-bold px-3 py-2 rounded-md text-base font-medium">
         Home
       </a>
 
-      <a href="#" className="text-black px-3 py-2 rounded-md text-base font-medium">
+      <a href="#" className="text-blueGray-600 font-bold px-3 py-2 rounded-md text-base font-medium">
         Sign In
       </a>
 
-      <a href="#" className="text-black px-3 py-2 rounded-md text-base font-medium" >
+      <a href="#" className="text-blueGray-600 font-bold px-3 py-2 rounded-md text-base font-medium" >
         Sign Up
       </a>
 
-      <a href="#" className="text-black px-3 py-2 rounded-md text-base font-medium" >
+      <a href="#" className="text-blueGray-600 font-bold px-3 py-2 rounded-md text-base font-medium" >
         Discover
       </a>
 

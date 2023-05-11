@@ -1,3 +1,4 @@
+import React from "react";
 import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
 import Home from "./components/pages/Home";
 import Profile from "./components/pages/user/Profile";

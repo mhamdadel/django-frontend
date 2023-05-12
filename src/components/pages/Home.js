@@ -7,11 +7,9 @@ import About from './user/components/About';
 function Home() {
   return (
     <div className="home">
-    <Navbar/>
     <Carousel/>
     <TrendingProducts/>
     <About/>
-    <Footer/>
     </div>
   );
 }

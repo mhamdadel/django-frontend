@@ -2,14 +2,18 @@ import React from "react";
 import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
 import Home from "./components/pages/Home";
 import EditableProfile from "./components/pages/user/EditableProfile";
-import Register from "./components/pages/FuncRegister";
-import Login from "./components/pages/Login";
+import Profile from "./components/pages/user/ProfileEditing";
+import Register from "./components/pages/user/FuncRegister";
+import Login from "./components/pages/user/Login";
 import { RequireAuth } from "react-auth-kit";
 import OrderDetails from "./components/pages/user/OrderDetails";
+import Footer from "./components/common/footer";
+import Navbar from "./components/common/navbar";
 function App() {
     return (
         <div>
         <Router>
+            <Navbar />
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/order" element={<OrderDetails />} />
@@ -17,7 +21,7 @@ function App() {
                     path="/profile"
                     element={
                         <RequireAuth loginPath="/login">
-                        <EditableProfile />
+                        <Profile />
                         </RequireAuth>
                     }
                 />
@@ -25,6 +29,7 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="*" element={<h1>Error 404</h1>} />
             </Routes>
+            <Footer />
         </Router>
 
         </div>

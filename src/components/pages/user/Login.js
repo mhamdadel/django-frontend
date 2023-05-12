@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
 import { backendServer } from "../../../env";
@@ -6,13 +6,15 @@ import { backendServer } from "../../../env";
 import { useNavigate, Link } from "react-router-dom";
 import { useSignIn } from "react-auth-kit";
 import Swal from "sweetalert2";
+import { useIsAuthenticated } from 'react-auth-kit';
 function Login() {
+    const isAuthenticated = useIsAuthenticated();
+    const navigate = useNavigate();
     const [userData, setUserData] = useState({
         email: "",
         password: "",
     });
     const signIn = useSignIn();
-    const navigate = useNavigate();
     const handleInputChange = (e) => {
         const fieldName = e.target.name;
         let fieldValue = e.target.value;
@@ -21,6 +23,11 @@ function Login() {
             [fieldName]: fieldValue,
         }));
     };
+
+    useEffect(()=> {
+        isAuthenticated() && navigate('/');
+    }, [])
+
     const loginUser = async () => {
         try {
             const response = await axios.post(

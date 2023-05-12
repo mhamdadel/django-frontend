@@ -3,7 +3,7 @@ import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
 import Home from "./components/pages/Home";
 import EditableProfile from "./components/pages/user/EditableProfile";
 import Profile from "./components/pages/user/ProfileEditing";
-import Register from "./components/pages/user/FuncRegister";
+import Register from "./components/pages/user/Register";
 import Login from "./components/pages/user/Login";
 import { RequireAuth } from "react-auth-kit";
 import OrderDetails from "./components/pages/user/OrderDetails";

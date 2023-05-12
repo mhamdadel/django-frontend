@@ -1,9 +1,13 @@
 import React from 'react';
 import { useState } from 'react';
 import '../pages/styles/navbar.css'
+import { useIsAuthenticated, useSignOut } from 'react-auth-kit';
+import { Link } from 'react-router-dom';
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const isAuthenticated = useIsAuthenticated();
+  const signOut = useSignOut();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -66,27 +70,29 @@ function Navbar() {
   </div>
   <div className="hidden sm:block sm:ml-6 flex-grow">
     <div className="flex justify-end space-x-4" id='link' >
-      <a href="#" className="text-blueGray-600 font-bold px-3 py-2 rounded-md text-base font-medium">
+      <Link to={'/'} className="text-blueGray-600 font-bold px-3 py-2 rounded-md text-base font-medium">
         Home
+      </Link>
+      {isAuthenticated() ? (
+      <a href="#" onClick={() => signOut()} className="text-blueGray-600 font-bold px-3 py-2 rounded-md text-base font-medium">
+        Sign out
       </a>
-
-      <a href="#" className="text-blueGray-600 font-bold px-3 py-2 rounded-md text-base font-medium">
+    ) : (
+      <>
+      <Link to={'login'} className="text-blueGray-600 font-bold px-3 py-2 rounded-md text-base font-medium">
         Sign In
-      </a>
+      </Link>
+      <Link to={'register'} className="text-blueGray-600 font-bold px-3 py-2 rounded-md text-base font-medium">
+      Sign Up
+      </Link>
+      </>
+    )}
 
-      <a href="#" className="text-blueGray-600 font-bold px-3 py-2 rounded-md text-base font-medium" >
-        Sign Up
-      </a>
+          <a><i className="fa fa-shopping-cart px-3 py-2"></i></a>
+          <a><i className="far fa-heart	px-3 py-2"></i></a>
 
-      <a href="#" className="text-blueGray-600 font-bold px-3 py-2 rounded-md text-base font-medium" >
-        Discover
-      </a>
-
-      <a><i className="fa fa-shopping-cart px-3 py-2"></i></a>
-      <a><i className="far fa-heart	px-3 py-2"></i></a>
-
-    </div>
-  </div>
+        </div>
+      </div>
 </div>
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">

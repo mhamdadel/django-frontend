@@ -1,7 +1,7 @@
 import React from "react";
 import 'flowbite';
 // import '../../../../../public/images/'
-import '../styles/carousel.css'
+// import '../styles/carousel.css'
 function Carousel(){
     return(
         

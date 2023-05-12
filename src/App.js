@@ -9,6 +9,7 @@ import { RequireAuth } from "react-auth-kit";
 import OrderDetails from "./components/pages/user/OrderDetails";
 import Footer from "./components/common/footer";
 import Navbar from "./components/common/navbar";
+import NotFound from "./components/common/NotFound";
 function App() {
     return (
         <div>
@@ -27,7 +28,7 @@ function App() {
                 />
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
-                <Route path="*" element={<h1>Error 404</h1>} />
+                <Route path="*" element={<NotFound />} />
             </Routes>
             <Footer />
         </Router>

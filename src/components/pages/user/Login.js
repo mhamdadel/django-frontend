@@ -4,9 +4,8 @@ import { useState } from "react";
 import { backendServer } from "../../../env";
 // import logo from "../assets/images/logo.png";
 import { useNavigate, Link } from "react-router-dom";
-import { useSignIn } from "react-auth-kit";
+import { useSignIn , useIsAuthenticated} from "react-auth-kit";
 import Swal from "sweetalert2";
-import { useIsAuthenticated } from 'react-auth-kit';
 function Login() {
     const isAuthenticated = useIsAuthenticated();
     const navigate = useNavigate();

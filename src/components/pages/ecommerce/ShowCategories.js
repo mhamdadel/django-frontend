@@ -1,13 +1,16 @@
+/* eslint-disable react/jsx-no-undef */
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
 
 const ShowCategory = () => {
-  const [categories, setcategories] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   const getCategories = async () => {
     try {
       const response = await axios.get('http://127.0.0.1:8000/api/ecommerce/categories/');
-      setcategories(response.data);
+      setCategories(response.data);
       console.log(response.data);
     } catch (error) {
       console.error(error);
@@ -18,32 +21,73 @@ const ShowCategory = () => {
     getCategories();
   }, []);
 
+  const responsive = {
+    superLargeDesktop: {
+      breakpoint: { max: 4000, min: 3000 },
+      items: 5
+    },
+    desktop: {
+      breakpoint: { max: 3000, min: 1024 },
+      items: 5
+    },
+    tablet: {
+      breakpoint: { max: 1024, min: 464 },
+      items: 2
+    },
+    mobile: {
+      breakpoint: { max: 464, min: 0 },
+      items: 1
+    }
+  };
   return (
-   
-      <div class="container">
-        <div class="row">
-          <div class="col">
-            <h2>Categories</h2>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <fb-slider dots="true">
-              {categories.map((category, index) => {
-                return (
-                  <fb-card > 
-                    <img src={`https://res.cloudinary.com/deg0m2eu4/${category.image}`} alt={category.title} />
-                    <h5>{category.title}</h5>
-                  </fb-card>
-                );
-              })}
-            </fb-slider>
-          </div>
-        </div>
-      </div>
-   
-   
-  );
+    // <div className="row">
+    //   {categories.map((category, index) => (
+    //     <div className="col-md-2 mb-2" style={{marginTop: "30px"}} key={index}>
+    //       <div className="card h-100">
+    //         <img src={`https://res.cloudinary.com/deg0m2eu4/${category.image}`} style={{ height: "500px", width: "100%", objectFit: "cover" }}  className="card-img-top" alt={category.name} />
+    //         <div className="card-footer">
+    //           <h3>{category.name}</h3>
+    //         </div>
+    //       </div>
+    //     </div>
+    //   ))}
+    // </div>
+
+
+    <div className="h-56 sm:h-64 xl:h-64 2xl:h-96">
+    <Carousel
+      responsive={{
+        superLargeDesktop: {
+          breakpoint: { max: 4000, min: 3000 },
+          items: 5
+        },
+        desktop: {
+          breakpoint: { max: 3000, min: 1024 },
+          items: 4
+        },
+        tablet: {
+          breakpoint: { max: 1024, min: 464 },
+          items: 2
+        },
+        mobile: {
+          breakpoint: { max: 464, min: 0 },
+          items: 1
+        }
+      }}
+      slide={true}
+    >
+      {categories.map((category, index) => (
+        <img
+          key={index}
+          src={`https://res.cloudinary.com/deg0m2eu4/${category.image}`}
+          style={{width: "75%", marginLeft: "20px", marginTop: "20px"}}
+          alt={category.name}
+        />
+      ))}
+    </Carousel>
+  </div>
+);
+    
 };
 
 export default ShowCategory;

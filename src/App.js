@@ -16,7 +16,10 @@ import Footer from "./components/common/footer";
 import Navbar from "./components/common/navbar";
 import NotFound from "./components/common/NotFound";
 import MyOrders from "./components/pages/user/MyOrders";
-
+import ShowCategory from "./components/pages/ecommerce/ShowCategories";
+import CategoryDetails from "./components/pages/ecommerce/CategoryDetails";
+import ShowProduct from "./components/pages/ecommerce/ShowProducts";
+import ProductDetails from "./components/pages/ecommerce/ProductDetails";
 function App() {
     return (
         <div>
@@ -27,6 +30,14 @@ function App() {
                     <Route path="/orders" >
                         <Route index element={<MyOrders />}></Route>
                         <Route path=":id" element={<OrderDetails />}></Route>
+                    </Route>
+                    <Route path="/categories" >
+                        <Route index element={<ShowCategory />}></Route>
+                        <Route path=":id" element={<CategoryDetails />}></Route>
+                    </Route>
+                    <Route path="/products" >
+                        <Route index element={<ShowProduct />}></Route>
+                        <Route path=":id" element={<ProductDetails />}></Route>
                     </Route>
                     <Route path="/profile" element={<Outlet />}>
                         <Route

@@ -1,135 +1,182 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 function OrderDetails() {
+    const [orderDetails, setOrderDetails] = useState({});
+    const { id } = useParams();
+    useEffect(() => {
+        axios
+            .get(`http://localhost:8000/api/auth/orders/${id}/`, {
+                withCredentials: true,
+            })
+            .then((res) => {
+                setOrderDetails(res.data);
+            })
+            .catch((err) => console.error(err));
+    }, []);
     return (
-    <section class="h-100 gradient-custom">
-    <div class="container py-5 h-100">
-      <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col-lg-10 col-xl-8">
-          <div class="card" style={{borderRadius: "10px"}}>
-            <div class="card-header px-4 py-5">
-              <h5 class="text-muted mb-0">Thanks for your Order, <span style={{color: "#a8729a"}}>Anna</span>!</h5>
-            </div>
-            <div class="card-body p-4">
-              <div class="d-flex justify-content-between align-items-center mb-4">
-                <p class="lead fw-normal mb-0" style={{color: "#a8729a"}}>Receipt</p>
-                <p class="small text-muted mb-0">Receipt Voucher : 1KAU9-84UIL</p>
-              </div>
-              <div class="card shadow-0 border mb-4">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-md-2">
-                      <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/13.webp"
-                        class="img-fluid" alt="Phone"/>
+        <div className="container py-5 h-100">
+            <div className="row d-flex justify-content-center align-items-center h-100">
+                <div className="col-lg-10 col-xl-8">
+                    <div className="card" style={{ borderRadius: "10px" }}>
+                        <div className="card-body p-4">
+                            <div className="d-flex justify-content-between align-items-center mb-4">
+                                <p
+                                    className="lead fw-normal mb-0"
+                                    style={{ color: "#a8729a" }}
+                                >
+                                    Order
+                                </p>
+                                <p className="small text-muted mb-0">
+                                    Order Number #{orderDetails.order_id}{" "}
+                                </p>
+                            </div>
+                            
+                            <div className="row d-flex align-items-center">
+                                      <div className="col-md-2">
+                                        <p className="text-muted mb-0 small">Track Order</p>
+                                      </div>
+                                      <div className="col-md-10">
+                                        <div
+                                          className="progress"
+                                          style={{
+                                            height: "6px",
+                                            borderRadius: "16px",
+                                          }}
+                                        >
+                                          <div
+                                            className="progress-bar"
+                                            role="progressbar"
+                                            style={{
+                                              width:
+                                                orderDetails.status === "pending"
+                                                  ? "10%"
+                                                  : orderDetails.status === "shipped"
+                                                  ? "50%"
+                                                  : orderDetails.status === "delivered"
+                                                  ? "100%"
+                                                  : "25%", // default width or error message
+                                              borderRadius: "16px",
+                                              backgroundColor: "#a8729a",
+                                            }}
+                                            aria-valuenow="65"
+                                            aria-valuemin="0"
+                                            aria-valuemax="100"
+                                          ></div>
+                                        </div>
+                                        <div className="d-flex mb-1">
+                                          <p className="text-muted mt-1 mb-0 small ms-xl-5">{orderDetails.status}</p>
+                                        </div>
+                                      </div>
+                                    </div>
+                            {(orderDetails && orderDetails.order_items) ? (
+                              orderDetails.order_items.map((item) => (
+                                <div key={item.image} className="card shadow-0 border mb-4">
+                                  <div className="card-body">
+                                    <div className="row">
+                                      <div className="col-md-2">
+                                        <img
+                                          src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/13.webp"
+                                          className="img-fluid"
+                                          alt="Phone"
+                                        />
+                                      </div>
+                                      <div className="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                        <p className="text-muted mb-0">Samsung Galaxy</p>
+                                      </div>
+                                      <div className="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                        <p className="text-muted mb-0 small">White</p>
+                                      </div>
+                                      <div className="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                        <p className="text-muted mb-0 small">Capacity: 64GB</p>
+                                      </div>
+                                      <div className="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                        <p className="text-muted mb-0 small">
+                                          {/* Qty: {item.quantity} */}
+                                        </p>
+                                      </div>
+                                      <div className="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                        <p className="text-muted mb-0 small">$499</p>
+                                      </div>
+                                    </div>
+                                    <hr
+                                      className="mb-4"
+                                      style={{
+                                        backgroundColor: "#e0e0e0",
+                                        opacity: 1,
+                                      }}
+                                    />
+                                  </div>
+                                </div>
+                              ))
+                            ) : (
+                              <div role="status mt-2 mx-auto text-center">
+                                  <svg aria-hidden="true" className="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                      <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+                                      <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
+                                  </svg>
+                                  <span className="sr-only">Loading...</span>
+                              </div>
+                            )}
+
+                            <div className="d-flex justify-content-between pt-2">
+                                <p className="fw-bold mb-0">Order Details</p>
+                                <p className="text-muted mb-0">
+                                    <span className="fw-bold me-4">Total</span>{" "}
+                                    $898.00
+                                </p>
+                            </div>
+
+                            <div className="d-flex justify-content-between pt-2">
+                                <p className="text-muted mb-0">
+                                    Invoice Number : 788152
+                                </p>
+                                <p className="text-muted mb-0">
+                                    <span className="fw-bold me-4">Discount</span>{" "}
+                                    $19.00
+                                </p>
+                            </div>
+
+                            <div className="d-flex justify-content-between">
+                                <p className="text-muted mb-0">
+                                    Invoice Date : 22 Dec,2019
+                                </p>
+                                <p className="text-muted mb-0">
+                                    <span className="fw-bold me-4">GST 18%</span>{" "}
+                                    123
+                                </p>
+                            </div>
+
+                            <div className="d-flex justify-content-between mb-5">
+                                <p className="text-muted mb-0">
+                                    Recepits Voucher : 18KU-62IIK
+                                </p>
+                                <p className="text-muted mb-0">
+                                    <span className="fw-bold me-4">
+                                        Delivery Charges
+                                    </span>{" "}
+                                    Free
+                                </p>
+                            </div>
+                        </div>
+                        <div
+                            className="card-footer border-0 px-4 py-5"
+                            style={{
+                                backgroundColor: "#a8729a",
+                                borderBottomLeftRadius: "10px",
+                                borderBottomRightRadius: "10px",
+                            }}
+                        >
+                            <h5 className="d-flex align-items-center justify-content-end text-white text-uppercase mb-0">
+                                Total paid:{" "}
+                                <span className="h2 mb-0 ms-2">$1040</span>
+                            </h5>
+                        </div>
                     </div>
-                    <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                      <p class="text-muted mb-0">Samsung Galaxy</p>
-                    </div>
-                    <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                      <p class="text-muted mb-0 small">White</p>
-                    </div>
-                    <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                      <p class="text-muted mb-0 small">Capacity: 64GB</p>
-                    </div>
-                    <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                      <p class="text-muted mb-0 small">Qty: 1</p>
-                    </div>
-                    <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                      <p class="text-muted mb-0 small">$499</p>
-                    </div>
-                  </div>
-                  <hr class="mb-4" style={{backgroundColor: "#e0e0e0", opacity: 1}}/>
-                  <div class="row d-flex align-items-center">
-                    <div class="col-md-2">
-                      <p class="text-muted mb-0 small">Track Order</p>
-                    </div>
-                    <div class="col-md-10">
-                      <div class="progress" style={{height: "6px", borderRadius: "16px"}}>
-                        <div class="progress-bar" role="progressbar"
-                          style={{width: "65%", borderRadius: "16px", backgroundColor: "#a8729a"}} aria-valuenow="65"
-                          aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                      <div class="d-flex justify-content-around mb-1">
-                        <p class="text-muted mt-1 mb-0 small ms-xl-5">Out for delivary</p>
-                        <p class="text-muted mt-1 mb-0 small ms-xl-5">Delivered</p>
-                      </div>
-                    </div>
-                  </div>
                 </div>
-              </div>
-              <div class="card shadow-0 border mb-4">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-md-2">
-                      <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/1.webp"
-                        class="img-fluid" alt="Phone"/>
-                    </div>
-                    <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                      <p class="text-muted mb-0">iPad</p>
-                    </div>
-                    <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                      <p class="text-muted mb-0 small">Pink rose</p>
-                    </div>
-                    <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                      <p class="text-muted mb-0 small">Capacity: 32GB</p>
-                    </div>
-                    <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                      <p class="text-muted mb-0 small">Qty: 1</p>
-                    </div>
-                    <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                      <p class="text-muted mb-0 small">$399</p>
-                    </div>
-                  </div>
-                  <hr class="mb-4" style={{backgroundColor: "#e0e0e0", opacity: 1}}/>
-                  <div class="row d-flex align-items-center">
-                    <div class="col-md-2">
-                      <p class="text-muted mb-0 small">Track Order</p>
-                    </div>
-                    <div class="col-md-10">
-                      <div class="progress" style={{height: "6px", borderRadius: "16px"}}>
-                        <div class="progress-bar" role="progressbar"
-                          style={{width: "20%", borderRadius: "16px", backgroundColor: "#a8729a"}} aria-valuenow="20"
-                          aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                      <div class="d-flex justify-content-around mb-1">
-                        <p class="text-muted mt-1 mb-0 small ms-xl-5">Out for delivary</p>
-                        <p class="text-muted mt-1 mb-0 small ms-xl-5">Delivered</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-  
-              <div class="d-flex justify-content-between pt-2">
-                <p class="fw-bold mb-0">Order Details</p>
-                <p class="text-muted mb-0"><span class="fw-bold me-4">Total</span> $898.00</p>
-              </div>
-  
-              <div class="d-flex justify-content-between pt-2">
-                <p class="text-muted mb-0">Invoice Number : 788152</p>
-                <p class="text-muted mb-0"><span class="fw-bold me-4">Discount</span> $19.00</p>
-              </div>
-  
-              <div class="d-flex justify-content-between">
-                <p class="text-muted mb-0">Invoice Date : 22 Dec,2019</p>
-                <p class="text-muted mb-0"><span class="fw-bold me-4">GST 18%</span> 123</p>
-              </div>
-  
-              <div class="d-flex justify-content-between mb-5">
-                <p class="text-muted mb-0">Recepits Voucher : 18KU-62IIK</p>
-                <p class="text-muted mb-0"><span class="fw-bold me-4">Delivery Charges</span> Free</p>
-              </div>
             </div>
-            <div class="card-footer border-0 px-4 py-5"
-              style={{backgroundColor: "#a8729a", borderBottomLeftRadius: "10px", borderBottomRightRadius: "10px"}}>
-              <h5 class="d-flex align-items-center justify-content-end text-white text-uppercase mb-0">Total
-                paid: <span class="h2 mb-0 ms-2">$1040</span></h5>
-            </div>
-          </div>
         </div>
-      </div>
-    </div>
-  </section>
-  );
+    );
 }
 
 export default OrderDetails;

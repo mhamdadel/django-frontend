@@ -1,0 +1,102 @@
+#register{
+    font-family:Sacramento, cursive;
+    width:80% !important;
+    margin: auto !important;
+    justify-content:center  !important;
+    align-items: center !important;
+    margin-bottom: 5% !important;
+    margin-top: 5% !important;
+}
+
+#register a {
+   align-items: center !important;  
+}
+
+.right img{
+    width:100%;
+    height:80vh;
+}
+
+.form-control{
+    width:320px !important;
+    padding: 5px;
+    height: 45px;
+    background-color: white;
+    border: 1px solid #9ea18e !important;
+    margin-top: 2% !important;
+}
+
+label{
+    font-family:Roboto, sans-serif;
+    margin-top: 2% !important;
+    font-size: 16px;
+}
+
+.form-control:focus{
+    border: 1px solid #9ea18e !important;
+    color: #9ea18e !important;
+    box-shadow: none !important;
+}
+
+.form-control:hover{
+    border: 1px solid #9ea18e !important;
+}
+
+.form-control::placeholder {
+    color: #ccc;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+
+
+#widForm{
+    width: 100%;
+}
+
+.form-group .form-control{
+    width: 200px !important;
+
+}
+/* .form-group .new{
+   margin-left: 8% !important;
+}  */
+
+
+.form-group button{
+    background-color: #9ea18e;
+    color: white;
+    width: 150px;
+    height: 45px;
+    font-size: 18px;
+    margin-top: 5%;
+    margin-left: 35%;
+    font-family:Roboto, sans-serif;
+    outline: #9ea18e !important;
+    border: 1px solid #9ea18e;
+}
+
+.form-group button:hover{
+    outline: #9ea18e !important;
+    border: 1px solid #9ea18e;
+    background-color: #9ea18e;
+}
+
+
+
+@media screen and (max-width: 700px) {
+    .form-control{
+        display: block !important;
+        width: 100% !important;
+    }
+    .form-group .form-control{
+        width: 100% !important;
+    }
+    .flex.flex-row {
+        flex-direction: column !important;
+      }
+    .right img{
+        display: none;
+    }
+}
+  

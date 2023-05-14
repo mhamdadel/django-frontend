@@ -5,10 +5,19 @@ button:hover{
 color: #9ea18e;
 }
 
-footer h4{
+.footer h4{
     color: #9ea18e;
     
 }
 #copy,#get-current-year{
     color: #9ea18e;
+}
+.footer{
+    width: 97%;
+    padding-top: 7% !important;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow:#8d8d8d 0px 10px 5px 10px !important ;  
 }

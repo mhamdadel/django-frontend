@@ -3,12 +3,22 @@ import { useState } from 'react';
 import '../pages/styles/navbar.css'
 import { useIsAuthenticated, useSignOut } from 'react-auth-kit';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import Swal from 'sweetalert2';
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const isAuthenticated = useIsAuthenticated();
   const signOut = useSignOut();
-
+  const signOutServer = () => {
+    axios.post('http://localhost:8000/api/auth/logout/', {}, {
+      withCredentials: true
+    })
+    .then(response => signOut())
+    .catch(error => (
+      Swal.error(error.message)
+    ));
+  };
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
@@ -77,7 +87,7 @@ function Navbar() {
         Products
       </Link>
       {isAuthenticated() ? (
-      <a href="#" onClick={() => signOut()} className="text-blueGray-600 font-bold px-3 py-2 rounded-md text-base font-medium">
+      <a href="#" onClick={() => signOutServer()} className="text-blueGray-600 font-bold px-3 py-2 rounded-md text-base font-medium">
         Sign out
       </a>
     ) : (

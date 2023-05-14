@@ -65,15 +65,15 @@ function Register() {
         {
             field: "phone",
             method: "matches",
-            args: [/^\(?\d\d\d\)? ?\d\d\d-?\d\d\d\d$/],
+            args: [/^\+?1?\d{9,15}$/],
             validWhen: true,
             message: "Enter valid phone number.",
         },
         {
             field: "phone",
-            method: (value) => value.length >= 10,
+            method: (value) => value.length >= 9,
             validWhen: true,
-            message: "Phone number must be at least 10 digits long.",
+            message: "Phone number must be at least 9 digits long.",
         },
         {
             field: "phone",
@@ -135,6 +135,12 @@ function Register() {
             validWhen: true,
             message: "City must be at most 50 characters long.",
         },
+        {
+            field: "zip_code",
+            method: (value) => value.length == 5 && new Number(value) instanceof Number,
+            validWhen: true,
+            message: "Zip must be 5 digits.",
+        },
     ]);
 
     const [state, setState] = useState({
@@ -146,6 +152,20 @@ function Register() {
         state: "",
         country: "",
         password: "",
+        zip_code: "",
+        password_confirmation: "",
+        validation: validator.valid(),
+    });
+    const [errors, setErrors] = useState({
+        first_name: "",
+        last_name: "",
+        email: "",
+        phone: "",
+        city: "",
+        state: "",
+        country: "",
+        password: "",
+        zip_code: "",
         password_confirmation: "",
         validation: validator.valid(),
     });
@@ -180,27 +200,28 @@ function Register() {
                     city: state.city,
                     state: state.state,
                     country: state.country,
+                    zip_code: state.zip_code,
                     password: state.password,
                     password2: state.password_confirmation,
                 })
-                .then((res) => console.log(res))
-                .catch((err) => console.log(err));
+                .then((res) => navigate('/login'))
+                .catch((err) => setErrors(err?.response?.data));
         }
     };
 
     return (
-        <section class="bg-gray-50 dark:bg-gray-900">
-            <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+        <section className="bg-gray-50 dark:bg-gray-900">
+            <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
                 <a
                     href="#"
-                    class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
+                    className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
                 >
-                    {/* <img class="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo" /> */}
+                    {/* <img className="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo" /> */}
                     Create and account
                 </a>
-                <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-                    <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-                        <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white"></h1>
+                <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+                    <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+                        <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white"></h1>
                         <form className="registrationForm">
                             <div
                                 className={
@@ -270,9 +291,9 @@ function Register() {
                                     onChange={handleInputChange}
                                 />
                                 <span className="help-block">
-                                    {validation.email.message ? (
+                                    {(validation.email.message || (errors?.email.length > 0))  ? (
                                         <span className="alert alert-danger d-block p-1">
-                                            {validation.email.message}
+                                            {validation.email.message || errors?.email[0]}
                                         </span>
                                     ) : (
                                         ""
@@ -306,6 +327,32 @@ function Register() {
                                 </span>
                             </div>
 
+                            <div
+                                className={
+                                    validation.phone.isInvalid
+                                        ? ""
+                                        : "has-error"
+                                }
+                            >
+                                <label htmlFor="zip_code">Zip Code</label>
+                                <input
+                                    type="tel"
+                                    className="form-control"
+                                    name="zip_code"
+                                    placeholder="zip code"
+                                    onChange={handleInputChange}
+                                />
+                                <span className="help-block">
+                                    {validation.zip_code.message ? (
+                                        <span className="alert alert-danger d-block p-1">
+                                            {validation.zip_code.message}
+                                        </span>
+                                    ) : (
+                                        ""
+                                    )}
+                                </span>
+                            </div>
+
                             <div className="form-group">
                                 <label htmlFor="city">City</label>
                                 <input
@@ -315,6 +362,15 @@ function Register() {
                                     placeholder="City"
                                     onChange={handleInputChange}
                                 />
+                                <span className="help-block">
+                                    {validation.city.message ? (
+                                        <span className="alert alert-danger d-block p-1">
+                                            {validation.city.message}
+                                        </span>
+                                    ) : (
+                                        ""
+                                    )}
+                                </span>
                             </div>
 
                             <div className="form-group">
@@ -326,6 +382,15 @@ function Register() {
                                     placeholder="State"
                                     onChange={handleInputChange}
                                 />
+                                <span className="help-block">
+                                    {validation.state.message ? (
+                                        <span className="alert alert-danger d-block p-1">
+                                            {validation.state.message}
+                                        </span>
+                                    ) : (
+                                        ""
+                                    )}
+                                </span>
                             </div>
 
                             <div className="form-group">
@@ -337,6 +402,15 @@ function Register() {
                                     placeholder="Country"
                                     onChange={handleInputChange}
                                 />
+                                <span className="help-block">
+                                    {validation.country.message ? (
+                                        <span className="alert alert-danger d-block p-1">
+                                            {validation.country.message}
+                                        </span>
+                                    ) : (
+                                        ""
+                                    )}
+                                </span>
                             </div>
 
                             <div

@@ -1,8 +1,12 @@
+
+
+
 import React, { useState, useEffect } from "react";
 import ValidatorClass from "../../../validatorClass";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { useSignIn, useIsAuthenticated } from "react-auth-kit";
+import '../styles/register.css'
 
 function Register() {
     const passwordMatch = (confirmation, state) =>
@@ -137,7 +141,7 @@ function Register() {
         },
         {
             field: "zip_code",
-            method: (value) => value.length == 5 && value instanceof Number,
+            method: (value) => value.length == 5 && new Number(value) instanceof Number,
             validWhen: true,
             message: "Zip must be 5 digits.",
         },
@@ -204,25 +208,29 @@ function Register() {
                     password: state.password,
                     password2: state.password_confirmation,
                 })
-                .then((res) => console.log(res))
+                .then((res) => navigate('/login'))
                 .catch((err) => setErrors(err?.response?.data));
         }
     };
 
     return (
-        <section class="bg-gray-50 dark:bg-gray-900">
-            <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+        <section className="bg-gray-50 dark:bg-gray-900">
+            <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
                 <a
                     href="#"
-                    class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
+                    className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
                 >
-                    {/* <img class="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo" /> */}
+                    {/* <img className="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo" /> */}
                     Create and account
                 </a>
-                <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-                    <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-                        <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white"></h1>
+                <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+                    <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+                        <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white"></h1>
                         <form className="registrationForm">
+                        <a href="#"className="flex items-center mb-8 mx-auto text-2xl font-semibold text-gray-900 dark:text-white" style={{textAlign:'center'}}>
+            {/* <img class="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo" /> */}
+           Create an Account
+        </a>
                             <div
                                 className={
                                     validation.first_name.isInvalid
@@ -230,10 +238,11 @@ function Register() {
                                         : "has-error"
                                 }
                             >
+                                <div className="flex flex-row">
+                                    <div>
                                 <label htmlFor="first_name">First Name</label>
-                                <input
-                                    type="string"
-                                    className="form-control"
+                                <input type="string"
+                                    className="form-control mr-8"
                                     name="first_name"
                                     placeholder="First Name"
                                     onChange={handleInputChange}
@@ -256,6 +265,9 @@ function Register() {
                                         : "has-error"
                                 }
                             >
+
+                                </div>
+                                <div> 
                                 <label htmlFor="last_name">Last Name</label>
                                 <input
                                     type="string"
@@ -274,6 +286,7 @@ function Register() {
                                     )}
                                 </span>
                             </div>
+</div>
 
                             <div
                                 className={
@@ -282,18 +295,21 @@ function Register() {
                                         : "has-error"
                                 }
                             >
+                            </div>
+                            <div className="flex flex-row">
+                                    <div>
                                 <label htmlFor="email">Email</label>
                                 <input
                                     type="email"
-                                    className="form-control"
+                                    className="form-control mr-8"
                                     name="email"
                                     placeholder="Email"
                                     onChange={handleInputChange}
                                 />
                                 <span className="help-block">
-                                    {validation.email.message ? (
+                                    {(validation.email.message || (errors?.email.length > 0))  ? (
                                         <span className="alert alert-danger d-block p-1">
-                                            {validation.email.message}
+                                            {validation.email.message || errors?.email[0]}
                                         </span>
                                     ) : (
                                         ""
@@ -308,6 +324,8 @@ function Register() {
                                         : "has-error"
                                 }
                             >
+                                </div>
+                                <div>
                                 <label htmlFor="phone">Phone Number</label>
                                 <input
                                     type="tel"
@@ -360,6 +378,7 @@ function Register() {
                                     className="form-control"
                                     name="city"
                                     placeholder="City"
+
                                     onChange={handleInputChange}
                                 />
                                 <span className="help-block">
@@ -372,12 +391,13 @@ function Register() {
                                     )}
                                 </span>
                             </div>
-
-                            <div className="form-group">
+</div>
+<div>
+                            <div className="form-group ml-8 mr-8">
                                 <label htmlFor="state">State</label>
                                 <input
                                     type="string"
-                                    className="form-control"
+                                    className="new form-control"
                                     name="state"
                                     placeholder="State"
                                     onChange={handleInputChange}
@@ -392,12 +412,13 @@ function Register() {
                                     )}
                                 </span>
                             </div>
-
-                            <div className="form-group">
+</div>
+<div>
+                            <div className="form-group ">
                                 <label htmlFor="country">Country</label>
                                 <input
                                     type="string"
-                                    className="form-control"
+                                    className="new form-control x"
                                     name="country"
                                     placeholder="Country"
                                     onChange={handleInputChange}
@@ -412,7 +433,10 @@ function Register() {
                                     )}
                                 </span>
                             </div>
+</div></div>
 
+<div className="flex flex-row">
+    <div>
                             <div
                                 className={
                                     validation.password.isInvalid
@@ -423,7 +447,7 @@ function Register() {
                                 <label htmlFor="password">Password</label>
                                 <input
                                     type="password"
-                                    className="form-control"
+                                    className="form-control mr-8"
                                     name="password"
                                     placeholder="Password"
                                     onChange={handleInputChange}
@@ -438,8 +462,8 @@ function Register() {
                                     )}
                                 </span>
                             </div>
-
-                            <div
+</div>
+<div>                            <div
                                 className={
                                     validation.password_confirmation.isInvalid
                                         ? ""
@@ -470,7 +494,7 @@ function Register() {
                                     )}
                                 </span>
                             </div>
-
+</div></div>
                             <div className="form-group">
                                 <button
                                     className="btn btn-primary btn-block"
@@ -483,7 +507,11 @@ function Register() {
                     </div>
                 </div>
             </div>
+                    <div className="right">
+<img src="https://assets.materialup.com/uploads/6102cce0-dc3c-42a3-ba0e-84d25f8a7cd3/preview.gif"/>
+            </div>
         </section>
+        </div>
     );
 }
 

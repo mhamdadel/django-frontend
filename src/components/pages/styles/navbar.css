@@ -23,6 +23,7 @@ span svg{
 #link i{
     color: #9ea18e !important; 
     font-size: 20px !important; 
+    cursor: pointer;
 }
  a:hover{
     color: #9ea18e !important;

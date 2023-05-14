@@ -1,0 +1,22 @@
+*{
+    font-family: 'Marcellus', serif;
+    box-sizing: border-box;
+}
+
+#loginform{
+padding-top: 10%;
+
+}
+.logbutton{
+    font-size: 25px !important;
+}
+#h2{
+    color: #9ea18e;
+}
+.logincontainer{
+width: 90%;
+justify-content: center;
+align-items: center;
+margin-left: auto;
+margin-right: auto;
+}

@@ -10,7 +10,6 @@ import OrderDetails from "./components/pages/user/OrderDetails";
 import Footer from "./components/common/footer";
 import Navbar from "./components/common/navbar";
 import NotFound from "./components/common/NotFound";
-import ShowProduct from "./components/pages/ecommerce/ShowProducts";
 import ShowCategory from "./components/pages/ecommerce/ShowCategories";
 import CategoryDetails from "./components/pages/ecommerce/CategoryDetails";
 function App() {

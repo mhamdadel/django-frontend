@@ -4,7 +4,7 @@ import '../styles/trendingProducts.css'
 function TrendingProducts(){
     return(
 
-    <div className="mb-5">
+    <div className="trending-products mb-5">
         <div className="title">
         <h5 className="text-center text-blueGray-600 mt-5">Welcome To Our</h5>
         <h3 className="text-center mb-5">Trending Products</h3>

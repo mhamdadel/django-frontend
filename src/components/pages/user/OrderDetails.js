@@ -1,7 +1,11 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 function OrderDetails() {
+  const [productDetails, setProductDetails] = useState({});
+  useEffect(()=> {
+    axios.post('http://localhost:8000/')
+  }, []); 
     return (
-    <section class="h-100 gradient-custom">
     <div class="container py-5 h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-lg-10 col-xl-8">
@@ -61,7 +65,7 @@ function OrderDetails() {
                   <div class="row">
                     <div class="col-md-2">
                       <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/1.webp"
-                        class="img-fluid" alt="Phone"/>
+                        class="img-fluid h-1 w-1" alt="Phone"/>
                     </div>
                     <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
                       <p class="text-muted mb-0">iPad</p>
@@ -128,7 +132,6 @@ function OrderDetails() {
         </div>
       </div>
     </div>
-  </section>
   );
 }
 

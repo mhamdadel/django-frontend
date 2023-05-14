@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import React from "react";
 import '../styles/trendingProducts.css'
 
@@ -31,7 +32,7 @@ function TrendingProducts(){
 
 <div className="card m-auto col-lg-3 col-md-12 col-sm-12 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
     <a href="#">
-        <img className="rounded-t-lg" src="https://i1.adis.ws/i/egl/24689904_NOCOLOUR_M?$PDP_main_portrait_desktop$&layer0=[top=0&left=0]" alt="" />
+        <img className="rounded-t-lg"  />
     </a>
     <div className="p-5">
         <a href="#">

@@ -1,6 +1,8 @@
+/* eslint-disable jsx-a11y/alt-text */
 import React from "react";
+import '../styles/carousel.css';
 import 'flowbite';
-import '../styles/carousel.css'
+
 function Carousel(){
     return(
         

@@ -15,6 +15,7 @@ import OrderDetails from "./components/pages/user/OrderDetails";
 import Footer from "./components/common/footer";
 import Navbar from "./components/common/navbar";
 import NotFound from "./components/common/NotFound";
+import MyOrders from "./components/pages/user/MyOrders";
 
 function App() {
     return (
@@ -23,10 +24,13 @@ function App() {
                 <Navbar />
                 <Routes>
                     <Route path="/" element={<Home />} />
-                    <Route path="/order" element={<OrderDetails />} />
+                    <Route path="/orders" >
+                        <Route index element={<MyOrders />}></Route>
+                        <Route path=":id" element={<OrderDetails />}></Route>
+                    </Route>
                     <Route path="/profile" element={<Outlet />}>
                         <Route
-                            path=""
+                            index
                             element={
                                 <RequireAuth loginPath="/login">
                                     <Profile />

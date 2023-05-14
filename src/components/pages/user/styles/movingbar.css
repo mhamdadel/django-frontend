@@ -1,0 +1,15 @@
+*{
+    box-sizing: border-box;
+
+}
+.slider{
+    background: linear-gradient(rgb(158, 161, 142, .3), rgb(158, 161, 142, .4));
+    width: 100%;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    overflow: hidden;
+}
+#img01{
+    border:2px solid gray;
+    border-radius: 50%;
+}

@@ -24,7 +24,7 @@ function Navbar() {
     className="inline-flex items-end justify-end p-2 rounded-md text-black focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
     aria-controls="mobile-menu"
     aria-expanded={isOpen}
-  >
+    style={{backgroundColor:'#9ea18e', marginBottom:'20%'}} >
               <span className="sr-only">Open main menu</span>
               {isOpen ? (
                 <svg

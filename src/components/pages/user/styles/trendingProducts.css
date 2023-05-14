@@ -1,28 +1,27 @@
-*{
-    font-family: 'Marcellus', serif;
-
+* {
+    font-family: "Marcellus", serif;
 }
 
-.title h5{
+.trending-products .title h5 {
     color: #4d4d4d;
 }
 
-.title h3{
+.trending-products .title h3 {
     color: #9ea18e;
 }
 
-.row .card a h5{
+.trending-products .row .card a h5 {
     color: #4d4d4d;
 }
 
-.row .card a:hover{
+.trending-products .row .card a:hover {
     color: #9ea18e !important;
 }
 
-.row .card{
+.trending-products .row .card {
     height: 90vh;
 }
-.row img{
-height: 55vh;
-margin: auto;
+.trending-products .row img {
+    height: 55vh;
+    margin: auto;
 }

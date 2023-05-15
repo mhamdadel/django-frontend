@@ -5,6 +5,7 @@ import { useIsAuthenticated, useSignOut } from 'react-auth-kit';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { error } from 'sweetalert2';
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);

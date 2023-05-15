@@ -12,9 +12,29 @@ const ShowProduct = () => {
     setproducts(response.data.results);
   }
 
+  // const addToCart = (id) =>{
+  //   try{
+  //     const response= axios.post(`http://localhost:8000/cart/add/${id}`,{quantity:1},{
+  //       withCredentials: true
+  //     });
+  //     console.log(response.data);
+  //   }catch(error){
+  //     console.log(error);
+  //   }
+  // }
+
+function addToCart(id){
+  axios.post(`http://localhost:8000/cart/add/${id}`,{
+    withCredentials: true
+  }).then((res)=>{
+    console.log(res.data)
+  }).catch((error)=>console.log(error))
+}
+
   useEffect(()=>{
     getProducts()
   },[]);
+  
   return (
     <div className='products-card-info'>
 
@@ -27,13 +47,11 @@ const ShowProduct = () => {
             <Card.Text>inStock: {product.inStock}</Card.Text>
             <Card.Text>Price : {product.price}</Card.Text>
           </div>
-          <Button variant="primary">Add To Cart</Button>
+          <Button variant="primary" onClick={()=>addToCart(product.id)}>Add To Cart</Button>
         </Card.Body>
       </Card>
-    ))}
-  
-  </div>
-        
+    ))} 
+  </div>      
 );
     
 };

@@ -20,6 +20,7 @@ import ShowCategory from "./components/pages/ecommerce/ShowCategories";
 import CategoryDetails from "./components/pages/ecommerce/CategoryDetails";
 import ShowProduct from "./components/pages/ecommerce/ShowProducts";
 import ProductDetails from "./components/pages/ecommerce/ProductDetails";
+import Cart from "./components/pages/ecommerce/Cart";
 function App() {
     return (
         <div>
@@ -49,6 +50,7 @@ function App() {
                             }
                         />
                     </Route>
+                    <Route path="/cart" element={<Cart />} />
                     <Route path="/register" element={<Register />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="*" element={<NotFound />} />

@@ -3,8 +3,17 @@ import React, { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import { Card, CardHeader} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-
 import './styles/ShowProducts.css';
+
+const addToWishlist =  (id) => {
+  try {
+    const response =  axios.post(`http://localhost:8000/wishlist/${id} `,{          withCredentials: true
+  });
+    console.log('product added to wishlist:');
+  } catch (error) {
+    console.error('Error adding product to wishlist:', error);
+  }
+}
 const ShowProduct = () => {
  
   const [products, setproducts]= useState([]);
@@ -33,7 +42,8 @@ const ShowProduct = () => {
             <Card.Text>Price : {product.price}</Card.Text>
           </div>
           <Button variant="primary">Add To Cart</Button>
-          <Link to={'wishList'} className="far fa-heart	px-3 py-2 text-danger"></Link>
+          <Link to={'/wishlist'}  onClick={() => addToWishlist(product.id)}className='far fa-heart	px-3 py-2 text-danger'>
+          </Link>
 
         </Card.Body>
       </Card>

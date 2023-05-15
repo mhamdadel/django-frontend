@@ -1,6 +1,6 @@
 import React from "react";
 import 'flowbite';
-import Carousel from "./user/components/Carousel";
+// import Carousel from "./user/components/Carousel";
 import TrendingProducts from './user/components/TrendingProducts';
 import About from './user/components/About';
 import Pop from './user/components/Popup';

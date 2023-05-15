@@ -100,7 +100,9 @@ function Navbar() {
       <Link to={'profile'} className="text-blueGray-600 font-bold px-3 py-2 rounded-md text-base font-medium">
         Profile
       </Link>
-      <a href="#" onClick={() => signOutServer()} className="text-blueGray-600 font-bold px-3 py-2 rounded-md text-base font-medium">
+      <Link to={'wishList'} className="far fa-heart	px-3 py-2 text-danger"></Link>
+
+      <a href="/" onClick={() => signOutServer()} className="text-blueGray-600 font-bold px-3 py-2 rounded-md text-base font-medium">
         Sign out
       </a>
       </>
@@ -116,7 +118,6 @@ function Navbar() {
     )}
 
           <a><i className="fa fa-shopping-cart px-3 py-2"></i></a>
-          <a><i className="far fa-heart	px-3 py-2"></i></a>
 
         </div>
       </div>

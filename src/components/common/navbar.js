@@ -14,10 +14,15 @@ function Navbar() {
     axios.post('http://localhost:8000/api/auth/logout/', {}, {
       withCredentials: true
     })
-    .then(response => signOut())
+    .then(response => {})
     .catch(error => (
-      Swal.error(error.message)
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: error.message,
+      })
     ));
+    signOut()
   };
   const toggleMenu = () => {
     setIsOpen(!isOpen);

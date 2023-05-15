@@ -87,9 +87,17 @@ function Navbar() {
         Products
       </Link>
       {isAuthenticated() ? (
+        <>
+      <Link to={'orders'} className="text-blueGray-600 font-bold px-3 py-2 rounded-md text-base font-medium">
+        My Orders
+      </Link>
+      <Link to={'profile'} className="text-blueGray-600 font-bold px-3 py-2 rounded-md text-base font-medium">
+        Profile
+      </Link>
       <a href="#" onClick={() => signOutServer()} className="text-blueGray-600 font-bold px-3 py-2 rounded-md text-base font-medium">
         Sign out
       </a>
+      </>
     ) : (
       <>
       <Link to={'login'} className="text-blueGray-600 font-bold px-3 py-2 rounded-md text-base font-medium">

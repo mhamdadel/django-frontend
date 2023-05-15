@@ -1,0 +1,7 @@
+.products-card-info
+{
+    display: flex;
+    flex-direction: row;
+    margin: 5px;
+    padding: 2px;
+}

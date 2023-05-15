@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import { Card, CardHeader} from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+
 import './styles/ShowProducts.css';
 import ReactPaginate from 'react-paginate';
 const ShowProduct = () => {
@@ -56,6 +58,8 @@ const ShowProduct = () => {
             <Card.Text>Price : {product.price}</Card.Text>
           </div>
           <Button variant="primary">Add To Cart</Button>
+          <Link to={'wishList'} className="far fa-heart	px-3 py-2 text-danger"></Link>
+
         </Card.Body>
       </Card>
     ))}

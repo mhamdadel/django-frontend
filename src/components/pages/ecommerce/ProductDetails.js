@@ -12,7 +12,7 @@ const ProductDetails = () => {
    
 
 <>
-    <h1>Hello here welcome to us </h1>
+    <h1>Hello here Product details  </h1>
 </>
 );
     

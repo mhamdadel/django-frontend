@@ -2,7 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import { Card, CardHeader} from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, BrowserRouter } from 'react-router-dom';
+
 
 import './styles/ShowProducts.css';
 import ReactPaginate from 'react-paginate';
@@ -50,7 +51,10 @@ const ShowProduct = () => {
     <div className='products-card-info'>
     {products.map((product, index) => (
       <Card className='m-2 rounded shadow-lg ' style={{width: "22rem"}} key={index}>
-      <Card.Img className='mx-auto' style={{width: "30%"}} variant="top" src={`https://res.cloudinary.com/deg0m2eu4/${product.Image}`} /><Card.Body>
+      <Link to={`/products/${product.id}`}>
+      <Card.Img className='mx-auto' style={{width: "30%"}} variant="top" src={`https://res.cloudinary.com/deg0m2eu4/${product.Image}`} />
+      </Link>
+      <Card.Body>
           <Card.Header className='text-center'>{product.title}</Card.Header>
           <Card.Text className='text-center'>{product.description}</Card.Text>
           <div className="d-flex justify-content-between">

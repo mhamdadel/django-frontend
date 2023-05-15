@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import { useState } from 'react';
 import '../pages/styles/navbar.css'
@@ -15,10 +16,15 @@ function Navbar() {
     axios.post('http://localhost:8000/api/auth/logout/', {}, {
       withCredentials: true
     })
-    .then(response => signOut())
+    .then(response => {})
     .catch(error => (
-      Swal.error(error.message)
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: error.message,
+      })
     ));
+    signOut()
   };
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -95,7 +101,9 @@ function Navbar() {
       <Link to={'profile'} className="text-blueGray-600 font-bold px-3 py-2 rounded-md text-base font-medium">
         Profile
       </Link>
-      <a href="#" onClick={() => signOutServer()} className="text-blueGray-600 font-bold px-3 py-2 rounded-md text-base font-medium">
+      <Link to={'wishList'} className="far fa-heart	px-3 py-2 text-danger"></Link>
+
+      <a href="/" onClick={() => signOutServer()} className="text-blueGray-600 font-bold px-3 py-2 rounded-md text-base font-medium">
         Sign out
       </a>
       </>
@@ -111,7 +119,6 @@ function Navbar() {
     )}
 
           <a><i className="fa fa-shopping-cart px-3 py-2"></i></a>
-          <a><i className="far fa-heart	px-3 py-2"></i></a>
 
         </div>
       </div>

@@ -2,16 +2,56 @@
 import React, { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import { Card, CardHeader} from 'react-bootstrap';
+import { Link, BrowserRouter } from 'react-router-dom';
+import ReactPaginate from 'react-paginate';
 import './styles/ShowProducts.css';
+
+const addToWishlist =  (id) => {
+  try {
+    const response =  axios.post(`http://localhost:8000/wishlist/${id} `,{          withCredentials: true
+  });
+    console.log('product added to wishlist:');
+  } catch (error) {
+    console.error('Error adding product to wishlist:', error);
+  }
+}
 const ShowProduct = () => {
  
   const [products, setproducts]= useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [currentPage, setCurrentPage] =  useState(1);
+  const [totalPages, setTotalPages] = useState();
+  useEffect(() => {
+    setIsLoading(true);
+     axios
+       .get(
+         `http://127.0.0.1:8000/api/ecommerce/productslist/`
+       )
+       .then((res) => {
+          setproducts(res.data.results);
+          setTotalPages(res.data.count);
+          setIsLoading(false);
+        
+       })
+       .catch((err) => {
+         console.log(err);
+         setIsLoading(false);
+       });
+   }, []);
+  const handlePageClick = (e)=> {
 
-  const getProducts = async ()=> {
-    const response = await axios.get('http://localhost:8000/api/ecommerce/productslist/');
-    setproducts(response.data.results);
+   setCurrentPage((e.selected + 1));
   }
 
+  useEffect( ()=>{
+
+    axios.get(`http://127.0.0.1:8000/api/ecommerce/productslist/?page=${currentPage}`)
+    .then((response)=>{setproducts(response.data.results)});
+    console.log(setproducts); 
+
+  }, [currentPage])
+
+  
   // const addToCart = (id) =>{
   //   try{
   //     const response= axios.post(`http://localhost:8000/cart/add/${id}`,{quantity:1},{
@@ -36,24 +76,55 @@ function addToCart(id){
   },[]);
   
   return (
-    <div className='products-card-info'>
+    <div>
 
-    {products.map((product) => (
-      <Card className='m-2 rounded shadow-lg ' style={{width: "22rem"}}>
-      <Card.Img className='mx-auto' style={{width: "30%"}} variant="top" src={`https://res.cloudinary.com/deg0m2eu4/${product.Image}`} />        <Card.Body>
-          <Card.Header className='text-center font-weight-bold'>{product.title}</Card.Header>
+   
+    <div className='products-card-info'>
+    {products.map((product, index) => (
+      <Card className='m-2 rounded shadow-lg ' style={{width: "22rem"}} key={index}>
+      <Link to={`/products/${product.id}`}>
+      <Card.Img className='mx-auto' style={{width: "30%"}} variant="top" src={`https://res.cloudinary.com/deg0m2eu4/${product.Image}`} />
+      </Link>
+      <Card.Body>
+          <Card.Header className='text-center'>{product.title}</Card.Header>
           <Card.Text className='text-center'>{product.description}</Card.Text>
           <div className="d-flex justify-content-between">
             <Card.Text>inStock: {product.inStock}</Card.Text>
             <Card.Text>Price : {product.price}</Card.Text>
           </div>
           <Button variant="primary" onClick={()=>addToCart(product.id)}>Add To Cart</Button>
+          <Link to={'/wishlist'}  onClick={() => addToWishlist(product.id)}className='far fa-heart	px-3 py-2 text-danger'>
+          </Link>
+
         </Card.Body>
       </Card>
-    ))} 
-  </div>      
-);
-    
-};
+    ))}
+  </div>
+
+  <div className="pagination">
+  <ReactPaginate
+    breakLabel="..."
+    nextLabel="next >"
+    onPageChange={handlePageClick}
+    pageRangeDisplayed={5}
+    pageCount={totalPages}
+    previousLabel="< previous"
+    renderOnZeroPageCount={null}
+    breakClassName={"page-item"}
+    breakLinkClassName={"page-link"}
+    containerClassName={"pagination"}
+    pageClassName={"page-item"}
+    pageLinkClassName={"page-link"}
+    previousClassName={"page-item"}
+    previousLinkClassName={"page-link"}
+    nextClassName={"page-item"}
+    nextLinkClassName={"page-link"}
+    activeClassName={"active"}
+  />
+</div>
+  </div>       
+    )} 
+
+
 
 export default ShowProduct;

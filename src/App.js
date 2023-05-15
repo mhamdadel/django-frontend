@@ -20,7 +20,11 @@ import ShowCategory from "./components/pages/ecommerce/ShowCategories";
 import CategoryDetails from "./components/pages/ecommerce/CategoryDetails";
 import ShowProduct from "./components/pages/ecommerce/ShowProducts";
 import ProductDetails from "./components/pages/ecommerce/ProductDetails";
+<<<<<<< HEAD
 import Cart from "./components/pages/ecommerce/Cart";
+=======
+import GetWishlistItems from "./components/pages/user/components/wishList";
+>>>>>>> 5a66919bf87d7982cc108cc1f97018dff59d9257
 function App() {
     return (
         <div>
@@ -39,6 +43,10 @@ function App() {
                     <Route path="/products" >
                         <Route index element={<ShowProduct />}></Route>
                         <Route path=":id" element={<ProductDetails />}></Route>
+                    </Route>
+                    <Route path="/wishlist" >
+                        <Route index element={<GetWishlistItems />}></Route>
+                        {/* <Route path=":id" element={<ProductDetails />}></Route> */}
                     </Route>
                     <Route path="/profile" element={<Outlet />}>
                         <Route

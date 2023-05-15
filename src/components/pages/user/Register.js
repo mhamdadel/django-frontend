@@ -66,15 +66,15 @@ function Register() {
         {
             field: "phone",
             method: "matches",
-            args: [/^\+?1?\d{9,15}$/],
+            args: [/^\(?\d\d\d\)? ?\d\d\d-?\d\d\d\d$/],
             validWhen: true,
             message: "Enter valid phone number.",
         },
         {
             field: "phone",
-            method: (value) => value.length >= 9,
+            method: (value) => value.length >= 10,
             validWhen: true,
-            message: "Phone number must be at least 9 digits long.",
+            message: "Phone number must be at least 10 digits long.",
         },
         {
             field: "phone",
@@ -136,12 +136,6 @@ function Register() {
             validWhen: true,
             message: "City must be at most 50 characters long.",
         },
-        {
-            field: "zip_code",
-            method: (value) => value.length == 5 && value instanceof Number,
-            validWhen: true,
-            message: "Zip must be 5 digits.",
-        },
     ]);
 
     const [state, setState] = useState({
@@ -200,12 +194,11 @@ function Register() {
                     city: state.city,
                     state: state.state,
                     country: state.country,
-                    zip_code: state.zip_code,
                     password: state.password,
                     password2: state.password_confirmation,
                 })
                 .then((res) => console.log(res))
-                .catch((err) => setErrors(err?.response?.data));
+                .catch((err) => console.log(err));
         }
     };
 

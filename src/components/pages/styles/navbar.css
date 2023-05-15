@@ -5,6 +5,11 @@ nav{
     padding:10px;
 }
 
+span svg{
+    margin-bottom: -15%;
+    color: #9ea18e !important;  
+}
+
 .logo{
     color: #9ea18e !important;  
 }

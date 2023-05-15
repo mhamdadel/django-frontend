@@ -39,7 +39,7 @@ function Navbar() {
     className="inline-flex items-end justify-end p-2 rounded-md text-black focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
     aria-controls="mobile-menu"
     aria-expanded={isOpen}
-  >
+    style={{backgroundColor:'#9ea18e', marginBottom:'20%'}} >
               <span className="sr-only">Open main menu</span>
               {isOpen ? (
                 <svg
@@ -92,9 +92,17 @@ function Navbar() {
         Products
       </Link>
       {isAuthenticated() ? (
+        <>
+      <Link to={'orders'} className="text-blueGray-600 font-bold px-3 py-2 rounded-md text-base font-medium">
+        My Orders
+      </Link>
+      <Link to={'profile'} className="text-blueGray-600 font-bold px-3 py-2 rounded-md text-base font-medium">
+        Profile
+      </Link>
       <a href="#" onClick={() => signOutServer()} className="text-blueGray-600 font-bold px-3 py-2 rounded-md text-base font-medium">
         Sign out
       </a>
+      </>
     ) : (
       <>
       <Link to={'login'} className="text-blueGray-600 font-bold px-3 py-2 rounded-md text-base font-medium">

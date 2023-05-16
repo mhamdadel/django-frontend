@@ -8,7 +8,8 @@ import './styles/ShowProducts.css';
 
 const addToWishlist =  (id) => {
   try {
-    const response =  axios.post(`http://localhost:8000/wishlist/${id} `,{          withCredentials: true
+    const response =  axios.post(`http://localhost:8000/wishlist/${id} `,{          
+      withCredentials: true
   });
     console.log('product added to wishlist:');
   } catch (error) {
@@ -23,8 +24,7 @@ const ShowProduct = () => {
   const [totalPages, setTotalPages] = useState();
   useEffect(() => {
     setIsLoading(true);
-     axios
-       .get(
+     axios.get(
          `http://127.0.0.1:8000/api/ecommerce/productslist/`
        )
        .then((res) => {
@@ -71,9 +71,9 @@ function addToCart(id){
   }).catch((error)=>console.log(error))
 }
 
-  useEffect(()=>{
-    getProducts()
-  },[]);
+  // useEffect(()=>{
+  //   getProducts()
+  // },[]);
   
   return (
     <div>

@@ -118,7 +118,7 @@ function Navbar() {
       </>
     )}
 
-          <a><i className="fa fa-shopping-cart px-3 py-2"></i></a>
+      <Link to={'cart'}><i className="fa fa-shopping-cart px-3 py-2"></i></Link>
 
         </div>
       </div>

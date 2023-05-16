@@ -36,73 +36,60 @@ function Cart() {
     }
 
     return(
-<div className=" container mx-auto">
+<div className="cart container mx-auto">
 
-<div className="relative overflow-x-auto">
-    <table className="table">
-        <thead>
-            <tr>
-                <th scope="col" className="p-2 px-3 text-uppercase">
-                    Product 
-                </th>
-                <th scope="col" className="py-2 text-uppercase">
-                    Price
-                </th>
-                <th scope="col" className="py-2 text-uppercase">
-                    Quantity
-                </th>
-                <th scope="col" className="py-2 text-uppercase">
-                    Delete
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-    {cart.map((cart)=>{
+<section>
+  <div className="container h-100 py-5">
+    <div className="row flex justify-content-center align-items-center h-100">
+      <div className="col-10">
+
+        <div className="flex justify-content-between align-items-center mb-4">
+          <h3 className="fw-normal mb-3">Shopping Cart</h3>
+        </div>
+        {cart.map((cart)=>{
         return(
          <React.Fragment key={cart.id}>
           {cart.cart_items.map((item) => (
-            <tr key={item.id}>
-            <th scope="row" className="border-0">
-               <div className="p-2 flex flex-row" id="prodName">
-                 <img src={`https://res.cloudinary.com/deg0m2eu4/${item.product_details.Image}`} alt="" width="90" className="img-fluid rounded shadow-sm"/>
-                 <div className="ml-3 inline-block align-middle">
-              <h5 className="mb-0 inline-block align-middle">
-                {item.product_details.title}
-              </h5>
-                 </div>
-               </div>
-             </th>
-           <td className="border-0 align-middle">
-            {item.product_details.price}
-           </td>
-           <td className="border-0 align-middle">
-            <select onChange={(e)=>updateCart(item.id,e.target.value)}>
+        <div className="card shadow border-0 rounded-3 mb-4" key={item.id} style={{height:'150px'}}>
+          <div className="card-body p-4">
+            <div className="row flex justify-content-between align-items-center">
+              <div className="col-md-2 col-lg-2 col-xl-2">
+                <img
+                  src={`https://res.cloudinary.com/deg0m2eu4/${item.product_details.Image}`}
+                  className="img-fluid rounded-3" alt="" style={{height:'80px',width:'70px'}}/>
+              </div>
+              <div className="col-md-3 col-lg-3 col-xl-3">
+                <p className="lead fw-normal mb-2">{item.product_details.title}</p>
+                {/* <p><span className="text-muted">{item.product_details.Category}</span></p> */}
+              </div>
+              <div className="col-md-3 col-lg-3 col-xl-2 d-flex">
+
+ <select  className="form-control form-control-sm text-items-center" onChange={(e)=>updateCart(item.id,e.target.value)}>
             <option value={item.quantity}>{item.quantity}</option>
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
             <option value="4">4</option>
            </select>
-           </td>
-           {/* <form id='form' className='validate' onSubmit={(e) => {
-  e.preventDefault();
-  handleSubmit(item.id);
-}}> */}
-           <td className="border-0 align-middle">
-            <button type="button" onClick={() => handleDelete(item.id)}><i className="fa fa-trash" aria-hidden="true"></i></button>
-           </td>
-           {/* </form> */}
-           </tr>
-           ))}
-           </React.Fragment>
-        )
-    })}
+              </div>
+              <div className="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                <h5 className="mb-0">{item.product_details.price}</h5>
+              </div>
+              <div className="col-md-1 col-lg-1 col-xl-1">
+              <button type="button" onClick={() => handleDelete(item.id)}><i className="fa fa-trash fa-lg" aria-hidden="true"></i></button>             
+               </div>
+            </div>
+          </div>
+        </div>
 
-        </tbody>
-    </table>
-</div>
-
-
+))}
+</React.Fragment>
+)
+})}
+      </div>
+    </div>
+  </div>
+</section>
         </div>
     )
 }

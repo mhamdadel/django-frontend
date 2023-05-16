@@ -1,4 +1,7 @@
-#prodName h5{
-    margin-top: 35% !important;
-    margin-left: 35% !important;
+.cart{
+    font-family: 'Acme', sans-serif !important;
+}
+
+.card:hover{
+    box-shadow: 5px 5px #9ea18e !important;
 }

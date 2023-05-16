@@ -6,22 +6,34 @@ import { Link, BrowserRouter } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
 import './styles/ShowProducts.css';
 
-const addToWishlist =  (id) => {
-  try {
-    const response =  axios.post(`http://localhost:8000/wishlist/${id} `,{          
-      withCredentials: true
-  });
-    console.log('product added to wishlist:');
-  } catch (error) {
-    console.error('Error adding product to wishlist:', error);
-  }
-}
 const ShowProduct = () => {
  
   const [products, setproducts]= useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [currentPage, setCurrentPage] =  useState(1);
   const [totalPages, setTotalPages] = useState();
+  const [wishList, setWish] = useState([]);
+
+
+
+  const AddToWishlist =  (id) => {
+  
+    try {
+      const response =  axios.post(`http://localhost:8000/wishlist/add/ `,{id},{ 
+                 withCredentials: true
+    });
+      console.log('product added to wishlist:');
+      setWish([...wishList, response.data]);
+  
+    } catch (error) {
+      console.error('Error adding product to wishlist:', error);
+    }
+  }
+
+
+
+
+
   useEffect(() => {
     setIsLoading(true);
      axios.get(
@@ -92,8 +104,8 @@ function addToCart(id){
             <Card.Text>inStock: {product.inStock}</Card.Text>
             <Card.Text>Price : {product.price}</Card.Text>
           </div>
-          <Button variant="primary" onClick={()=>addToCart(product.id)}>Add To Cart</Button>
-          <Link to={'/wishlist'}  onClick={() => addToWishlist(product.id)}className='far fa-heart	px-3 py-2 text-danger'>
+          <Button variant="primary">Add To Cart</Button>
+          <Link  to={'/wishlist'} onClick={() => AddToWishlist(product.id)}className='far fa-heart	px-3 py-2 text-danger'>
           </Link>
 
         </Card.Body>

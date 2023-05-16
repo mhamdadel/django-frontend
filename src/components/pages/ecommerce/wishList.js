@@ -1,7 +1,7 @@
 /* eslint-disable react/style-prop-object */
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import withLoader from "./loader";
+import withLoader from "../user/components/loader";
 import { MagnifyingGlass } from 'react-loader-spinner';
 function GetWishlistItems() {
   const [wishList, setWish] = useState([]);

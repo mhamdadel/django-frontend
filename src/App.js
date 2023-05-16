@@ -22,7 +22,7 @@ import CategoryDetails from "./components/pages/ecommerce/CategoryDetails";
 import ShowProduct from "./components/pages/ecommerce/ShowProducts";
 import ProductDetails from "./components/pages/ecommerce/ProductDetails";
 import Cart from "./components/pages/ecommerce/Cart";
-import GetWishlistItems from "./components/pages/user/components/wishList";
+import GetWishlistItems from "./components/pages/ecommerce/wishList";
 function App() {
     // const AppWithLoader = withLoader(App);
 

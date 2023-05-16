@@ -4,6 +4,7 @@ import "../styles/cart.css";
 import ReactPaginate from 'react-paginate';
 import { MagnifyingGlass } from 'react-loader-spinner';
 import withLoader from "../user/components/loader";
+import Paypal from "./paypal";
 function Cart() {
     const[cart,setCart]=useState([])
     const [isLoading, setIsLoading] = useState(false);
@@ -119,11 +120,9 @@ function Cart() {
             </div>
           </div>
         </div>
-
 ))}
-{/* </React.Fragment>
-)
-})} */}
+<Paypal/>
+
       </div>
     </div>
   </div>
@@ -135,8 +134,11 @@ function Cart() {
   //         containerClassName={'pagination justify-content-center'}
   //         activeClassName={'active'}
   //       />
+  
         )}
+
 </section>
+
         </div>
     )
 }

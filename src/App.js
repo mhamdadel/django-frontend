@@ -20,6 +20,7 @@ import ShowCategory from "./components/pages/ecommerce/ShowCategories";
 import CategoryDetails from "./components/pages/ecommerce/CategoryDetails";
 import ShowProduct from "./components/pages/ecommerce/ShowProducts";
 import ProductDetails from "./components/pages/ecommerce/ProductDetails";
+import Cart from "./components/pages/ecommerce/Cart";
 import GetWishlistItems from "./components/pages/user/components/wishList";
 function App() {
     return (
@@ -53,6 +54,7 @@ function App() {
                             }
                         />
                     </Route>
+                    <Route path="/cart" element={<Cart />} />
                     <Route path="/register" element={<Register />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="*" element={<NotFound />} />

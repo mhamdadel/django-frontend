@@ -1,0 +1,7 @@
+.cart{
+    font-family: 'Acme', sans-serif !important;
+}
+
+.card:hover{
+    box-shadow: 5px 5px #9ea18e !important;
+}

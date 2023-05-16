@@ -6,7 +6,6 @@ import { Link, BrowserRouter } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
 import './styles/ShowProducts.css';
 
-
 const ShowProduct = () => {
  
   const [products, setproducts]= useState([]);
@@ -37,8 +36,7 @@ const ShowProduct = () => {
 
   useEffect(() => {
     setIsLoading(true);
-     axios
-       .get(
+     axios.get(
          `http://127.0.0.1:8000/api/ecommerce/productslist/`
        )
        .then((res) => {
@@ -66,6 +64,29 @@ const ShowProduct = () => {
   }, [currentPage])
 
   
+  // const addToCart = (id) =>{
+  //   try{
+  //     const response= axios.post(`http://localhost:8000/cart/add/${id}`,{quantity:1},{
+  //       withCredentials: true
+  //     });
+  //     console.log(response.data);
+  //   }catch(error){
+  //     console.log(error);
+  //   }
+  // }
+
+function addToCart(id){
+  axios.post(`http://localhost:8000/cart/add/`,{id},{
+    withCredentials: true
+  }).then((res)=>{
+    console.log(res.data)
+  }).catch((error)=>console.log(error))
+}
+
+  // useEffect(()=>{
+  //   getProducts()
+  // },[]);
+  
   return (
     <div>
 
@@ -84,8 +105,8 @@ const ShowProduct = () => {
             <Card.Text>Price : {product.price}</Card.Text>
           </div>
           <Button variant="primary">Add To Cart</Button>
-          <Button   onClick={() => AddToWishlist(product.id)}className='far fa-heart	px-3 py-2 text-danger'>
-          </Button>
+          <Link  to={'/wishlist'} onClick={() => AddToWishlist(product.id)}className='far fa-heart	px-3 py-2 text-danger'>
+          </Link>
 
         </Card.Body>
       </Card>
@@ -113,11 +134,9 @@ const ShowProduct = () => {
     activeClassName={"active"}
   />
 </div>
-  </div>
+  </div>       
+    )} 
 
-        
-);
-    
-};
+
 
 export default ShowProduct;

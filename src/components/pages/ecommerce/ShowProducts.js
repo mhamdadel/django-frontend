@@ -5,6 +5,8 @@ import { Card, CardHeader} from 'react-bootstrap';
 import { Link, BrowserRouter } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
 import './styles/ShowProducts.css';
+import { MagnifyingGlass } from 'react-loader-spinner'
+
 
 const ShowProduct = () => {
  
@@ -14,7 +16,17 @@ const ShowProduct = () => {
   const [totalPages, setTotalPages] = useState();
   const [wishList, setWish] = useState([]);
 
+<MagnifyingGlass
+  visible={true}
+  height="80"
+  width="80"
+  ariaLabel="MagnifyingGlass-loading"
+  wrapperStyle={{}}
+  wrapperClass="MagnifyingGlass-wrapper"
+  glassColor = '#c0efff'
+  color = '#e15b64'
 
+/>
 
   const AddToWishlist =  (id) => {
   
@@ -89,8 +101,9 @@ function addToCart(id){
   
   return (
     <div>
-
-   
+  {/* {isLoading ? (
+        <div><MagnifyingGlass/></div>
+      ) : ( */}
     <div className='products-card-info'>
     {products.map((product, index) => (
       <Card className='m-2 rounded shadow-lg ' style={{width: "22rem"}} key={index}>
@@ -104,10 +117,8 @@ function addToCart(id){
             <Card.Text>inStock: {product.inStock}</Card.Text>
             <Card.Text>Price : {product.price}</Card.Text>
           </div>
-          <Button variant="primary">Add To Cart</Button>
-          <Link  to={'/wishlist'} onClick={() => AddToWishlist(product.id)}className='far fa-heart	px-3 py-2 text-danger'>
-          </Link>
-
+          <Button onClick={()=>addToCart(product.id)} variant="primary">Add To Cart</Button>
+          <Button onClick={() => AddToWishlist(product.id)} className='far fa-heart px-3 py-2 text-danger'></Button>
         </Card.Body>
       </Card>
     ))}
@@ -134,8 +145,10 @@ function addToCart(id){
     activeClassName={"active"}
   />
 </div>
+{/* )} */}
   </div>       
-    )} 
+    );
+  }
 
 
 

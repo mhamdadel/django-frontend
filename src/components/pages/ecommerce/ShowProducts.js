@@ -13,6 +13,10 @@ const ShowProduct = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState();
     const [wishList, setWish] = useState([]);
+    const [searchCategory, setSearchCategory] = useState("");
+    const [searchProductName, setSearchProductName] = useState("");
+    const [sorting, setSorting] = useState();
+    const [searchNow, setSearchNow] = useState(true);
 
     const AddToWishlist = (id) => {
         try {
@@ -29,6 +33,30 @@ const ShowProduct = () => {
             console.error("Error adding product to wishlist:", error);
         }
     };
+
+    function handleCategoryChange(e) {
+        setSearchCategory(e.target.value);
+        setSearchNow(false);
+        setTimeout(() => {
+            setSearchNow(true);
+        }, 1000);
+    }
+
+    function handleProductNameChange(e) {
+        setSearchProductName(e.target.value);
+        setSearchNow(false);
+        setTimeout(() => {
+            setSearchNow(true);
+        }, 1000);
+    }
+
+    function handleSortingChange(e) {
+        setSorting(e.target.value);
+        setSearchNow(false);
+        setTimeout(() => {
+            setSearchNow(true);
+        }, 1000);
+    }
 
     // useEffect(() => {
     //   setIsLoading(true);
@@ -52,20 +80,26 @@ const ShowProduct = () => {
     };
 
     useEffect(() => {
-        axios
-            .get(
-                `http://127.0.0.1:8000/api/ecommerce/productslist/?page=${currentPage}`
-            )
-            .then((response) => {
-                setproducts(response.data.results);
-                setTotalPages(response.data.count);
-                setIsLoading(false);
-            })
-            .catch((err) => {
-                console.log(err);
-                setIsLoading(true);
-            });
-    }, [currentPage]);
+        if (searchNow === true) {
+          let filter = "";
+          searchCategory && (filter += "&category=" + searchCategory);
+          searchProductName && (filter += "&product=" + searchProductName);
+          sorting && (filter += "&sort=" + sorting);
+            axios
+                .get(
+                    `http://127.0.0.1:8000/api/ecommerce/productslist/?page=${currentPage}${filter}`
+                )
+                .then((response) => {
+                    setproducts(response.data.results);
+                    setTotalPages(response.data.count);
+                    setIsLoading(false);
+                })
+                .catch((err) => {
+                    console.log(err);
+                    setIsLoading(true);
+                });
+        }
+    }, [currentPage, searchNow]);
 
     // const addToCart = (id) =>{
     //   try{
@@ -105,7 +139,24 @@ const ShowProduct = () => {
     }, [isLoading]);
 
     return (
-        <div>
+        <div class="container">
+        <input
+            type="text"
+            value={searchCategory}
+            onChange={handleCategoryChange}
+            placeholder="category"
+        />
+        <input
+            type="text"
+            value={searchProductName}
+            onChange={handleProductNameChange}
+            placeholder="product name"
+        />
+        sort by :
+        <select value={sorting} onChange={handleSortingChange}>
+            <option value="1">low to high price</option>
+            <option value="0">high to low price</option>
+        </select>
             {isLoading ? (
                 <withLoader>
                     <MagnifyingGlass
@@ -120,7 +171,7 @@ const ShowProduct = () => {
                     />
                 </withLoader>
             ) : (
-                <div className="products-card-info">
+                <div className="products-card-info mx-auto">
                     {products.map((product, index) => (
                         <Card
                             className="m-2 rounded shadow-lg "
@@ -130,7 +181,6 @@ const ShowProduct = () => {
                             <Link to={`/products/${product.id}`}>
                                 <Card.Img
                                     className="mx-auto"
-                                    style={{ width: "30%" }}
                                     variant="top"
                                     src={`https://res.cloudinary.com/deg0m2eu4/${product.Image}`}
                                 />
@@ -150,17 +200,21 @@ const ShowProduct = () => {
                                         Price : {product.price}
                                     </Card.Text>
                                 </div>
-                                <Button
-                                    onClick={() => addToCart(product.id)}
-                                    variant="primary"
-                                >
-                                    Add To Cart
-                                </Button>
-                                <Button
-                                    onClick={() => AddToWishlist(product.id)}
-                                >
-                                    <i className="far fa-heart px-3 py-2 text-danger"></i>
-                                </Button>
+                                <div className="flex">
+                                    <Button
+                                        onClick={() => addToCart(product.id)}
+                                        variant="primary"
+                                    >
+                                        Add To Cart
+                                    </Button>
+                                    <a
+                                        onClick={() =>
+                                            AddToWishlist(product.id)
+                                        }
+                                    >
+                                        <i className="far fa-heart px-3 py-2 text-danger"></i>
+                                    </a>
+                                </div>
                             </Card.Body>
                         </Card>
                     ))}
@@ -170,7 +224,7 @@ const ShowProduct = () => {
             {isLoading ? (
                 <withLoader></withLoader>
             ) : (
-                <div className="pagination">
+                <div className="pagination justify-center">
                     <ReactPaginate
                         breakLabel="..."
                         nextLabel="next >"

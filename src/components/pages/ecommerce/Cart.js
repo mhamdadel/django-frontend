@@ -64,7 +64,7 @@ function Cart() {
               </div>
               <div className="col-md-3 col-lg-3 col-xl-2 d-flex">
 
- <select  className="form-control form-control-sm text-items-center" onChange={(e)=>updateCart(item.id,e.target.value)}>
+ <select  className="form-control form-control-sm text-center" onChange={(e)=>updateCart(item.id,e.target.value)}>
             <option value={item.quantity}>{item.quantity}</option>
             <option value="1">1</option>
             <option value="2">2</option>

@@ -64,7 +64,7 @@ const ShowProduct = () => {
   // }
 
 function addToCart(id){
-  axios.post(`http://localhost:8000/cart/add/${id}`,{
+  axios.post(`http://localhost:8000/cart/add/`,{id},{
     withCredentials: true
   }).then((res)=>{
     console.log(res.data)

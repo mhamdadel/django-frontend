@@ -42,7 +42,6 @@ function App() {
                     </Route>
                     <Route path="/wishlist" >
                         <Route index element={<GetWishlistItems />}></Route>
-                        {/* <Route path=":id" element={<ProductDetails />}></Route> */}
                     </Route>
                     <Route path="/profile" element={<Outlet />}>
                         <Route

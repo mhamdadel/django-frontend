@@ -1,0 +1,13 @@
+
+.MagnifyingGlass-wrapper{
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: auto;
+   
+   }
+   .loading{
+    background-color: black;
+     opacity: 1;
+     height: 100vh;
+   z-index: 9999;
+   }

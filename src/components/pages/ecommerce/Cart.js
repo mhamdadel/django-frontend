@@ -2,23 +2,31 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/cart.css";
 import ReactPaginate from 'react-paginate';
-
+import { MagnifyingGlass } from 'react-loader-spinner';
+import withLoader from "../user/components/loader";
 function Cart() {
     const[cart,setCart]=useState([])
-    const [loading, setLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
     const getCart = async ()=>{
         const response = await axios.get(`http://localhost:8000/cart/`,{
             withCredentials: true
         })
         if(response.data){
           setCart(response.data); 
-          setLoading(false);
         }
           }
 
     useEffect(()=>{
         getCart()
     },[])
+
+    useEffect(() => {
+      if (isLoading) {
+        document.body.classList.add('loading');
+      } else {
+        document.body.classList.remove('loading');
+      }
+    }, [isLoading]);
 
 
     function handleDelete(id) {
@@ -47,6 +55,20 @@ function Cart() {
 <div className="cart container mx-auto">
 
 <section>
+{isLoading ? (
+ <withLoader>
+ <MagnifyingGlass
+ visible={true}
+ height="80"
+ width="80"
+ ariaLabel="MagnifyingGlass-loading"
+ wrapperStyle={{}}
+ wrapperClass="MagnifyingGlass-wrapper"
+ glassColor="#c0efff"
+ color="#e15b64"
+/>
+</withLoader>
+      ) : (
   <div className="container h-100 py-5">
     <div className="row flex justify-content-center align-items-center h-100">
       <div className="col-12 col-md-10">
@@ -96,6 +118,15 @@ function Cart() {
       </div>
     </div>
   </div>
+  // <ReactPaginate
+  //         pageCount={totalPages}
+  //         pageRangeDisplayed={5}
+  //         marginPagesDisplayed={2}
+  //         onPageChange={(data) => setCurrentPageNumber(data.selected + 1)}
+  //         containerClassName={'pagination justify-content-center'}
+  //         activeClassName={'active'}
+  //       />
+        )}
 </section>
 </div>
 

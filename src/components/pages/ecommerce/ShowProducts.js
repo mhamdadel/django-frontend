@@ -104,7 +104,7 @@ function addToCart(id){
             <Card.Text>inStock: {product.inStock}</Card.Text>
             <Card.Text>Price : {product.price}</Card.Text>
           </div>
-          <Button variant="primary">Add To Cart</Button>
+          <Button variant="primary" onClick={()=>addToCart(product.id)}>Add To Cart</Button>
           <Link  to={'/wishlist'} onClick={() => AddToWishlist(product.id)}className='far fa-heart	px-3 py-2 text-danger'>
           </Link>
 

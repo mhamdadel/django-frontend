@@ -1,6 +1,7 @@
 import axios from "axios";
 import "./styles/profile.css";
 import React, { useState } from "react";
+import Swal from "sweetalert2";
 
 function Profile() {
     const [email, setEmail] = useState("");
@@ -13,7 +14,35 @@ function Profile() {
     const [country, setCountry] = useState("");
     const [password, setPassword] = useState("");
 
-    const handleSaveProfile = () => {};
+    const handleSaveProfile = () => {
+        axios
+            .patch("http://localhost:8000/api/auth/profile/",{
+                email: email,
+                first_name: firstName,
+                last_name: lastName,
+                phone_number: mobileNumber,
+                zip_code: zipCode,
+                city: city,
+                state: state,
+                country: country,
+            } ,{
+                withCredentials: true,
+            })
+            .then((res) => {
+                setEmail(res.data.email);
+                setFirstName(res.data.first_name);
+                setLastName(res.data.last_name);
+                setMobileNumber(res.data.phone_number);
+                setZipCode(res.data.zip_code);
+                setCity(res.data.city);
+                setState(res.data.state);
+                setCountry(res.data.country);
+                Swal.fire('Success', "your profile has been updated successfully", 'success')
+            })
+            .catch((err) => {
+                Swal.fire('Error', err.message, 'error');
+            });
+    };
 
     useState(() => {
         axios

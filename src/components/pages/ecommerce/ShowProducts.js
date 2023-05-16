@@ -5,9 +5,8 @@ import { Card, CardHeader} from 'react-bootstrap';
 import { Link, BrowserRouter } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
 import './styles/ShowProducts.css';
-import { MagnifyingGlass } from 'react-loader-spinner'
-
-
+import withLoader from '../user/components/loader';
+import { MagnifyingGlass } from 'react-loader-spinner';
 const ShowProduct = () => {
  
   const [products, setproducts]= useState([]);
@@ -16,17 +15,6 @@ const ShowProduct = () => {
   const [totalPages, setTotalPages] = useState();
   const [wishList, setWish] = useState([]);
 
-<MagnifyingGlass
-  visible={true}
-  height="80"
-  width="80"
-  ariaLabel="MagnifyingGlass-loading"
-  wrapperStyle={{}}
-  wrapperClass="MagnifyingGlass-wrapper"
-  glassColor = '#c0efff'
-  color = '#e15b64'
-
-/>
 
   const AddToWishlist =  (id) => {
   
@@ -62,6 +50,8 @@ const ShowProduct = () => {
          setIsLoading(false);
        });
    }, []);
+
+   
   const handlePageClick = (e)=> {
 
    setCurrentPage((e.selected + 1));
@@ -98,12 +88,30 @@ function addToCart(id){
   // useEffect(()=>{
   //   getProducts()
   // },[]);
+     useEffect(() => {
+        if (isLoading) {
+          document.body.classList.add('loading');
+        } else {
+          document.body.classList.remove('loading');
+        }
+      }, [isLoading]);
   
   return (
     <div>
-  {/* {isLoading ? (
-        <div><MagnifyingGlass/></div>
-      ) : ( */}
+     {isLoading ? (
+     <withLoader>
+     <MagnifyingGlass
+     visible={true}
+     height="80"
+     width="80"
+     ariaLabel="MagnifyingGlass-loading"
+     wrapperStyle={{}}
+     wrapperClass="MagnifyingGlass-wrapper"
+     glassColor="#c0efff"
+     color="#e15b64"
+   />
+   </withLoader>
+     ):(
     <div className='products-card-info'>
     {products.map((product, index) => (
       <Card className='m-2 rounded shadow-lg ' style={{width: "22rem"}} key={index}>
@@ -118,37 +126,41 @@ function addToCart(id){
             <Card.Text>Price : {product.price}</Card.Text>
           </div>
           <Button onClick={()=>addToCart(product.id)} variant="primary">Add To Cart</Button>
-          <Button onClick={() => AddToWishlist(product.id)} className='far fa-heart px-3 py-2 text-danger'></Button>
+          <Button onClick={() => AddToWishlist(product.id)}><i className='far fa-heart px-3 py-2 text-danger'></i></Button>
         </Card.Body>
       </Card>
     ))}
   </div>
-
-  <div className="pagination">
+)};
+ {isLoading ? (
+     <withLoader>
+   </withLoader>
+     ):(
+   <div className="pagination">
   <ReactPaginate
-    breakLabel="..."
-    nextLabel="next >"
-    onPageChange={handlePageClick}
-    pageRangeDisplayed={5}
-    pageCount={totalPages}
-    previousLabel="< previous"
-    renderOnZeroPageCount={null}
+       breakLabel="..."
+     nextLabel="next >"
+     onPageChange={handlePageClick}
+     pageRangeDisplayed={5}
+     pageCount={totalPages}
+     previousLabel="< previous"
+     renderOnZeroPageCount={null}
     breakClassName={"page-item"}
-    breakLinkClassName={"page-link"}
+     breakLinkClassName={"page-link"}
     containerClassName={"pagination"}
-    pageClassName={"page-item"}
-    pageLinkClassName={"page-link"}
-    previousClassName={"page-item"}
-    previousLinkClassName={"page-link"}
-    nextClassName={"page-item"}
-    nextLinkClassName={"page-link"}
-    activeClassName={"active"}
-  />
-</div>
-{/* )} */}
+     pageClassName={"page-item"}
+     pageLinkClassName={"page-link"}
+     previousClassName={"page-item"}
+     previousLinkClassName={"page-link"}
+     nextClassName={"page-item"}
+     nextLinkClassName={"page-link"}
+     activeClassName={"active"}
+   />
+ </div>
+     )};
   </div>       
     );
-  }
+    }
 
 
 

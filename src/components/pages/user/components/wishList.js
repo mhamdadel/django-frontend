@@ -1,7 +1,8 @@
 /* eslint-disable react/style-prop-object */
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-
+import withLoader from "./loader";
+import { MagnifyingGlass } from 'react-loader-spinner';
 function GetWishlistItems() {
   const [wishList, setWish] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -52,13 +53,28 @@ function GetWishlistItems() {
       console.error("Error deleting product from wishlist:", error);
     }
   };
-  // useEffect(() => {
-  //   console.log("product deleted from wishlist");
-  // }, [wishList]);
+  useEffect(() => {
+    if (isLoading) {
+      document.body.classList.add('loading');
+    } else {
+      document.body.classList.remove('loading');
+    }
+  }, [isLoading]);
   return (
     <div className="wishList">
            {isLoading ? (
-        <div>Loading...</div>
+ <withLoader>
+ <MagnifyingGlass
+ visible={true}
+ height="80"
+ width="80"
+ ariaLabel="MagnifyingGlass-loading"
+ wrapperStyle={{}}
+ wrapperClass="MagnifyingGlass-wrapper"
+ glassColor="#c0efff"
+ color="#e15b64"
+/>
+</withLoader>
       ) : (
         <div className="py-3 py-md-5 bg-light">
           <div className="container">

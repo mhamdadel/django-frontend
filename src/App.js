@@ -6,6 +6,7 @@ import {
     Outlet,
 } from "react-router-dom";
 import Home from "./components/pages/Home";
+import withLoader from './components/pages/user/components/loader';
 import EditableProfile from "./components/pages/user/EditableProfile";
 import Profile from "./components/pages/user/ProfileEditing";
 import Register from "./components/pages/user/Register";
@@ -23,8 +24,11 @@ import ProductDetails from "./components/pages/ecommerce/ProductDetails";
 import Cart from "./components/pages/ecommerce/Cart";
 import GetWishlistItems from "./components/pages/user/components/wishList";
 function App() {
+    // const AppWithLoader = withLoader(App);
+
     return (
         <div>
+
             <Router>
                 <Navbar />
                 <Routes>

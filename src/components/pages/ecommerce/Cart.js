@@ -2,14 +2,18 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/cart.css";
 import ReactPaginate from 'react-paginate';
-
+import { MagnifyingGlass } from 'react-loader-spinner';
+import withLoader from "../user/components/loader";
 function Cart() {
     const[cart,setCart]=useState([])
+    const [isLoading, setIsLoading] = useState(false);
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] =  useState(1);
     const [totalPages, setTotalPages] = useState(2);
     const [recordsPerPage] = useState(2);
     const getCart = async ()=>{
+      // setIsLoading(true);
+
         const response = await axios.get(`http://localhost:8000/cart/?page=${setCurrentPage}`,{
             withCredentials: true
         })
@@ -23,6 +27,13 @@ function Cart() {
         getCart()
     },[])
 
+    useEffect(() => {
+      if (isLoading) {
+        document.body.classList.add('loading');
+      } else {
+        document.body.classList.remove('loading');
+      }
+    }, [isLoading]);
     const setCurrentPageNumber = (pageNumber) => {
       setCurrentPage(pageNumber);
     };
@@ -52,6 +63,20 @@ function Cart() {
 <div className="cart container mx-auto">
 
 <section>
+{isLoading ? (
+ <withLoader>
+ <MagnifyingGlass
+ visible={true}
+ height="80"
+ width="80"
+ ariaLabel="MagnifyingGlass-loading"
+ wrapperStyle={{}}
+ wrapperClass="MagnifyingGlass-wrapper"
+ glassColor="#c0efff"
+ color="#e15b64"
+/>
+</withLoader>
+      ) : (
   <div className="container h-100 py-5">
     <div className="row flex justify-content-center align-items-center h-100">
       <div className="col-10">
@@ -102,14 +127,15 @@ function Cart() {
       </div>
     </div>
   </div>
-  <ReactPaginate
-          pageCount={totalPages}
-          pageRangeDisplayed={5}
-          marginPagesDisplayed={2}
-          onPageChange={(data) => setCurrentPageNumber(data.selected + 1)}
-          containerClassName={'pagination justify-content-center'}
-          activeClassName={'active'}
-        />
+  // <ReactPaginate
+  //         pageCount={totalPages}
+  //         pageRangeDisplayed={5}
+  //         marginPagesDisplayed={2}
+  //         onPageChange={(data) => setCurrentPageNumber(data.selected + 1)}
+  //         containerClassName={'pagination justify-content-center'}
+  //         activeClassName={'active'}
+  //       />
+        )}
 </section>
         </div>
     )

@@ -91,7 +91,7 @@ function OrderDetails() {
                                             <div className="row">
                                                 <div className="col-md-2">
                                                     <img
-                                                        src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/13.webp"
+                                                        src={`https://res.cloudinary.com/deg0m2eu4/${item.product.Image}`}
                                                         className="img-fluid"
                                                         alt="Phone"
                                                     />

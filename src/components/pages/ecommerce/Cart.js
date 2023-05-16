@@ -1,18 +1,31 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/cart.css";
+import ReactPaginate from 'react-paginate';
 
 function Cart() {
     const[cart,setCart]=useState([])
+    const [loading, setLoading] = useState(true);
+    const [currentPage, setCurrentPage] =  useState(1);
+    const [totalPages, setTotalPages] = useState(2);
+    const [recordsPerPage] = useState(2);
     const getCart = async ()=>{
-        const respone = await axios.get('http://localhost:8000/cart/',{
+        const response = await axios.get(`http://localhost:8000/cart/?page=${setCurrentPage}`,{
             withCredentials: true
         })
-        setCart(respone.data)
-    }
+        if(response.data){
+          setCart(response.data.cart_items); 
+          setLoading(false);
+        }
+          }
+
     useEffect(()=>{
         getCart()
     },[])
+
+    const setCurrentPageNumber = (pageNumber) => {
+      setCurrentPage(pageNumber);
+    };
 
     function handleDelete(id) {
         console.log(id)
@@ -46,10 +59,10 @@ function Cart() {
         <div className="flex justify-content-between align-items-center mb-4">
           <h3 className="fw-normal mb-3">Shopping Cart</h3>
         </div>
-        {cart.map((cart)=>{
+        {/* {cart.map((cart)=>{
         return(
-         <React.Fragment key={cart.id}>
-          {cart.cart_items.map((item) => (
+         <React.Fragment key={cart.id}> */}
+          {cart.map((item) => (
         <div className="card shadow border-0 rounded-3 mb-4" key={item.id} style={{height:'150px'}}>
           <div className="card-body p-4">
             <div className="row flex justify-content-between align-items-center">
@@ -83,12 +96,20 @@ function Cart() {
         </div>
 
 ))}
-</React.Fragment>
+{/* </React.Fragment>
 )
-})}
+})} */}
       </div>
     </div>
   </div>
+  <ReactPaginate
+          pageCount={totalPages}
+          pageRangeDisplayed={5}
+          marginPagesDisplayed={2}
+          onPageChange={(data) => setCurrentPageNumber(data.selected + 1)}
+          containerClassName={'pagination justify-content-center'}
+          activeClassName={'active'}
+        />
 </section>
         </div>
     )

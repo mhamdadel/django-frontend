@@ -1,0 +1,81 @@
+* {
+    font-family: 'Marcellus', serif;
+}
+
+#img1 h1 {
+    font-size: 105px;
+    color:wheat;
+    font-weight: bold;
+    /* height: 100vh; */
+}
+
+#img2 h1 {
+    font-size: 105px;
+    color: wheat;
+    font-weight: bold;
+
+}
+
+#img3 h1 {
+    font-size: 105px;
+    color: wheat;
+    font-weight: bold;
+}
+
+#img4 h1 {
+    font-size: 105px;
+    color: wheat;
+    font-weight: bold;
+
+}
+
+#img5 h1 {
+    font-size: 105px;
+    color: wheat;
+    font-weight: bold;
+
+}
+
+#img1 {
+    background: linear-gradient(rgb(158, 161, 142, .7), rgb(158, 161, 142, .8)), url('https://images.unsplash.com/photo-1522199755839-a2bacb67c546?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=872&q=80');
+    background-position: center;
+    background-size: cover;
+    height: 100vh;
+position: relative;
+}
+
+#img2 {
+    background: linear-gradient(rgb(158, 161, 142, .7), rgb(158, 161, 142, .8)), url('https://media.istockphoto.com/id/1428709516/photo/shopping-online-woman-hand-online-shopping-on-laptop-computer-with-virtual-graphic-icon.jpg?s=612x612&w=0&k=20&c=ROAncmFL4lbSQdU4VOhyXu-43ngzfEqHE5ZZAw5FtYk=');
+    background-position: center;
+    background-size: cover;
+    height: 100vh;
+    position: relative;
+
+}
+
+#img3 {
+    background: linear-gradient(rgb(158, 161, 142, .7), rgb(158, 161, 142, .8)), url('https://cdn.pixabay.com/photo/2018/07/25/20/29/ecommerce-3562191_960_720.jpg');
+    background-position: center;
+    background-size: cover;
+    height: 100vh;
+    position: relative;
+
+}
+
+#img4 {
+    background: linear-gradient(rgb(158, 161, 142, .7), rgb(158, 161, 142, .8)), url('https://cdn.pixabay.com/photo/2017/03/13/17/26/ecommerce-2140603_960_720.jpg');
+    background-position: center;
+    background-size: cover;
+    height: 100vh;
+    position: relative;
+
+}
+
+#img5 {
+    background: linear-gradient(rgb(158, 161, 142, .7), rgb(158, 161, 142, .8)), url('https://images.pexels.com/photos/6443068/pexels-photo-6443068.jpeg?auto=compress&cs=tinysrgb&w=600');
+    background-position: center;
+    background-size: cover;
+    height: 100vh;
+    position: relative;
+
+}

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/cart.css";
 import ReactPaginate from 'react-paginate';
+import { Link } from "react-router-dom";
+
 import { MagnifyingGlass } from 'react-loader-spinner';
 import withLoader from "../user/components/loader";
 function Cart() {
@@ -49,7 +51,7 @@ function Cart() {
             withCredentials:true
         }).then((res)=>{
             console.log(res.data)
-        }) .catch((err)=>console.log(err))
+        }).catch((err)=>console.log(err))
     }
 
     return(
@@ -128,7 +130,9 @@ function Cart() {
   //         containerClassName={'pagination justify-content-center'}
   //         activeClassName={'active'}
   //       />
+  
         )}
+        <Link to= {'/order'}>Complete Your Order</Link>
 </section>
 </div>
 

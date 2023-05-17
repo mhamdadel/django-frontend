@@ -7,7 +7,8 @@
    }
    .loading{
     /* background-color: black; */
+    /* background-color: black !important; */
      opacity: 1;
      height: 100vh;
-   z-index: 9999;
+     z-index: 9999 !important;
    }

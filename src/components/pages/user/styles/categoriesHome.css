@@ -1,0 +1,15 @@
+.imgCateg{
+    height: 150px !important;
+    border-radius: 50%;
+    transition: transform .7s;
+}
+
+.imgCateg:hover{
+    transform: scale(1.2);
+}
+
+.imgCateg img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}

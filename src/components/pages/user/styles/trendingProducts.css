@@ -2,6 +2,10 @@
     font-family: "Marcellus", serif;
 }
 
+.trending-products {
+    margin-top: -15% !important;
+}
+
 .trending-products .title h5 {
     color: #4d4d4d;
 }

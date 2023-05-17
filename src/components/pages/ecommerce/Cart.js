@@ -10,11 +10,13 @@ function Cart() {
     const[cart,setCart]=useState([])
     const [isLoading, setIsLoading] = useState(false);
     const getCart = async ()=>{
+        setIsLoading(true);
         const response = await axios.get(`http://localhost:8000/cart/`,{
             withCredentials: true
         })
         if(response.data){
-          setCart(response.data); 
+          setCart(response.data);
+          setIsLoading(false); 
         }
           }
 

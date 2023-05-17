@@ -4,7 +4,8 @@ import "../styles/trendingProducts.css";
 
 function TrendingProducts() {
     return (
-        <div className="trending-products mb-5 pb-5">
+        <div className="trending-products mb-8 mt-5 pb-5">
+            <br/>
             <div className="title">
                 <h5 className="text-center text-blueGray-600 mt-5">
                     Welcome To Our

@@ -21,8 +21,10 @@ const ButtonWrapper = ({ currency,
   // This is the main reason to wrap the PayPalButtons in a new component
   const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
   const [cart, setCart] = useState([]);
-  const [order, setOrder] = useState({});
   const [total, setTotal] = useState({});
+  const [success, setSuccess] = useState(false);
+  const [ErrorMessage, setErrorMessage] = useState("");
+  const [orderID, setOrderID] = useState(false);
   // const [isSubmitting, setIsSubmitting] = useState(false);
   // const [submitSuccess, setSubmitSuccess] = useState(false);
   const { id } = useParams();
@@ -57,33 +59,7 @@ const ButtonWrapper = ({ currency,
      return sum;
   }
 
-  // function hamo(){
-  //   cart.map((item) => {
-  //       item.cart_items.map((element) => {
-  //           const quantity = element.quantity;
-  //           const price = element.product_details.price;
-  //           const product_id= element.product_details.id;
-  //       })
-        
-  //   })
-
-  // }
-
-
-//   const addOrder = () => {
-//     try {
-//         const response = axios.post(
-//             `http://localhost:8000/orders/add_order/ `,
-//             {
-//                 withCredentials: true,
-//             }
-//         );
-//         console.log("product added to orders:");
-//         setOrder([...order, response.data]);
-//     } catch (error) {
-//         console.error("Error adding product to orders:", error);
-//     }
-// };
+ 
 
 
 
@@ -123,25 +99,30 @@ const ButtonWrapper = ({ currency,
                 },
               },
             ],
+          })
+          .then((orderId) => {
+            setOrderID(orderId)
+            console.log(orderId);
+              return orderId;
           });
-          // .then((orderId) => {
-          //     // Your code here after create the order
-          //     return orderId;
-          // });
         }}
         onApprove={function (data, actions) {
-          return actions.order.capture().then(function (details) {
+          return actions.order.capture()
+          .then(function (details) {
             alert("transaction completed"+" "+details.payer.name.given_name);
             setIsSubmitting(true)
             setSubmitSuccess(true)
-  
+  console.log(actions.order.capture())
           })
 
 
         }}
+        onCancel={() =>{
+          // cancelOrder()
+        }}
         onError = {function (data, actions) {
           return actions.order.capture().then(function () {
-            alert("An Error occured with your payment ");
+            setErrorMessage("An Error occured with your payment ");
           })
         }}
 

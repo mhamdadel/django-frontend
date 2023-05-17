@@ -5,3 +5,30 @@
 .card:hover{
     box-shadow: 5px 5px #9ea18e !important;
 }
+
+
+@media (min-width: 576px) {
+    .col-sm-10 {
+      max-width: 83.333333%;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .col-md-10 {
+      max-width: 83.333333%;
+    }
+  }
+
+  @media (min-width: 992px) {
+    .col-lg-10 {
+      max-width: 83.333333%;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .col-xl-10 {
+      max-width: 83.333333%;
+    }
+  }
+
+ 

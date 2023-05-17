@@ -23,6 +23,7 @@ import ShowProduct from "./components/pages/ecommerce/ShowProducts";
 import ProductDetails from "./components/pages/ecommerce/ProductDetails";
 import Cart from "./components/pages/ecommerce/Cart";
 import GetWishlistItems from "./components/pages/ecommerce/wishList";
+import OrderForm from "./components/pages/ecommerce/orderForm";
 function App() {
     // const AppWithLoader = withLoader(App);
 
@@ -59,6 +60,7 @@ function App() {
                         />
                     </Route>
                     <Route path="/cart" element={<Cart />} />
+                    <Route path="/order" element={<OrderForm />} />
                     <Route path="/register" element={<Register />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="*" element={<NotFound />} />

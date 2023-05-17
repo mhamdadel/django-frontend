@@ -27,7 +27,7 @@ function GetWishlistItems() {
 
     useEffect(() => {
       setIsLoading(true);
-      axios.get("http://localhost:8000/wishlist/?page=${setCurrentPage}",{
+      axios.get("http://localhost:8000/wishlist/",{
         withCredentials: true
       })
       .then((res)=> {

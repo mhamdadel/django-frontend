@@ -35,11 +35,13 @@ function Cart() {
 
     function handleDelete(id) {
         console.log(id)
+        setIsLoading(true);
        axios.delete(`http://localhost:8000/cart/${id}`,{
             withCredentials: true
         })
         .then((res)=>{
             console.log(res.data)
+            setIsLoading(false);
             getCart()
         })
         .catch((err)=>console.log(err))
@@ -47,9 +49,11 @@ function Cart() {
 
     function updateCart(id,quantity){
         console.log(quantity)
+        setIsLoading(true);
         axios.put(`http://localhost:8000/cart/${id}`,{quantity},{
             withCredentials:true
         }).then((res)=>{
+          setIsLoading(false);
             console.log(res.data)
         }).catch((err)=>console.log(err))
     }

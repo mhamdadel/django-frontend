@@ -26,8 +26,7 @@ const ShowProduct = () => {
                 {
                     withCredentials: true,
                 }
-            );
-            console.log("product added to wishlist:");
+            );    
             setWish([...wishList, response.data]);
         } catch (error) {
             console.error("Error adding product to wishlist:", error);
@@ -123,6 +122,7 @@ const ShowProduct = () => {
             )
             .then((res) => {
                 console.log(res.data);
+
             })
             .catch((error) => console.log(error));
     }
@@ -139,7 +139,8 @@ const ShowProduct = () => {
     }, [isLoading]);
 
     return (
-        <div class="container">
+        <div className="container">
+            <div className="pSearch">
         <input
             type="text"
             value={searchCategory}
@@ -152,11 +153,12 @@ const ShowProduct = () => {
             onChange={handleProductNameChange}
             placeholder="product name"
         />
-        sort by :
+        Sort by: 
         <select value={sorting} onChange={handleSortingChange}>
             <option value="1">low to high price</option>
             <option value="0">high to low price</option>
         </select>
+        </div>
             {isLoading ? (
                 <withLoader>
                     <MagnifyingGlass
@@ -180,7 +182,7 @@ const ShowProduct = () => {
                         >
                             <Link to={`/products/${product.id}`}>
                                 <Card.Img
-                                    className="mx-auto"
+                                    className=" image mx-auto"
                                     variant="top"
                                     src={`https://res.cloudinary.com/deg0m2eu4/${product.Image}`}
                                 />
@@ -200,13 +202,13 @@ const ShowProduct = () => {
                                         Price : {product.price}
                                     </Card.Text>
                                 </div>
-                                <div className="flex">
-                                    <Button
-                                        onClick={() => addToCart(product.id)}
-                                        variant="primary"
+                                <hr/>
+                                <div className="cart flex">
+                                    <button className="butnCart"
+                                        onClick={() => addToCart(product.id)}                               
                                     >
                                         Add To Cart
-                                    </Button>
+                                    </button>
                                     <a
                                         onClick={() =>
                                             AddToWishlist(product.id)
@@ -227,11 +229,11 @@ const ShowProduct = () => {
                 <div className="pagination justify-center">
                     <ReactPaginate
                         breakLabel="..."
-                        nextLabel="next >"
+                        nextLabel="Next"
                         onPageChange={handlePageClick}
                         pageRangeDisplayed={5}
                         pageCount={totalPages}
-                        previousLabel="< previous"
+                        previousLabel="Previous"
                         renderOnZeroPageCount={null}
                         breakClassName={"page-item"}
                         breakLinkClassName={"page-link"}

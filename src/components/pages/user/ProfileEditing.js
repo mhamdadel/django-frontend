@@ -1,8 +1,9 @@
 import axios from "axios";
 import "./styles/profile.css";
-import React, { useState } from "react";
+import React, { useState , useEffect} from "react";
 import Swal from "sweetalert2";
-
+import { MagnifyingGlass } from 'react-loader-spinner';
+import withLoader from "../user/components/loader";
 function Profile() {
     const [email, setEmail] = useState("");
     const [firstName, setFirstName] = useState("");
@@ -13,8 +14,10 @@ function Profile() {
     const [state, setState] = useState("");
     const [country, setCountry] = useState("");
     const [password, setPassword] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleSaveProfile = () => {
+        setIsLoading(true); 
         axios
             .patch("http://localhost:8000/api/auth/profile/",{
                 email: email,
@@ -37,12 +40,21 @@ function Profile() {
                 setCity(res.data.city);
                 setState(res.data.state);
                 setCountry(res.data.country);
+                setIsLoading(false); 
                 Swal.fire('Success', "Your Profile has been Updated Successfully", 'success')
             })
             .catch((err) => {
                 Swal.fire('Error', err.message, 'error');
             });
     };
+
+    useEffect(() => {
+        if (isLoading) {
+          document.body.classList.add('loading');
+        } else {
+          document.body.classList.remove('loading');
+        }
+      }, [isLoading]);
 
     useState(() => {
         axios

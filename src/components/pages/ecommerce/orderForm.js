@@ -97,7 +97,7 @@ function OrderForm() {
           <label htmlFor="phone_number">Phone Number:</label>
           <input type="text" id="phone_number" name="phone_number" onChange={handleChange} value={formData.phone_number} />
 <br />
-          <Button type="submit" disabled={isSubmitting}>Submit</Button>
+          <Button type="submit">Submit</Button>
           {/* {isSubmitting && alert('please pay first')} */}
         {/* {isSubmitting === false}{
             alert('please pay first')

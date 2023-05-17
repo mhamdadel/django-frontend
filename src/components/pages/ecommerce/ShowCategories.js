@@ -57,8 +57,9 @@ const ShowCategory = () => {
     // </div>
 
 
-    <div className="h-56 sm:h-64 xl:h-64 2xl:h-96 mb-5">
+    <div className="categoryHome mt-8 h-56 sm:h-64 xl:h-64 2xl:h-96 mb-5">
       <h3 className='text-muted text-center'>Choose What You Need</h3>
+      <br/>
     <Carousel
       responsive={{
         superLargeDesktop: {

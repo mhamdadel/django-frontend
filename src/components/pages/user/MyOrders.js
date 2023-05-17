@@ -1,9 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import withLoader from "./components/loader";
+import { MagnifyingGlass } from "react-loader-spinner";
 
 function MyOrders() {
     const [orders, setOrders] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
     useEffect(() => {
       axios.get("http://localhost:8000/api/auth/orders",{
         withCredentials: true
@@ -11,11 +14,34 @@ function MyOrders() {
       .then((res)=> {
         setOrders(res.data);
         console.log(res.data[0])
+        setIsLoading(false);
+
       })
       .catch(err => console.log(err));
     }, []);
+    useEffect(() => {
+        if (isLoading) {
+            document.body.classList.add("loading");
+        } else {
+            document.body.classList.remove("loading");
+        }
+    }, [isLoading]);
     return (
       <section className="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5">
+         {isLoading ? (
+                <withLoader>
+                    <MagnifyingGlass
+                        visible={true}
+                        height="80"
+                        width="80"
+                        ariaLabel="MagnifyingGlass-loading"
+                        wrapperStyle={{}}
+                        wrapperClass="MagnifyingGlass-wrapper"
+                        glassColor="#c0efff"
+                        color="#e15b64"
+                    />
+                </withLoader>
+            ) : (
     <div className="mx-auto max-w-screen-xl px-4 lg:px-12">
         <div className="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
           {/*
@@ -96,6 +122,7 @@ function MyOrders() {
             </div>
             */}
             <div className="overflow-x-auto">
+           
                 <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
@@ -116,13 +143,13 @@ function MyOrders() {
                     {orders.map((order) => {
                 return (
                         <tr key={order.order_id} className="border-b dark:border-gray-700">
-                            <td className="px-4 py-3"><Link to={`/orders/${order.order_id}`}>{order.order_id}</Link></td>
-                            <td className="px-4 py-3">{(new Date(order.createdAt)).toLocaleDateString('ar-EG')}</td>
+                            <td className="px-4 py-3"><Link to={`/orders/${order.order_id}`} style={{color:'#9ea18e'}}>{order.order_id}</Link></td>
+                            <td className="px-4 py-3">{(new Date(order.createdAt)).toLocaleDateString('EN-EG')}</td>
                             <td className="px-4 py-3">{order.shipping_address}</td>
                             <td className="px-4 py-3">{order.phone_number}</td>
                             <td className="px-4 py-3">{order.order_items.length}</td>
-                            <td className="px-4 py-3">{order.status}</td>
                             <td className="px-4 py-3">{255}</td>
+                            <td className="px-4 py-3">{order.status}</td>
                             <td className="px-4 py-3">{order.cancellation_fees}</td>
                             <td className="px-4 py-3 flex items-center justify-end">
                                 <button id="apple-imac-27-dropdown-button" data-dropdown-toggle="apple-imac-27-dropdown" className="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100" type="button">
@@ -150,6 +177,7 @@ function MyOrders() {
                     
                     </tbody>
                 </table>
+          
             </div>
             {/*<nav className="flex flex-col md:flex-row justify-between items-start md:items-center space-y-3 md:space-y-0 p-4" aria-label="Table navigation">
                 <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
@@ -194,6 +222,7 @@ function MyOrders() {
             </nav> */}
         </div>
     </div>
+      )}
     </section>
         
     );

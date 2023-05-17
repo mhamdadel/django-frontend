@@ -3,11 +3,14 @@
     margin-right: auto;
     margin-left: auto;
     margin-bottom: auto;
+    opacity: 0.5;
+    margin-top: 20%;
    
    }
    .loading{
-    background-color: black !important;
-     opacity: 1;
+    /* background-color: black; */
+    /* background-color: black !important; */
+     opacity: 0.5;
      height: 100vh;
      z-index: 9999 !important;
    }

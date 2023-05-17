@@ -1,5 +1,8 @@
+.categoryHome{
+    margin-top: 7%;
+}
 .imgCateg{
-    height: 120px !important;
+    height: 130px !important;
     border-radius: 50%;
     transition: transform .7s;
 }

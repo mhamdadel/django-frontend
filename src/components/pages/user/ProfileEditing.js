@@ -4,6 +4,7 @@ import React, { useState , useEffect} from "react";
 import Swal from "sweetalert2";
 import { MagnifyingGlass } from 'react-loader-spinner';
 import withLoader from "../user/components/loader";
+import '../user/styles/loader.css'
 function Profile() {
     const [email, setEmail] = useState("");
     const [firstName, setFirstName] = useState("");
@@ -85,8 +86,7 @@ function Profile() {
                 {/* <div>
                     <h5>{firstName} {lastName}</h5>
                 </div> */}
-                <hr className=" mb-8"/>
-                <div>
+                <hr className=" mb-8"/> <div>
                 <img className="imageIcon" src="https://cdn.pixabay.com/photo/2021/02/12/07/03/icon-6007530_640.png"/>
 
                 {/* className="flex flex-row" */}
@@ -215,13 +215,25 @@ function Profile() {
                                     </div>
                                 </div>
                                 <div className="mt-5 text-center">
-                                    <button
+                                {isLoading ? (
+                <withLoader>
+                <MagnifyingGlass
+                    visible={true}
+                    height="80"
+                    width="80"
+                    ariaLabel="MagnifyingGlass-loading"
+                    wrapperStyle={{}}
+                    wrapperClass="MagnifyingGlass-wrapper"
+                    glassColor="#c0efff"
+                    color="#e15b64"
+                />
+            </withLoader>            ) : (  <button
                                         className=" btn profile-button"
                                         type="button"
                                         onClick={handleSaveProfile}
                                     >
                                         Save Profile
-                                    </button>
+                                    </button>)}
                                 </div>
                             </div>
                         </div>

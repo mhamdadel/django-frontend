@@ -141,6 +141,22 @@ const ShowProduct = () => {
     return (
         <div className="container">
             <div className="pSearch">
+        <div class="container">
+                       {isLoading ? (
+                <withLoader>
+                    <MagnifyingGlass
+                        visible={true}
+                        height="80"
+                        width="80"
+                        ariaLabel="MagnifyingGlass-loading"
+                        wrapperStyle={{}}
+                        wrapperClass="MagnifyingGlass-wrapper"
+                        glassColor="#c0efff"
+                        color="#e15b64"
+                    />
+                </withLoader>
+            ) : (
+                <div>
         <input
             type="text"
             value={searchCategory}
@@ -159,6 +175,7 @@ const ShowProduct = () => {
             <option value="0">high to low price</option>
         </select>
         </div>
+            )}
             {isLoading ? (
                 <withLoader>
                     <MagnifyingGlass
@@ -249,6 +266,8 @@ const ShowProduct = () => {
                 </div>
             )}
             ;
+        </div>
+        </div>
         </div>
     );
 };

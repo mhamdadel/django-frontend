@@ -6,6 +6,22 @@
     box-shadow: 5px 5px #9ea18e !important;
 }
 
+.orderCart{
+  /* margin-top: 5% !important;
+  margin-right: 5% !important; */
+  margin: auto !important;
+  margin-left: 50%;
+  background-color: #9ea18e;
+  color: #fff;
+  padding: 13px;
+  border-radius: 5px;
+  width: 30vw;
+  transition: transform .7s !important;
+}
+.orderCart:hover{
+  color: white !important;
+  transform: scale(1.2) !important;
+}
 
 @media (min-width: 576px) {
     .col-sm-10 {

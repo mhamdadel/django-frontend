@@ -3,7 +3,7 @@ import axios from "axios";
 import "../styles/cart.css";
 import ReactPaginate from 'react-paginate';
 import { Link } from "react-router-dom";
-
+import '../user/styles/loader.css'
 import { MagnifyingGlass } from 'react-loader-spinner';
 import withLoader from "../user/components/loader";
 function Cart() {
@@ -102,19 +102,37 @@ function Cart() {
                         {/* <p><span className="text-muted">{item.product_details.Category}</span></p> */}
                       </div>
                       <div className="col-md-2 col-lg-3 col-xl-2 d-flex">
+                      {isLoading ? (
+ <withLoader>
+ <MagnifyingGlass
+ visible={true}
+ height="80"
+ width="80"
+ ariaLabel="MagnifyingGlass-loading"
+ wrapperStyle={{}}
+ wrapperClass="MagnifyingGlass-wrapper"
+ glassColor="#c0efff"
+ color="#e15b64"
+/>
+</withLoader>
+      ) : (
                         <select id="cartq" className="form-control form-control-sm text-center" onChange={(e)=>updateCart(item.id,e.target.value)}>
                           <option value={item.quantity}>{item.quantity}</option>
                           <option value="1">1</option>
                           <option value="2">2</option>
                           <option value="3">3</option>
                           <option value="4">4</option>
-                        </select>
+                        </select>)}
                       </div>
                       <div className="col-md-3 col-lg-2 col-xl-2 offset-lg-1">                       
                        <h5 className="mb-0">{item.product_details.price}</h5>
                       </div>
                       <div className="col-12 col-md-6 col-sm-6 col-lg-1 col-xl-1">
-                        <button type="button" onClick={() => handleDelete(item.id)}><i className="fa fa-trash fa-lg" aria-hidden="true"></i></button>             
+                      {isLoading ? (
+ <withLoader>
+
+</withLoader>
+      ) : ( <button type="button" onClick={() => handleDelete(item.id)}><i className="fa fa-trash fa-lg" aria-hidden="true"></i></button>    )}         
                       </div>
                     </div>
                   </div>
@@ -125,6 +143,7 @@ function Cart() {
         })}
       </div>
     </div>
+    <Link className="orderCart" to= {'/order'}>Complete Your Order</Link>
   </div>
   // <ReactPaginate
   //         pageCount={totalPages}
@@ -134,9 +153,8 @@ function Cart() {
   //         containerClassName={'pagination justify-content-center'}
   //         activeClassName={'active'}
   //       />
-  
+
         )}
-        <Link to= {'/order'}>Complete Your Order</Link>
 </section>
 </div>
 

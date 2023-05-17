@@ -7,6 +7,8 @@ import ReactPaginate from "react-paginate";
 import "./styles/ShowProducts.css";
 import withLoader from "../user/components/loader";
 import { MagnifyingGlass } from "react-loader-spinner";
+import { ToastContainer, toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 const ShowProduct = () => {
     const [products, setproducts] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -121,10 +123,23 @@ const ShowProduct = () => {
                 }
             )
             .then((res) => {
-                console.log(res.data);
-
+                // console.log(res.data);
+                toast.success(res.data.message, {
+                    position: toast.POSITION.TOP_RIGHT,
+                    autoClose: 2000
+                  }
+                  );
+                  if(res.data.non_field_errors[0]){
+                    toast.error(res.data.non_field_errors[0], {
+                        position: toast.POSITION.TOP_RIGHT,
+                        autoClose: 2000
+                      })
+                  }
+                  console.log(res.data.non_field_errors[0])
             })
-            .catch((error) => console.log(error));
+            .catch((error) => {
+                console.log(error)
+            })
     }
 
     // useEffect(()=>{
@@ -141,6 +156,8 @@ const ShowProduct = () => {
     return (
         <div className="container">
             <div className="pSearch">
+            <ToastContainer />
+
         <div class="container">
                        {isLoading ? (
                 <withLoader>

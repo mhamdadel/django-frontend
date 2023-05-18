@@ -60,12 +60,7 @@ function Cart() {
         console.log("After Axios Post: submitSuccess = ", submitSuccess);
         console.log(formData);
         console.log(cartData);
-        // setFormData({
-        //   shipping_address: "",
-        //   phone_number: "",
-        //   cart_data: [],
-  
-        // });
+
         setSubmitSuccess(true);
         alert("Please pay first");
   

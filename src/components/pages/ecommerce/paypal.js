@@ -25,8 +25,7 @@ const ButtonWrapper = ({ currency,
   const [success, setSuccess] = useState(false);
   const [ErrorMessage, setErrorMessage] = useState("");
   const [orderID, setOrderID] = useState(false);
-  // const [isSubmitting, setIsSubmitting] = useState(false);
-  // const [submitSuccess, setSubmitSuccess] = useState(false);
+
   const { id } = useParams();
   const getCart = async () => {
     try {
@@ -140,15 +139,6 @@ function Paypal({
 }) {
   console.log("Paypal props: isSubmitting = ", isSubmitting);
   console.log("Paypal props: submitSuccess = ", submitSuccess);
-  // const [{ isLoaded, loadError }] = usePayPalScriptReducer();
-
-  // if (!isLoaded && !loadError) {
-  //   return <div>Loading...</div>;
-  // }
-
-  // if (loadError) {
-  //   return <div>Error loading PayPal script!</div>;
-  // }
   return (
     <div style={{ maxWidth: "750px", minHeight: "200px" }}>
       <PayPalScriptProvider

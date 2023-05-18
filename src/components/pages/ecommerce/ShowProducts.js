@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { Card, CardHeader } from "react-bootstrap";
-import { Link, BrowserRouter } from "react-router-dom";
+import { Link, BrowserRouter, useSearchParams } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import "./styles/ShowProducts.css";
 import withLoader from "../user/components/loader";
@@ -17,7 +17,7 @@ const ShowProduct = () => {
     const [searchProductName, setSearchProductName] = useState("");
     const [sorting, setSorting] = useState();
     const [searchNow, setSearchNow] = useState(true);
-
+    const [searchParams, setSearchParams] = useSearchParams();
     const AddToWishlist = (id) => {
         try {
             const response = axios.post(
@@ -79,15 +79,21 @@ const ShowProduct = () => {
         setCurrentPage(e.selected + 1);
     };
 
+
     useEffect(() => {
-        if (searchNow === true) {
+        const category = searchParams.get('category');
+        const isCategoryFilter = (category) => category && setSearchCategory(category);
+        if (isCategoryFilter(category) || searchNow === true) {
+          const categoryFilterDetails = category || searchCategory;
           let filter = "";
-          searchCategory && (filter += "&category=" + searchCategory);
+          categoryFilterDetails && (filter += "&category=" + categoryFilterDetails);
           searchProductName && (filter += "&product=" + searchProductName);
           sorting && (filter += "&sort=" + sorting);
+          const urlProducts = `http://127.0.0.1:8000/api/ecommerce/productslist/?page=${currentPage}${filter}`;
+          console.log(urlProducts);
             axios
                 .get(
-                    `http://127.0.0.1:8000/api/ecommerce/productslist/?page=${currentPage}${filter}`
+                  urlProducts
                 )
                 .then((response) => {
                     setproducts(response.data.results);
@@ -139,7 +145,7 @@ const ShowProduct = () => {
     }, [isLoading]);
 
     return (
-        <div class="container">
+        <div className="container">
         <input
             type="text"
             value={searchCategory}
@@ -165,7 +171,7 @@ const ShowProduct = () => {
                         width="80"
                         ariaLabel="MagnifyingGlass-loading"
                         wrapperStyle={{}}
-                        wrapperClass="MagnifyingGlass-wrapper"
+                        wrapperclassName="MagnifyingGlass-wrapper"
                         glassColor="#c0efff"
                         color="#e15b64"
                     />

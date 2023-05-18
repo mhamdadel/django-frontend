@@ -2,7 +2,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Swal from "sweetalert2";
 import withLoader from "./components/loader";
 import { MagnifyingGlass } from "react-loader-spinner";
 
@@ -18,7 +17,7 @@ function MyOrders() {
           })
           .then((res)=> {
             setOrders(res.data);
-    
+
             console.log(res.data[0])
             setIsLoading(false);
     
@@ -26,156 +25,152 @@ function MyOrders() {
           .catch(err => console.log(err));
     }
     useEffect(() => {
-        axios
-            .get("http://localhost:8000/api/auth/orders", {
-                withCredentials: true,
-            })
-            .then((res) => {
-                setOrders(res.data);
-                console.log(res.data[0]);
-            })
-            .catch((err) => console.log(err));
-    }, []);
-    function getAmount(items) {
-        const sumTotal = items.reduce((sum, current) => {
-            return sum + current.price * current.quantity;
-        }, 0);
-        return sumTotal;
-    }
+     getOrders() },
+      []);
 
-    function areYouSureToCancel(orderId) {
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be cancel this order!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!",
-        }).then((result) => {
-            if (result.isConfirmed) {
-                axios
-                    .post(
-                        `http://localhost:8000/orders/orders/${orderId}/cancel/`,
-                        { orderId },
-                        {
-                            withCredentials: true,
-                        }
-                    )
-                    .then(() => {
-                        Swal.fire(
-                            "Canceled!",
-                            "Your file has been deleted.",
-                            "success"
-                        );
-                    })
-                    .catch((err) => {console.log(err.message);})
-            }
-        });
-    }
+
+    useEffect(() => {
+        if (isLoading) {
+            document.body.classList.add("loading");
+        } else {
+            document.body.classList.remove("loading");
+            alert('if you want to track your order please click on the number of any order you want')
+
+        }
+    }, [isLoading]);
+
+
+    const cancelOrder = (order_id) => {
+        try {
+            const response = axios.post(
+                `http://localhost:8000/orders/orders/${order_id}/cancel/ `,{},
+                {
+                    withCredentials: true,
+                }
+            );
+            console.log(response.data);
+            setOrderCancelled(true)
+        } catch (error) {
+            console.error( error);
+            setOrderCancelled(false)
+        }
+    };
+    
+    const deleteOrder = (order_id) => {
+
+            const response = axios.delete(
+                `http://localhost:8000/orders/orders/${order_id}/delete/ `,
+                {
+                    withCredentials: true,
+                }).then((response)=>{
+                    setIsLoading(true)
+                    getOrders()
+                }).catch((err)=>console.log(err))};
+    
 
     return (
-        <section className="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5">
-            <div className="mx-auto max-w-screen-xl px-4 lg:px-12">
-                <div className="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
-                    <div className="overflow-x-auto">
-                        <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                                <tr>
-                                    <th scope="col" className="px-4 py-3">
-                                        order id
-                                    </th>
-                                    <th scope="col" className="px-4 py-3">
-                                        ordered at
-                                    </th>
-                                    <th scope="col" className="px-4 py-3">
-                                        shipping address
-                                    </th>
-                                    <th scope="col" className="px-4 py-3">
-                                        phone number
-                                    </th>
-                                    <th scope="col" className="px-4 py-3">
-                                        product quantity
-                                    </th>
-                                    <th scope="col" className="px-4 py-3">
-                                        total
-                                    </th>
-                                    <th scope="col" className="px-4 py-3">
-                                        status
-                                    </th>
-                                    <th scope="col" className="px-4 py-3">
-                                        cancel
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {orders.map((order) => {
-                                    return (
-                                        <tr
-                                            key={order.order_id}
-                                            className="border-b dark:border-gray-700"
-                                        >
-                                            <td className="px-4 py-3">
-                                                <Link
-                                                    to={`/orders/${order.order_id}`}
-                                                >
-                                                    {order.order_id}
-                                                </Link>
-                                            </td>
-                                            <td className="px-4 py-3">
-                                                {new Date(
-                                                    order.createdAt
-                                                ).toLocaleDateString("ar-EG")}
-                                            </td>
-                                            <td className="px-4 py-3">
-                                                {order.shipping_address}
-                                            </td>
-                                            <td className="px-4 py-3">
-                                                {order.phone_number}
-                                            </td>
-                                            <td className="px-4 py-3">
-                                                {order.order_items.length}
-                                            </td>
-                                            <td className="px-4 py-3">
-                                                {getAmount(order.order_items)}
-                                            </td>
-                                            <td className="px-4 py-3">
-                                                {order.status}
-                                            </td>
-                                            <td className="px-4 py-3">
-                                                {order.status !==
-                                                "delivered" ? (
-                                                    <a
-                                                        onClick={() =>
-                                                            areYouSureToCancel(
-                                                                order.order_id
-                                                            )
-                                                        }
-                                                        class="btn btn-danger"
-                                                        href="#"
-                                                        role="button"
-                                                    >
-                                                        Cancel
-                                                    </a>
-                                                ) : (
-                                                    <a
-                                                        type="button"
-                                                        class="btn btn-primary"
-                                                        disabled
-                                                    >
-                                                        delivered
-                                                    </a>
-                                                )}
-                                            </td>
-                                        </tr>
-                                    );
-                                })}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+      <section className="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5">
+         {isLoading ? (
+                <withLoader>
+                    <MagnifyingGlass
+                        visible={true}
+                        height="80"
+                        width="80"
+                        ariaLabel="MagnifyingGlass-loading"
+                        wrapperStyle={{}}
+                        wrapperClass="MagnifyingGlass-wrapper"
+                        glassColor="#c0efff"
+                        color="#e15b64"
+                    />
+                </withLoader>
+            ) : (
+    <div className="mx-auto max-w-screen-xl px-4 lg:px-12">
+        <div className="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
+        
+            <div className="overflow-x-auto">
+                <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th scope="col" className="px-4 py-3">order id</th>
+                            <th scope="col" className="px-4 py-3">ordered at</th>
+                            <th scope="col" className="px-4 py-3">shipping address</th>
+                            <th scope="col" className="px-4 py-3">phone number</th>
+                            <th scope="col" className="px-4 py-3">product quantity</th>
+                            <th scope="col" className="px-4 py-3">total</th>
+                            <th scope="col" className="px-4 py-3">status</th>
+                            <th scope="col" className="px-4 py-3">cancellation fees</th>
+                            {/* <th scope="col" className="px-4 py-3">
+                                <span className="sr-only">Actions</span>
+                            </th> */}
+                            <th scope="col" className="px-4 py-3">Cancel</th>
+                            <th scope="col" className="px-4 py-3">Delete</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {orders.length > 0 ?(
+
+                    orders.map((order) => {
+                return (
+                        <tr key={order.order_id} className="border-b dark:border-gray-700">
+                            <td className="px-4 py-3"><Link to={`/orders/${order.order_id}`} style={{color:'#9ea18e'}}>{order.order_id} <i className="far fa-hand-point-right" style={{fontSize:'small'}}></i> </Link></td>
+                            <td className="px-4 py-3">{(new Date(order.createdAt)).toLocaleDateString('EN-EG')}</td>
+                            <td className="px-4 py-3">{order.shipping_address}</td>
+                            <td className="px-4 py-3">{order.phone_number}</td>
+                            <td className="px-4 py-3">{order.order_items.length}</td>
+                            <td className="px-4 py-3">{255}</td>
+                            <td className="px-4 py-3" >
+                            { orderCancelled === true ?'Cancelled': order.status}
+                                </td>
+                            <td className="px-4 py-3">{order.cancellation_fees}</td>
+                            <td className="px-4 py-3">
+                           {orderCancelled !== true && (
+                            <button onClick={() => cancelOrder(order.order_id)} type="submit" className="btn btn-danger">
+                                Cancel
+                                </button>
+                                        )}
+                             </td>
+
+                             <td className="px-4 py-3">
+                            <button onClick={() => deleteOrder(order.order_id)} type="submit" className="btn btn-danger">
+                                Delete
+                                </button>
+                             </td>
+                            <td className="px-4 py-3 flex items-center justify-end">
+                                <button id="apple-imac-27-dropdown-button" data-dropdown-toggle="apple-imac-27-dropdown" className="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100" type="button">
+                                    <svg className="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
+                                    </svg>
+                                </button>
+                                <div id="apple-imac-27-dropdown" className="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
+                                    <ul className="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="apple-imac-27-dropdown-button">
+                                        <li>
+                                            <a href="#" className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Show</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
+                                        </li>
+                                    </ul>
+                                    <div className="py-1">
+                                        <a href="#" className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                )
+                    })):(    <div>No items in your Order page</div>
+                    )}
+                    
+                    </tbody>
+                </table>
+          
             </div>
-        </section>
+          
+        </div>
+    </div>
+      )}
+    </section>
+        
     );
 }
 

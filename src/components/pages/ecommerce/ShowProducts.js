@@ -192,16 +192,7 @@ const ShowProduct = () => {
             )}
             {isLoading ? (
                 <withLoader>
-                    <MagnifyingGlass
-                        visible={true}
-                        height="80"
-                        width="80"
-                        ariaLabel="MagnifyingGlass-loading"
-                        wrapperStyle={{}}
-                        wrapperclassName="MagnifyingGlass-wrapper"
-                        glassColor="#c0efff"
-                        color="#e15b64"
-                    />
+                   
                 </withLoader>
             ) : (
                 <div className="products-card-info mx-auto">

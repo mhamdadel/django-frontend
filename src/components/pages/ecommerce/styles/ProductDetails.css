@@ -1,55 +1,27 @@
 img {
-    max-width: 100%; }
-  
-  .preview {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -webkit-flex-direction: column;
-        -ms-flex-direction: column;
-            flex-direction: column; }
+    max-width: 50%; }
+  /* .product-description{
+    color:#9ea18e  ;
+  } */
+  /* .price{
+    color:#9ea18e ;
+  } */
+
     @media screen and (max-width: 996px) {
       .preview {
         margin-bottom: 20px; } }
   
-  .preview-pic {
-    -webkit-box-flex: 1;
-    -webkit-flex-grow: 1;
-        -ms-flex-positive: 1;
-            flex-grow: 1; }
+
   
-  .preview-thumbnail.nav-tabs {
-    border: none;
-    margin-top: 15px; }
-    .preview-thumbnail.nav-tabs li {
-      width: 18%;
-      margin-right: 2.5%; }
-      .preview-thumbnail.nav-tabs li img {
-        max-width: 100%;
-        display: block; }
-      .preview-thumbnail.nav-tabs li a {
-        padding: 0;
-        margin: 0; }
-      .preview-thumbnail.nav-tabs li:last-of-type {
-        margin-right: 0; }
-  
-  .tab-content {
-    overflow: hidden; }
-    .tab-content img {
-      width: 100%;
-      -webkit-animation-name: opacity;
-              animation-name: opacity;
-      -webkit-animation-duration: .3s;
-              animation-duration: .3s; }
+ 
+
   
   .card {
     margin-top: 50px;
     background: #eee;
     padding: 3em;
-    line-height: 1.5em; }
+    line-height: 1.5em;
+  margin-bottom: 20px; }
   
   @media screen and (min-width: 997px) {
     .wrapper {
@@ -76,8 +48,10 @@ img {
             flex-grow: 1; }
   
   .product-title, .price, .sizes, .colors {
-    text-transform: UPPERCASE;
-    font-weight: bold; }
+    /* text-transform: UPPERCASE; */
+    font-weight: bold; 
+  text-align: center;
+  }
   
   .checked, .price span {
     color: #073a10; }
@@ -86,12 +60,15 @@ img {
     margin-bottom: 15px; }
   
   .product-title {
-    margin-top: 0; }
+    margin-top: 0;
+  color: #9ea18e ;
   
-  .size {
+  }
+  
+  /* .size {
     margin-right: 10px; }
     .size:first-of-type {
-      margin-left: 40px; }
+      margin-left: 40px; } */
   
   .color {
     display: inline-block;
@@ -107,11 +84,9 @@ img {
     background: #03095f;
     padding: 1.2em 1.5em;
     border: none;
-    text-transform: UPPERCASE;
     font-weight: bold;
     color: #fff;
-    -webkit-transition: background .3s ease;
-            transition: background .3s ease; }
+}
     .add-to-cart:hover, .like:hover {
       background: #4c70e9;
       color: #fff; }

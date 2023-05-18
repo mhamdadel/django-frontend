@@ -63,23 +63,45 @@ function addToCart(id) {
       })
 }
 console.log(product);
+
+
+const AddToWishlist = (id) => {
+  setIsLoading(true);
+
+  const response = axios.post(
+      `http://localhost:8000/wishlist/add/ `,
+      { id },
+      {
+          withCredentials: true,
+      }
+  )
+  .then((res) => {
+    setIsLoading(false)
+      toast.success(res.data.message, {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 2000
+        }
+        );
+        if(res.data.non_field_errors[0]){
+          setIsLoading(false)
+          toast.error(res.data.non_field_errors[0], {
+              position: toast.POSITION.TOP_RIGHT,
+              autoClose: 2000
+            })
+        }
+        console.log(res.data.non_field_errors[0])
+  })
+  .catch((error) => {
+      console.log(error)
+  })
+}
+
+
+
   return (
    
 
 <>
-    {/* <div className='details'>
-      <div className='big-img'> 
-          <img src={`https://res.cloudinary.com/deg0m2eu4/${product.Image}`} alt={product.title}/>
-      </div>
-      <div className='box'>
-        <div className='row'>
-          <h2>{product.title}</h2>
-          <span>${product.price}</span>
-        </div>
-        <p>{product.description}</p>
-        <p></p>
-      </div>
-    </div> */}
       {isLoading ? (
                 <withLoader>
                     <MagnifyingGlass
@@ -94,32 +116,32 @@ console.log(product);
                     />
                 </withLoader>
             ) : (
-<div class="container">
+<div className="container">
 <ToastContainer />
-		<div class="card">
-			<div class="container-fliud">
-				<div class="wrapper row">
-					<div class="preview col-md-6">
+		<div className="card">
+			<div className="container">
+				<div className="wrapper row">
+					<div className="preview col-md-12 col-lg-6 col-sm-12">
             <img src={`https://res.cloudinary.com/deg0m2eu4/${product.Image}`}  alt=''/>
 						
 					</div>
-					<div class="details col-md-6">
-						<h3 class="product-title">{product.title}</h3>
+					<div className="details col-md-6 col-lg-6 pt-5">
+						<h3 className="product-title">{product.title}</h3>
 						
-						<p class="product-description">{product.description}</p>
-						<h4 class="price">current price: <span>${product.price}</span></h4>
-						<div class="action">
+						<p className="product-description text-center text-muted">{product.description}</p>
+						<h4 className="price text-muted" >current price: <span style={{color:'#9ea18e'}}>${product.price}</span></h4>
+						<div className="action text-center">
             {isLoading ? (
  <withLoader>
  
 </withLoader>
-      ) : (					<button class="add-to-cart btn btn-default" type="button" onClick={() => addToCart(product.id)} >add to cart</button>)}
+      ) : (	<button className="add-to-cart btn  me-3" type="button" style={{backgroundColor:'#9ea18e',color:'white'}} onClick={() => addToCart(product.id)} >Add to cart</button>)}
                                          {isLoading ? (
  <withLoader>
  
 </withLoader>
       ) : (
-							<button class="like btn btn-default" type="button"><span class="fa fa-heart"></span></button>
+							<button className="like btn   "style={{backgroundColor:'#9ea18e',color:'white'}} type="button"onClick={() => AddToWishlist(product.id)}><span className="fa fa-heart"></span></button>
       )}
               </div>
 					</div>

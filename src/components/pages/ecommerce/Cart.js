@@ -10,7 +10,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import Paypal from "./paypal";
 import { Button } from "react-bootstrap";
-import OrderForm from "./orderForm";
 
 function Cart() {
     const[cart,setCart]=useState([])

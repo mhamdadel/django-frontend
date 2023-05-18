@@ -27,7 +27,7 @@ function GetWishlistItems() {
 
     useEffect(() => {
       setIsLoading(true);
-      axios.get("http://localhost:8000/wishlist/?page=${setCurrentPage}",{
+      axios.get("http://localhost:8000/wishlist/",{
         withCredentials: true
       })
       .then((res)=> {
@@ -118,6 +118,7 @@ wishList.map((element) => {
    </div>
    <div className="col-md-2 col-5 my-auto">
      <div className="remove">
+      
      <button  onClick={()=> deleteFromWishlist(element.id)} className="btn btn-danger btn-sm">
   <i className="fa fa-trash"></i> Remove
 </button>

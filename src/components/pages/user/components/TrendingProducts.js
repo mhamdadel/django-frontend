@@ -4,7 +4,8 @@ import "../styles/trendingProducts.css";
 
 function TrendingProducts() {
     return (
-        <div className="trending-products mb-5 pb-5">
+        <div className="trending-products mb-8 mt-5 pb-5">
+            <br/>
             <div className="title">
                 <h5 className="text-center text-blueGray-600 mt-5">
                     Welcome To Our
@@ -83,7 +84,7 @@ function TrendingProducts() {
                         </a>
                         <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
                             Wireless Bluetooth-compatible Headphones With Mic
-                            Stereo Sound.
+                            Stereo.
                         </p>
                         <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
                             Price 5000 EGP

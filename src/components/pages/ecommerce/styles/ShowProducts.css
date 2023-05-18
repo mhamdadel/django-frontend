@@ -4,6 +4,11 @@
     flex-direction: row;
     margin: 5px;
     padding: 2px;
+    height:80vh !important
+}
+
+.image{
+  height:25vh;
 }
 
 
@@ -22,15 +27,51 @@
   
   .pagination > li.active > a {
     color: #fff;
-    background-color: #218838;
-    border-color: #1e7e34;
+    background-color: #9ea18e;
+    border-color: #9ea18e;
   }
   .pagination > li > a:hover {
-    background-color: #218838;
+    background-color:#9ea18e;
     color: white;
     cursor: pointer;
   }
   .pagination > li:first-child > a,
   .pagination > li:first-child > span {
     margin-left: 0;
+  }
+
+  .page-link{
+    color:rgb(139, 135, 135) !important;
+  }
+  .page-link:hover{
+    color:#fff !important;
+  }
+
+  .butnCart{
+    background-color: #9ea18e !important;
+    width: 16rem;
+    outline: #9ea18e !important;
+    border-radius: 5px;
+    color:#fff
+  }
+
+  .pSearch{
+    margin-left:15% !important;
+  }
+  .pSearch input{
+    justify-content: space-between !important;
+    border-radius: 5px;
+    margin-right: 5% !important;
+  }
+
+  .pSearch select{
+    border-radius: 5px;
+  }
+
+  .pagination ReactPaginate{
+    border: 1px solid black;
+    border-radius: 5px !important;
+  }
+  .butnCart:hover{
+    color: #fff;
   }

@@ -1,10 +1,30 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import withLoader from "./components/loader";
+import { MagnifyingGlass } from "react-loader-spinner";
 
 function MyOrders() {
     const [orders, setOrders] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [order, setOrder] = useState([]);
+    const [orderCancelled,setOrderCancelled]= useState(false)
+
+    const getOrders = ()=>{
+         axios.get("http://localhost:8000/api/auth/orders",{
+            withCredentials: true
+          })
+          .then((res)=> {
+            setOrders(res.data);
+    
+            console.log(res.data[0])
+            setIsLoading(false);
+    
+          })
+          .catch(err => console.log(err));
+    }
     useEffect(() => {
         axios
             .get("http://localhost:8000/api/auth/orders", {

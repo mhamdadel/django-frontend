@@ -3,18 +3,23 @@ import axios from "axios";
 import "../styles/cart.css";
 import ReactPaginate from 'react-paginate';
 import { Link } from "react-router-dom";
-
+import '../user/styles/loader.css'
 import { MagnifyingGlass } from 'react-loader-spinner';
 import withLoader from "../user/components/loader";
+import { ToastContainer, toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+
 function Cart() {
     const[cart,setCart]=useState([])
     const [isLoading, setIsLoading] = useState(false);
     const getCart = async ()=>{
+        setIsLoading(true);
         const response = await axios.get(`http://localhost:8000/cart/`,{
             withCredentials: true
         })
         if(response.data){
-          setCart(response.data); 
+          setCart(response.data);
+          setIsLoading(false); 
         }
           }
 
@@ -33,22 +38,40 @@ function Cart() {
 
     function handleDelete(id) {
         console.log(id)
-       axios.delete(`http://localhost:8000/cart/${id}`,{
+        setIsLoading(true);
+        axios.delete(`http://localhost:8000/cart/${id}`,{
             withCredentials: true
         })
         .then((res)=>{
-            console.log(res.data)
-            getCart()
+          console.log(res.data.message)
+          setIsLoading(false);
+          getCart();
+          toast.success(res.data.message, {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 2000 
+          });
+          // setCart(cart.filter((item) => item.id !== id));
         })
-        .catch((err)=>console.log(err))
+        .catch((err)=>{
+          console.log(err)
+          toast.error("An error occurred. Please try again later.");
+        })
+
     }
 
     function updateCart(id,quantity){
         console.log(quantity)
+        setIsLoading(true);
         axios.put(`http://localhost:8000/cart/${id}`,{quantity},{
             withCredentials:true
         }).then((res)=>{
-            console.log(res.data)
+          setIsLoading(false);
+          getCart()
+          toast.success(res.data.message, {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 2000 // number of milliseconds to display the message
+          });
+          console.log(res.data)
         }).catch((err)=>console.log(err))
     }
 
@@ -78,7 +101,8 @@ function Cart() {
         <div className="flex justify-content-between align-items-center mb-4">
           <h3 className="fw-normal mb-3">Shopping Cart</h3>
         </div>
-        
+        <ToastContainer />
+
         {cart.map((cart)=>{
           return(
             <React.Fragment key={cart.id}>
@@ -96,19 +120,29 @@ function Cart() {
                         {/* <p><span className="text-muted">{item.product_details.Category}</span></p> */}
                       </div>
                       <div className="col-md-2 col-lg-3 col-xl-2 d-flex">
-                        <select id="cartq" className="form-control form-control-sm text-center" onChange={(e)=>updateCart(item.id,e.target.value)}>
+                      {isLoading ? (
+ <withLoader>
+ 
+</withLoader>
+      ) : (
+                       <select id="cartq" className="form-control form-control-sm text-center" onChange={(e)=>updateCart(item.id,e.target.value)}>
                           <option value={item.quantity}>{item.quantity}</option>
                           <option value="1">1</option>
                           <option value="2">2</option>
                           <option value="3">3</option>
                           <option value="4">4</option>
                         </select>
+                        )}
                       </div>
                       <div className="col-md-3 col-lg-2 col-xl-2 offset-lg-1">                       
                        <h5 className="mb-0">{item.product_details.price}</h5>
                       </div>
                       <div className="col-12 col-md-6 col-sm-6 col-lg-1 col-xl-1">
-                        <button type="button" onClick={() => handleDelete(item.id)}><i className="fa fa-trash fa-lg" aria-hidden="true"></i></button>             
+                      {isLoading ? (
+ <withLoader>
+
+</withLoader>
+      ) : ( <button type="button" onClick={() => handleDelete(item.id)}><i className="fa fa-trash fa-lg" aria-hidden="true"></i></button>    )}         
                       </div>
                     </div>
                   </div>
@@ -119,6 +153,7 @@ function Cart() {
         })}
       </div>
     </div>
+    <Link className="orderCart" to= {'/order'}>Complete Your Order</Link>
   </div>
   // <ReactPaginate
   //         pageCount={totalPages}
@@ -128,12 +163,10 @@ function Cart() {
   //         containerClassName={'pagination justify-content-center'}
   //         activeClassName={'active'}
   //       />
-  
+
         )}
-        <Link to= {'/order'}>Complete Your Order</Link>
 </section>
 </div>
-
     )
 }
 export default Cart

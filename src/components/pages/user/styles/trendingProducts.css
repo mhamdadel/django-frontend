@@ -2,6 +2,10 @@
     font-family: "Marcellus", serif;
 }
 
+.trending-products {
+    margin-top: -15% !important;
+}
+
 .trending-products .title h5 {
     color: #4d4d4d;
 }
@@ -19,9 +23,9 @@
 }
 
 .trending-products .row .card {
-    height: 90vh;
+    height: 95vh;
 }
 .trending-products .row img {
-    height: 55vh;
+    height: 50vh;
     margin: auto;
 }

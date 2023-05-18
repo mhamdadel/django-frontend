@@ -7,6 +7,10 @@ import ReactPaginate from "react-paginate";
 import "./styles/ShowProducts.css";
 import withLoader from "../user/components/loader";
 import { MagnifyingGlass } from "react-loader-spinner";
+import { ToastContainer, toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+import '../user/styles/loader.css'
+
 const ShowProduct = () => {
     const [products, setproducts] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -19,16 +23,20 @@ const ShowProduct = () => {
     const [searchNow, setSearchNow] = useState(true);
     const [searchParams, setSearchParams] = useSearchParams();
     const AddToWishlist = (id) => {
+
         try {
+            setIsLoading(true);
+
             const response = axios.post(
                 `http://localhost:8000/wishlist/add/ `,
                 { id },
                 {
                     withCredentials: true,
                 }
-            );
-            console.log("product added to wishlist:");
+            );    
             setWish([...wishList, response.data]);
+            setIsLoading(false);
+
         } catch (error) {
             console.error("Error adding product to wishlist:", error);
         }
@@ -119,6 +127,7 @@ const ShowProduct = () => {
     // }
 
     function addToCart(id) {
+        setIsLoading(true);
         axios
             .post(
                 `http://localhost:8000/cart/add/`,
@@ -128,9 +137,24 @@ const ShowProduct = () => {
                 }
             )
             .then((res) => {
-                console.log(res.data);
+                toast.success(res.data.message, {
+                    position: toast.POSITION.TOP_RIGHT,
+                    autoClose: 2000
+                  }
+                  );
+                  if(res.data.non_field_errors[0]){
+                    toast.error(res.data.non_field_errors[0], {
+                        position: toast.POSITION.TOP_RIGHT,
+                        autoClose: 2000
+                      })
+                  }
+                  setIsLoading(false);
+
+                  console.log(res.data.non_field_errors[0])
             })
-            .catch((error) => console.log(error));
+            .catch((error) => {
+                console.log(error)
+            })
     }
 
     // useEffect(()=>{
@@ -146,6 +170,25 @@ const ShowProduct = () => {
 
     return (
         <div className="container">
+            <div className="pSearch">
+            <ToastContainer />
+
+        <div class="container">
+                       {isLoading ? (
+                <withLoader>
+                    <MagnifyingGlass
+                        visible={true}
+                        height="80"
+                        width="80"
+                        ariaLabel="MagnifyingGlass-loading"
+                        wrapperStyle={{}}
+                        wrapperClass="MagnifyingGlass-wrapper"
+                        glassColor="#c0efff"
+                        color="#e15b64"
+                    />
+                </withLoader>
+            ) : (
+                <div>
         <input
             type="text"
             value={searchCategory}
@@ -158,11 +201,13 @@ const ShowProduct = () => {
             onChange={handleProductNameChange}
             placeholder="product name"
         />
-        sort by :
+        Sort by: 
         <select value={sorting} onChange={handleSortingChange}>
             <option value="1">low to high price</option>
             <option value="0">high to low price</option>
         </select>
+        </div>
+            )}
             {isLoading ? (
                 <withLoader>
                     <MagnifyingGlass
@@ -186,7 +231,7 @@ const ShowProduct = () => {
                         >
                             <Link to={`/products/${product.id}`}>
                                 <Card.Img
-                                    className="mx-auto"
+                                    className=" image mx-auto"
                                     variant="top"
                                     src={`https://res.cloudinary.com/deg0m2eu4/${product.Image}`}
                                 />
@@ -206,38 +251,49 @@ const ShowProduct = () => {
                                         Price : {product.price}
                                     </Card.Text>
                                 </div>
-                                <div className="flex">
-                                    <Button
-                                        onClick={() => addToCart(product.id)}
-                                        variant="primary"
+                                <hr/>
+                                <div className="cart flex">
+                                {isLoading ? (
+ <withLoader>
+ 
+</withLoader>
+      ) : (
+             
+                                    <button className="butnCart"
+                                        onClick={() => addToCart(product.id)}                               
                                     >
                                         Add To Cart
-                                    </Button>
+                                    </button>)}
+                                    {isLoading ? (
+ <withLoader>
+ 
+</withLoader>
+      ) : (
+             
                                     <a
                                         onClick={() =>
                                             AddToWishlist(product.id)
                                         }
                                     >
                                         <i className="far fa-heart px-3 py-2 text-danger"></i>
-                                    </a>
+                                    </a>)}
                                 </div>
                             </Card.Body>
                         </Card>
                     ))}
                 </div>
-            )}
-            ;
+            )};
             {isLoading ? (
                 <withLoader></withLoader>
             ) : (
                 <div className="pagination justify-center">
                     <ReactPaginate
                         breakLabel="..."
-                        nextLabel="next >"
+                        nextLabel="Next"
                         onPageChange={handlePageClick}
                         pageRangeDisplayed={5}
                         pageCount={totalPages}
-                        previousLabel="< previous"
+                        previousLabel="Previous"
                         renderOnZeroPageCount={null}
                         breakClassName={"page-item"}
                         breakLinkClassName={"page-link"}
@@ -253,6 +309,8 @@ const ShowProduct = () => {
                 </div>
             )}
             ;
+        </div>
+        </div>
         </div>
     );
 };

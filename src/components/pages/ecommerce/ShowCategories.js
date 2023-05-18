@@ -5,6 +5,8 @@ import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { BrowserRouter, Link } from 'react-router-dom';
 import ShowProduct from './ShowProducts';
+import '../user/styles/categoriesHome.css'
+
 const ShowCategory = () => {
   const [categories, setCategories] = useState([]);
 
@@ -55,7 +57,9 @@ const ShowCategory = () => {
     // </div>
 
 
-    <div className="h-56 sm:h-64 xl:h-64 2xl:h-96">
+    <div className="categoryHome mt-8 h-56 sm:h-64 xl:h-64 2xl:h-96 mb-5">
+      <h3 className='text-muted text-center'>Choose What You Need</h3>
+      <br/>
     <Carousel
       responsive={{
         superLargeDesktop: {
@@ -79,19 +83,20 @@ const ShowCategory = () => {
     >
       {categories.map((category, index) => (
         <div style={{marginLeft: "25px", marginTop: "20px"}}>
-        <Link to={`/products/?category=${category.name}`}>
-        <img
+        <Link to={`/categories/${category.name}`}>
+        <img className='imgCateg'
           key={index}
           src={`https://res.cloudinary.com/deg0m2eu4/${category.image}`}
           style={{width: "75%", marginLeft: "20px", marginTop: "20px"}}
           alt={category.name}
         />
         </Link>
-        <h3 style={{ marginRight: "35px",marginTop: "20px", textAlign: "center"}}>{category.name}</h3>
+        <h3 className='text-muted' style={{ marginRight: "35px",marginTop: "20px", textAlign: "center"}}>{category.name}</h3>
         </div>
         
       ))}
     </Carousel>
+    <br/>
   </div>
 );
     

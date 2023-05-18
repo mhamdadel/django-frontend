@@ -12,6 +12,7 @@ function OrderForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [cart, setCart] = useState([]);
+  const [show, setShow] = useState(false);
 
   const handleChange = (event) => {
     setFormData((prevState) => ({
@@ -48,12 +49,12 @@ function OrderForm() {
       console.log("After Axios Post: submitSuccess = ", submitSuccess);
       console.log(formData);
       console.log(cartData);
-      setFormData({
-        shipping_address: "",
-        phone_number: "",
-        cart_data: [],
+      // setFormData({
+      //   shipping_address: "",
+      //   phone_number: "",
+      //   cart_data: [],
 
-      });
+      // });
       setSubmitSuccess(true);
       alert("Please pay first");
 
@@ -97,19 +98,19 @@ function OrderForm() {
           <label htmlFor="phone_number">Phone Number:</label>
           <input type="text" id="phone_number" name="phone_number" onChange={handleChange} value={formData.phone_number} />
 <br />
-          <Button type="submit" disabled={isSubmitting}>Submit</Button>
+          <Button type="submit"onClick={() => setShow(true)}>Submit</Button>
           {/* {isSubmitting && alert('please pay first')} */}
         {/* {isSubmitting === false}{
             alert('please pay first')
           } */}
         </form>
-
+        {show ?(
               <Paypal
                 isSubmitting={isSubmitting}
                 setIsSubmitting={setIsSubmitting}
                 submitSuccess={submitSuccess}
                 setSubmitSuccess={setSubmitSuccess}/>
-
+        ):null}
     </>
   );
 }

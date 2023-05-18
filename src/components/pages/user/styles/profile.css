@@ -1,5 +1,43 @@
-body {
-    background: rgb(99, 39, 120)
+
+@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@400;600;800;900&display=swap');
+
+
+
+.profileInput input{
+    width: 46rem !important;
+}
+
+.profilePage{
+    font-family: 'Mulish', sans-serif !important; 
+}
+
+.profile{
+    margin-top: -5%;
+}
+
+label{
+    font-size: 16px !important;
+    font-family: 'Mulish', sans-serif !important; 
+}
+
+.zipInput{
+    margin-top: 1.4% !important;
+}
+
+
+
+.places input{
+width: 14.8rem !important;
+}
+
+.state{
+    margin-left: 5% !important;
+    margin-right: 5% !important;
+}
+
+input::placeholder{
+    color: rgb(85, 83, 83);
+    text-transform: uppercase;
 }
 
 .form-control:focus {
@@ -7,23 +45,36 @@ body {
     border-color: #BA68C8
 }
 
+.imageIcon{
+    width: 150px;
+    margin: auto;
+    margin-top: 7%;
+}
+
+
 .profile-button {
-    background: rgb(99, 39, 120);
+    background: #9ea18e!important;
     box-shadow: none;
-    border: none
+    border: none;
+    padding:13px;
+    color: #fff !important;
+    width: 15rem;
+    transition: transform 1s;
+    font-family: 'Mulish', sans-serif !important; 
 }
 
 .profile-button:hover {
-    background: #682773
+    background: #9ea18e;
+    transform: scale(1.1);
 }
 
 .profile-button:focus {
-    background: #682773;
+    background: #9ea18e;
     box-shadow: none
 }
 
 .profile-button:active {
-    background: #682773;
+    background: #9ea18e;
     box-shadow: none
 }
 
@@ -41,4 +92,37 @@ body {
     color: #fff;
     cursor: pointer;
     border: solid 1px #BA68C8
+}
+
+@media screen and (max-width: 1000px){
+    .profileInput input{
+        width: 77% !important;
+    }
+    .state{
+        margin-left: 0% !important;
+    }
+    .places input{
+        width: 77% !important;
+        }
+}
+
+@media screen and (max-width: 800px){
+    input{
+        flex-direction: column !important;
+    }
+    input .form-control{
+        width: 100% !important;
+    }
+    .profileInput input{
+        width: 80% !important;
+    }
+}
+
+@media screen and (max-width: 780px){
+    .profileInput input{
+        width: 100% !important;
+    }
+    .places input{
+        width: 100% !important;
+    }
 }

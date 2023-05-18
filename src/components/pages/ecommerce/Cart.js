@@ -17,113 +17,110 @@ function Cart() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitSuccess, setSubmitSuccess] = useState(false);
     const [show, setShow] = useState(false);
+    const [transactionsData, setTransactionData] = useState({});
 
     const [formData, setFormData] = useState({
-      shipping_address: "",
-      phone_number: "",
+        shipping_address: "",
+        phone_number: "",
     });
-
-  
+    
     const handleChange = (event) => {
-      setFormData((prevState) => ({
-        ...prevState,
-        [event.target.name]: event.target.value,  
+        setFormData((prevState) => ({
+            ...prevState,
+            [event.target.name]: event.target.value,
         }));
     };
     const create_order = () => {
-      const cartData = cart.map((item) => {
-        return item.cart_items.map((element) => ({
-          quantity: element.quantity,
-          price: element.product_details.price,
-          product_id: element.product_details.id,
-        }));
-      });
-      return cartData;
+        const cartData = cart.map((item) => {
+            return item.cart_items.map((element) => ({
+                quantity: element.quantity,
+                price: element.product_details.price,
+                product_id: element.product_details.id,
+            }));
+        });
+        return cartData;
     };
-  
+    
     const handleSubmit = async (event) => {
-      event.preventDefault();
-      setIsSubmitting(true);
-      try {
-        const cartData = create_order();
-        console.log("Before Axios Post: isSubmitting = ", isSubmitting);
-        console.log("Before Axios Post: submitSuccess = ", submitSuccess);
-        await axios.post("http://localhost:8000/orders/add_order/",{
-          ...formData,
-          cart_data: cartData,
-        }, {
-          
-          withCredentials: true,
-        });
-        console.log("After Axios Post: isSubmitting = ", isSubmitting);
-        console.log("After Axios Post: submitSuccess = ", submitSuccess);
-        console.log(formData);
-        console.log(cartData);
-
-        setSubmitSuccess(true);
-        alert("Please pay first");
-  
-  
-      } catch (error) {
-        console.error(error);
-        setSubmitSuccess(false);
-      } finally {
-        setIsSubmitting(false);
-      }
-    };
-  
-    const getCart = async () => {
-      try {
-        const response = await axios.get("http://localhost:8000/cart/", {
-          withCredentials: true,
-        });
-        if (response.data) {
-          setCart(response.data);
+        event.preventDefault();
+        setIsSubmitting(true);
+        try {
+            const cartData = create_order();
+            console.log(transactionsData);
+            if (transactionsData.status = "COMPLETED") {
+                await axios.post(
+                    "http://localhost:8000/orders/add_order/",
+                    {
+                        ...formData,
+                        cart_data: cartData,
+                    },
+                    {
+                        withCredentials: true,
+                    }
+                );
+                setSubmitSuccess(true);
+            } else {
+                alert("Please pay first");
+            }
+        } catch (error) {
+            console.error(error);
+            setSubmitSuccess(false);
         }
-      } catch (error) {
-        console.error(error);
-        setCart([]);
-      }
     };
-  
+    
+    const getCart = async () => {
+        try {
+            const response = await axios.get("http://localhost:8000/cart/", {
+                withCredentials: true,
+            });
+            if (response.data) {
+                setCart(response.data);
+            }
+        } catch (error) {
+            console.error(error);
+            setCart([]);
+        }
+    };
+    
     useEffect(() => {
-      getCart();
+        getCart();
     }, []);
-
+    
     useEffect(() => {
-      if (isLoading) {
-        document.body.classList.add('loading');
-      } else {
-        document.body.classList.remove('loading');
-      }
+        if (isLoading) {
+            document.body.classList.add("loading");
+        } else {
+            document.body.classList.remove("loading");
+        }
     }, [isLoading]);
+    
 
 
-    function handleDelete(id) {
-        console.log(id)
-        setIsLoading(true);
-        axios.delete(`http://localhost:8000/cart/${id}`,{
-            withCredentials: true
-        })
-        .then((res)=>{
-          console.log(res.data.message)
-          setIsLoading(false);
-          getCart();
-          toast.success(res.data.message, {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 2000 
-          });
-          // setCart(cart.filter((item) => item.id !== id));
-        })
-        .catch((err)=>{
-          console.log(err)
-          toast.error("An error occurred. Please try again later.");
-        })
+      function handleDelete(id) {
+          // console.log(id)
+          setIsLoading(true);
+          axios.delete(`http://localhost:8000/cart/${id}`,{
+              withCredentials: true
+          })
+          .then((res)=>{
+            // console.log(res.data.message)
+            setIsLoading(false);
+            getCart();
+            toast.success(res.data.message, {
+              position: toast.POSITION.TOP_RIGHT,
+              autoClose: 2000 
+            });
+            // setCart(cart.filter((item) => item.id !== id));
+          })
+          .catch((err)=>{
+            // console.log(err)
+            toast.error("An error occurred. Please try again later.");
+          })
 
-    }
+      }
 
     function updateCart(id,quantity){
-        console.log(quantity)
+        // console.log(quantity)
         setIsLoading(true);
         axios.put(`http://localhost:8000/cart/${id}`,{quantity},{
             withCredentials:true
@@ -134,7 +131,7 @@ function Cart() {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 2000 // number of milliseconds to display the message
           });
-          console.log(res.data)
+          // console.log(res.data)
         }).catch((err)=>console.log(err))
     }
 
@@ -217,7 +214,9 @@ function Cart() {
       </div>
     </div>
     <center>
-    <button data-modal-target="authentication-modal" data-modal-toggle="authentication-modal" className="orderCart block text-white   focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center  " type="button" onClick={() => setShow(true)} >Complete Your Order</button>
+    <button data-modal-target="authentication-modal" data-modal-toggle="authentication-modal" className="orderCart block text-white   focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center  " type="button" onClick={() => {
+      setShow(true)
+    }} >Complete Your Order</button>
     </center>
     <>
 
@@ -252,7 +251,9 @@ function Cart() {
                 isSubmitting={isSubmitting}
                 setIsSubmitting={setIsSubmitting}
                 submitSuccess={submitSuccess}
-                setSubmitSuccess={setSubmitSuccess}/>
+                setSubmitSuccess={setSubmitSuccess}
+                setTransactionData={setTransactionData}
+                />
         ):null}
 </div> 
 

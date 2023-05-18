@@ -3,27 +3,11 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import withLoader from "../user/components/loader";
 import { MagnifyingGlass } from 'react-loader-spinner';
+import { ToastContainer, toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 function GetWishlistItems() {
   const [wishList, setWish] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-
-  // useEffect(() => {
-  //   setIsLoading(true);
-    // const listWishes = async () => {
-    //   try {
-        
-    //     const response = await axios.get("http://localhost:8000/wishlist/", {
-    //       withCredentials: true,
-
-    //     });
-    //     if (response && response.data) {
-    //        setWish(response.data);
-    // setIsLoading(false);
-    //     }
-    //   } catch (error) {
-    //     console.log(error.response.data);
-    //   }
-    // };
 
     useEffect(() => {
       setIsLoading(true);
@@ -38,20 +22,24 @@ function GetWishlistItems() {
       .catch(err => console.log(err));
     }, []);
 
-  //   listWishes();
 
-  // }, []);
+  const deleteFromWishlist =  (id) => {
 
-  const deleteFromWishlist = async (id) => {
-    try {
-      await axios.delete(`http://localhost:8000/wishlist/${id} `, {
+       axios.delete(`http://localhost:8000/wishlist/${id} `, {
         withCredentials: true,
-      });
-      console.log("product deleted from wishlist:");
-      setWish(wishList.filter((item) => item.id !== id));
-    } catch (error) {
-      console.error("Error deleting product from wishlist:", error);
-    }
+      })
+      .then((res)=>{
+        setIsLoading(true);
+        setWish(wishList.filter((item) => item.id !== id));
+        toast.success(res.data.message, {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 2000 
+        });
+      }).catch((err)=>{
+        console.log(err)
+        toast.error("An error occurred. Please try again later.");
+      })
+    
   };
   useEffect(() => {
     if (isLoading) {

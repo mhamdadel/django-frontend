@@ -8,24 +8,93 @@ import { MagnifyingGlass } from 'react-loader-spinner';
 import withLoader from "../user/components/loader";
 import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
+import Paypal from "./paypal";
+import { Button } from "react-bootstrap";
+import OrderForm from "./orderForm";
 
 function Cart() {
     const[cart,setCart]=useState([])
     const [isLoading, setIsLoading] = useState(false);
-    const getCart = async ()=>{
-        setIsLoading(true);
-        const response = await axios.get(`http://localhost:8000/cart/`,{
-            withCredentials: true
-        })
-        if(response.data){
-          setCart(response.data);
-          setIsLoading(false); 
-        }
-          }
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submitSuccess, setSubmitSuccess] = useState(false);
+    const [show, setShow] = useState(false);
 
-    useEffect(()=>{
-        getCart()
-    },[])
+    const [formData, setFormData] = useState({
+      shipping_address: "",
+      phone_number: "",
+    });
+
+  
+    const handleChange = (event) => {
+      setFormData((prevState) => ({
+        ...prevState,
+        [event.target.name]: event.target.value,  
+        }));
+    };
+    const create_order = () => {
+      const cartData = cart.map((item) => {
+        return item.cart_items.map((element) => ({
+          quantity: element.quantity,
+          price: element.product_details.price,
+          product_id: element.product_details.id,
+        }));
+      });
+      return cartData;
+    };
+  
+    const handleSubmit = async (event) => {
+      event.preventDefault();
+      setIsSubmitting(true);
+      try {
+        const cartData = create_order();
+        console.log("Before Axios Post: isSubmitting = ", isSubmitting);
+        console.log("Before Axios Post: submitSuccess = ", submitSuccess);
+        await axios.post("http://localhost:8000/orders/add_order/",{
+          ...formData,
+          cart_data: cartData,
+        }, {
+          
+          withCredentials: true,
+        });
+        console.log("After Axios Post: isSubmitting = ", isSubmitting);
+        console.log("After Axios Post: submitSuccess = ", submitSuccess);
+        console.log(formData);
+        console.log(cartData);
+        // setFormData({
+        //   shipping_address: "",
+        //   phone_number: "",
+        //   cart_data: [],
+  
+        // });
+        setSubmitSuccess(true);
+        alert("Please pay first");
+  
+  
+      } catch (error) {
+        console.error(error);
+        setSubmitSuccess(false);
+      } finally {
+        setIsSubmitting(false);
+      }
+    };
+  
+    const getCart = async () => {
+      try {
+        const response = await axios.get("http://localhost:8000/cart/", {
+          withCredentials: true,
+        });
+        if (response.data) {
+          setCart(response.data);
+        }
+      } catch (error) {
+        console.error(error);
+        setCart([]);
+      }
+    };
+  
+    useEffect(() => {
+      getCart();
+    }, []);
 
     useEffect(() => {
       if (isLoading) {
@@ -162,20 +231,60 @@ function Cart() {
         })}
       </div>
     </div>
-    <Link className="orderCart" to= {'/order'}>Complete Your Order</Link>
+    <center>
+    <button data-modal-target="authentication-modal" data-modal-toggle="authentication-modal" className="orderCart block text-white   focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center  " type="button" onClick={() => setShow(true)} >Complete Your Order</button>
+    </center>
+    <>
+
+<div id="authentication-modal" tabindex="-1" aria-hidden="true" className="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div className="relative w-full max-w-md max-h-full">
+        <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <button type="button" className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-hide="authentication-modal">
+                <svg aria-hidden="true" className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                <span className="sr-only">Close modal</span>
+            </button>
+            <div className="px-6 py-6 lg:px-8">
+                <h3 className="mb-4 text-xl font-medium text-gray-900 dark:text-white">complete your data please</h3>
+                <form  onSubmit={handleSubmit}className="space-y-6" action="#">
+                    <div>
+                        <label htmlFor="shipping_address" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Address:</label>
+                        <input type="text" id="shipping_address" name="shipping_address" onChange={handleChange} value={formData.shipping_address} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"  required/>
+                    </div>
+                    <div>
+                        <label htmlFor="phone_number" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone Number</label>
+                        <input type="text" id="phone_number" name="phone_number" onChange={handleChange} value={formData.phone_number} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required/>
+                    </div>
+ 
+                    <button type="submit" className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" >Submit</button>
+
+                </form>
+           
+            </div>
+        </div>
+    </div>
+    {show ?(
+              <Paypal
+                isSubmitting={isSubmitting}
+                setIsSubmitting={setIsSubmitting}
+                submitSuccess={submitSuccess}
+                setSubmitSuccess={setSubmitSuccess}/>
+        ):null}
+</div> 
+
+
+</>
+
+
+ 
   </div>
-  // <ReactPaginate
-  //         pageCount={totalPages}
-  //         pageRangeDisplayed={5}
-  //         marginPagesDisplayed={2}
-  //         onPageChange={(data) => setCurrentPageNumber(data.selected + 1)}
-  //         containerClassName={'pagination justify-content-center'}
-  //         activeClassName={'active'}
-  //       />
+
 
         )}
+
+
+        
 </section>
 </div>
-    )
+    );
 }
 export default Cart

@@ -20,20 +20,35 @@ const ShowProduct = () => {
     const [sorting, setSorting] = useState();
     const [searchNow, setSearchNow] = useState(true);
 
-    const AddToWishlist = (id) => {
-        try {
-            const response = axios.post(
-                `http://localhost:8000/wishlist/add/ `,
+
+    function AddToWishlist(id) {
+        axios
+            .post(
+                `http://localhost:8000/wishlist/add/`,
                 { id },
                 {
                     withCredentials: true,
                 }
-            );    
-            setWish([...wishList, response.data]);
-        } catch (error) {
-            console.error("Error adding product to wishlist:", error);
-        }
-    };
+            )
+            .then((res) => {
+                toast.success(res.data.message, {
+                    position: toast.POSITION.TOP_RIGHT,
+                    autoClose: 2000
+                  }
+                  );
+                  if(res.data.non_field_errors[0]){
+                    toast.error(res.data.non_field_errors[0], {
+                        position: toast.POSITION.TOP_RIGHT,
+                        autoClose: 2000
+                      })
+                  }
+                  console.log(res.data.non_field_errors[0])
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
+
 
     function handleCategoryChange(e) {
         setSearchCategory(e.target.value);
@@ -59,22 +74,6 @@ const ShowProduct = () => {
         }, 1000);
     }
 
-    // useEffect(() => {
-    //   setIsLoading(true);
-    //    axios.get(
-    //        `http://127.0.0.1:8000/api/ecommerce/productslist/`
-    //      )
-    //      .then((res) => {
-    //         setproducts(res.data.results);
-    //         setTotalPages(res.data.count);
-    //         setIsLoading(false);
-
-    //      })
-    //      .catch((err) => {
-    //        console.log(err);
-
-    //      });
-    //  }, []);
 
     const handlePageClick = (e) => {
         setCurrentPage(e.selected + 1);
@@ -102,16 +101,6 @@ const ShowProduct = () => {
         }
     }, [currentPage, searchNow]);
 
-    // const addToCart = (id) =>{
-    //   try{
-    //     const response= axios.post(`http://localhost:8000/cart/add/`,{id},{
-    //       withCredentials: true
-    //     });
-    //     console.log(response.data);
-    //   }catch(error){
-    //     console.log(error);
-    //   }
-    // }
 
     function addToCart(id) {
         axios
@@ -142,9 +131,7 @@ const ShowProduct = () => {
             })
     }
 
-    // useEffect(()=>{
-    //   getProducts()
-    // },[]);
+
     useEffect(() => {
         if (isLoading) {
             document.body.classList.add("loading");
@@ -247,7 +234,7 @@ const ShowProduct = () => {
                                         onClick={() =>
                                             AddToWishlist(product.id)
                                         }
-                                    >
+                                    style={{cursor:'pointer'}}>
                                         <i className="far fa-heart px-3 py-2 text-danger"></i>
                                     </a>
                                 </div>

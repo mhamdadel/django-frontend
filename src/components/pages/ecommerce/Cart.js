@@ -67,9 +67,10 @@ function Cart() {
       } catch (error) {
         console.error(error);
         setSubmitSuccess(false);
-      } finally {
-        setIsSubmitting(false);
       }
+      //  finally {
+      //   setIsSubmitting(false);
+      // }
     };
   
     const getCart = async () => {

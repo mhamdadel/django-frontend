@@ -4,7 +4,8 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import withLoader from "./components/loader";
 import { MagnifyingGlass } from "react-loader-spinner";
-
+import { ToastContainer, toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 function MyOrders() {
     const [orders, setOrders] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -57,16 +58,24 @@ function MyOrders() {
     };
     
     const deleteOrder = (order_id) => {
-
+        setIsLoading(true);
             const response = axios.delete(
                 `http://localhost:8000/orders/orders/${order_id}/delete/ `,
                 {
                     withCredentials: true,
-                }).then((response)=>{
-                    setIsLoading(true)
-                    getOrders()
-                }).catch((err)=>console.log(err))};
-    
+                })
+                .then((response)=>{
+                    setIsLoading(false);
+                    getOrders();
+                    toast.success(response.data.message, {
+                        position: toast.POSITION.TOP_RIGHT,
+                        autoClose: 2000 
+                      });
+                }).catch((err)=>{
+                    console.log(err)
+                    toast.error("An error occurred. Please try again later.");
+                  });
+                };
 
     return (
       <section className="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5">
@@ -108,6 +117,8 @@ function MyOrders() {
                         </tr>
                     </thead>
                     <tbody>
+                    <ToastContainer />
+
                         {orders.length > 0 ?(
 
                     orders.map((order) => {
@@ -120,7 +131,7 @@ function MyOrders() {
                             <td className="px-4 py-3">{order.order_items.length}</td>
                             <td className="px-4 py-3">{255}</td>
                             <td className="px-4 py-3" >
-                            { orderCancelled === true ?'Cancelled': order.status}
+                            { order.status}
                                 </td>
                             <td className="px-4 py-3">{order.cancellation_fees}</td>
                             <td className="px-4 py-3">
@@ -174,4 +185,4 @@ function MyOrders() {
     );
 }
 
-export default MyOrders;
+export default MyOrders

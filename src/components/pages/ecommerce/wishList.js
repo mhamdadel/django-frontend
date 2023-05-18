@@ -118,6 +118,7 @@ wishList.map((element) => {
    </div>
    <div className="col-md-2 col-5 my-auto">
      <div className="remove">
+      
      <button  onClick={()=> deleteFromWishlist(element.id)} className="btn btn-danger btn-sm">
   <i className="fa fa-trash"></i> Remove
 </button>

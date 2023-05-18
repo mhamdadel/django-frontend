@@ -61,8 +61,8 @@ function MyOrders() {
                 {
                     withCredentials: true,
                 }).then((response)=>{
-                    setIsLoading(true)
                     getOrders()
+                    setIsLoading(true)
                 }).catch((err)=>console.log(err))};
     
 

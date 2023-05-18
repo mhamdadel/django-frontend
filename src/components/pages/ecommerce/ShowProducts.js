@@ -9,6 +9,8 @@ import withLoader from "../user/components/loader";
 import { MagnifyingGlass } from "react-loader-spinner";
 import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
+import '../user/styles/loader.css'
+
 const ShowProduct = () => {
     const [products, setproducts] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -21,7 +23,10 @@ const ShowProduct = () => {
     const [searchNow, setSearchNow] = useState(true);
 
     const AddToWishlist = (id) => {
+
         try {
+            setIsLoading(true);
+
             const response = axios.post(
                 `http://localhost:8000/wishlist/add/ `,
                 { id },
@@ -30,6 +35,8 @@ const ShowProduct = () => {
                 }
             );    
             setWish([...wishList, response.data]);
+            setIsLoading(false);
+
         } catch (error) {
             console.error("Error adding product to wishlist:", error);
         }
@@ -114,6 +121,7 @@ const ShowProduct = () => {
     // }
 
     function addToCart(id) {
+        setIsLoading(true);
         axios
             .post(
                 `http://localhost:8000/cart/add/`,
@@ -123,7 +131,6 @@ const ShowProduct = () => {
                 }
             )
             .then((res) => {
-                // console.log(res.data);
                 toast.success(res.data.message, {
                     position: toast.POSITION.TOP_RIGHT,
                     autoClose: 2000
@@ -135,6 +142,8 @@ const ShowProduct = () => {
                         autoClose: 2000
                       })
                   }
+                  setIsLoading(false);
+
                   console.log(res.data.non_field_errors[0])
             })
             .catch((error) => {
@@ -238,25 +247,36 @@ const ShowProduct = () => {
                                 </div>
                                 <hr/>
                                 <div className="cart flex">
+                                {isLoading ? (
+ <withLoader>
+ 
+</withLoader>
+      ) : (
+             
                                     <button className="butnCart"
                                         onClick={() => addToCart(product.id)}                               
                                     >
                                         Add To Cart
-                                    </button>
+                                    </button>)}
+                                    {isLoading ? (
+ <withLoader>
+ 
+</withLoader>
+      ) : (
+             
                                     <a
                                         onClick={() =>
                                             AddToWishlist(product.id)
                                         }
                                     >
                                         <i className="far fa-heart px-3 py-2 text-danger"></i>
-                                    </a>
+                                    </a>)}
                                 </div>
                             </Card.Body>
                         </Card>
                     ))}
                 </div>
-            )}
-            ;
+            )};
             {isLoading ? (
                 <withLoader></withLoader>
             ) : (

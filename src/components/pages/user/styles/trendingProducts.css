@@ -23,9 +23,9 @@
 }
 
 .trending-products .row .card {
-    height: 90vh;
+    height: 95vh;
 }
 .trending-products .row img {
-    height: 55vh;
+    height: 50vh;
     margin: auto;
 }

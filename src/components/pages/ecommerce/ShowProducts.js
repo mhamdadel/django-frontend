@@ -2,13 +2,15 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { Card, CardHeader } from "react-bootstrap";
-import { Link, BrowserRouter } from "react-router-dom";
+import { Link, BrowserRouter, useSearchParams } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import "./styles/ShowProducts.css";
 import withLoader from "../user/components/loader";
 import { MagnifyingGlass } from "react-loader-spinner";
 import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
+import '../user/styles/loader.css'
+
 const ShowProduct = () => {
     const [products, setproducts] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -19,12 +21,12 @@ const ShowProduct = () => {
     const [searchProductName, setSearchProductName] = useState("");
     const [sorting, setSorting] = useState();
     const [searchNow, setSearchNow] = useState(true);
+    const [searchParams, setSearchParams] = useSearchParams();
+    const AddToWishlist = (id) => {
+            setIsLoading(true);
 
-
-    function AddToWishlist(id) {
-        axios
-            .post(
-                `http://localhost:8000/wishlist/add/`,
+            const response = axios.post(
+                `http://localhost:8000/wishlist/add/ `,
                 { id },
                 {
                     withCredentials: true,
@@ -79,15 +81,21 @@ const ShowProduct = () => {
         setCurrentPage(e.selected + 1);
     };
 
+
     useEffect(() => {
-        if (searchNow === true) {
+        const category = searchParams.get('category');
+        const isCategoryFilter = (category) => category && setSearchCategory(category);
+        if (isCategoryFilter(category) || searchNow === true) {
+          const categoryFilterDetails = category || searchCategory;
           let filter = "";
-          searchCategory && (filter += "&category=" + searchCategory);
+          categoryFilterDetails && (filter += "&category=" + categoryFilterDetails);
           searchProductName && (filter += "&product=" + searchProductName);
           sorting && (filter += "&sort=" + sorting);
+          const urlProducts = `http://127.0.0.1:8000/api/ecommerce/productslist/?page=${currentPage}${filter}`;
+          console.log(urlProducts);
             axios
                 .get(
-                    `http://127.0.0.1:8000/api/ecommerce/productslist/?page=${currentPage}${filter}`
+                  urlProducts
                 )
                 .then((response) => {
                     setproducts(response.data.results);
@@ -103,6 +111,7 @@ const ShowProduct = () => {
 
 
     function addToCart(id) {
+        setIsLoading(true);
         axios
             .post(
                 `http://localhost:8000/cart/add/`,
@@ -112,7 +121,6 @@ const ShowProduct = () => {
                 }
             )
             .then((res) => {
-                // console.log(res.data);
                 toast.success(res.data.message, {
                     position: toast.POSITION.TOP_RIGHT,
                     autoClose: 2000
@@ -124,6 +132,8 @@ const ShowProduct = () => {
                         autoClose: 2000
                       })
                   }
+                  setIsLoading(false);
+
                   console.log(res.data.non_field_errors[0])
             })
             .catch((error) => {
@@ -188,7 +198,7 @@ const ShowProduct = () => {
                         width="80"
                         ariaLabel="MagnifyingGlass-loading"
                         wrapperStyle={{}}
-                        wrapperClass="MagnifyingGlass-wrapper"
+                        wrapperclassName="MagnifyingGlass-wrapper"
                         glassColor="#c0efff"
                         color="#e15b64"
                     />
@@ -225,25 +235,36 @@ const ShowProduct = () => {
                                 </div>
                                 <hr/>
                                 <div className="cart flex">
+                                {isLoading ? (
+ <withLoader>
+ 
+</withLoader>
+      ) : (
+             
                                     <button className="butnCart"
                                         onClick={() => addToCart(product.id)}                               
                                     >
                                         Add To Cart
-                                    </button>
+                                    </button>)}
+                                    {isLoading ? (
+ <withLoader>
+ 
+</withLoader>
+      ) : (
+             
                                     <a
                                         onClick={() =>
                                             AddToWishlist(product.id)
                                         }
                                     style={{cursor:'pointer'}}>
                                         <i className="far fa-heart px-3 py-2 text-danger"></i>
-                                    </a>
+                                    </a>)}
                                 </div>
                             </Card.Body>
                         </Card>
                     ))}
                 </div>
-            )}
-            ;
+            )};
             {isLoading ? (
                 <withLoader></withLoader>
             ) : (

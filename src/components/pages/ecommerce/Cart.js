@@ -186,16 +186,7 @@ function Cart() {
                       <div className="col-md-2 col-lg-3 col-xl-2 d-flex">
                       {isLoading ? (
  <withLoader>
- <MagnifyingGlass
- visible={true}
- height="80"
- width="80"
- ariaLabel="MagnifyingGlass-loading"
- wrapperStyle={{}}
- wrapperClass="MagnifyingGlass-wrapper"
- glassColor="#c0efff"
- color="#e15b64"
-/>
+ 
 </withLoader>
       ) : (
                        <select id="cartq" className="form-control form-control-sm text-center" onChange={(e)=>updateCart(item.id,e.target.value)}>

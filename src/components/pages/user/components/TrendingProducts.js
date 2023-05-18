@@ -84,7 +84,7 @@ function TrendingProducts() {
                         </a>
                         <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
                             Wireless Bluetooth-compatible Headphones With Mic
-                            Stereo Sound.
+                            Stereo.
                         </p>
                         <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
                             Price 5000 EGP

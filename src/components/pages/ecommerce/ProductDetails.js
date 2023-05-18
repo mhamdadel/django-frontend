@@ -5,23 +5,63 @@ import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { useParams } from 'react-router-dom';
 import './styles/ProductDetails.css';
+import { MagnifyingGlass } from "react-loader-spinner";
+import { ToastContainer, toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+import '../user/styles/loader.css'
+
 const ProductDetails = () => {
   
   const { id } = useParams();
   let [product , setproduct] =  useState({});
+  const [isLoading, setIsLoading] = useState(true);
+
 
 
 
 useEffect(  ()=>{
-
+  setIsLoading(true);
   axios.get(`http://localhost:8000/api/ecommerce/products/${id}`)
   .then((response) => {
     setproduct(response.data);
+    setIsLoading(false);
+
   })
   .catch((error) => {console.log(error)});
 
 }, []);
   
+
+function addToCart(id) {
+  setIsLoading(true);
+
+  axios
+      .post(
+          `http://localhost:8000/cart/add/`,
+          { id },
+          {
+              withCredentials: true,
+          }
+      )
+      .then((res) => {
+        setIsLoading(false);
+          toast.success(res.data.message, {
+              position: toast.POSITION.TOP_RIGHT,
+              autoClose: 2000
+            }
+            );
+            if(res.data.non_field_errors[0]){
+              toast.error(res.data.non_field_errors[0], {
+                  position: toast.POSITION.TOP_RIGHT,
+                  autoClose: 2000
+                })
+            }
+            console.log(res.data.non_field_errors[0])
+      })
+      .catch((error) => {
+          console.log(error)
+      })
+}
 console.log(product);
   return (
    
@@ -40,8 +80,22 @@ console.log(product);
         <p></p>
       </div>
     </div> */}
-
+      {isLoading ? (
+                <withLoader>
+                    <MagnifyingGlass
+                        visible={true}
+                        height="80"
+                        width="80"
+                        ariaLabel="MagnifyingGlass-loading"
+                        wrapperStyle={{}}
+                        wrapperClass="MagnifyingGlass-wrapper"
+                        glassColor="#c0efff"
+                        color="#e15b64"
+                    />
+                </withLoader>
+            ) : (
 <div class="container">
+<ToastContainer />
 		<div class="card">
 			<div class="container-fliud">
 				<div class="wrapper row">
@@ -55,15 +109,25 @@ console.log(product);
 						<p class="product-description">{product.description}</p>
 						<h4 class="price">current price: <span>${product.price}</span></h4>
 						<div class="action">
-							<button class="add-to-cart btn btn-default" type="button">add to cart</button>
+            {isLoading ? (
+ <withLoader>
+ 
+</withLoader>
+      ) : (					<button class="add-to-cart btn btn-default" type="button" onClick={() => addToCart(product.id)} >add to cart</button>)}
+                                         {isLoading ? (
+ <withLoader>
+ 
+</withLoader>
+      ) : (
 							<button class="like btn btn-default" type="button"><span class="fa fa-heart"></span></button>
-						</div>
+      )}
+              </div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-
+            )}
 </>
 );
     

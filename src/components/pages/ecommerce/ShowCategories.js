@@ -83,7 +83,7 @@ const ShowCategory = () => {
     >
       {categories.map((category, index) => (
         <div style={{marginLeft: "25px", marginTop: "20px"}}>
-        <Link to={`/categories/${category.id}`}>
+        <Link to={`/categories/${category.name}`}>
         <img className='imgCateg'
           key={index}
           src={`https://res.cloudinary.com/deg0m2eu4/${category.image}`}

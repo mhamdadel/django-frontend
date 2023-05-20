@@ -102,7 +102,7 @@ wishList.map((element) => {
      </a>
    </div>
    <div className="col-md-2 my-auto">
-     <label className="price">{element.product_details.price} </label>
+     <label className="price">$ {element.product_details.price} </label>
    </div>
    <div className="col-md-2 col-5 my-auto">
      <div className="remove">

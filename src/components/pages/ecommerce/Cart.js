@@ -70,10 +70,12 @@ function Cart() {
     
     const getCart = async () => {
         try {
+          // setIsLoading(true)
             const response = await axios.get("http://localhost:8000/cart/", {
                 withCredentials: true,
             });
             if (response.data) {
+              // setIsLoading(false)
                 setCart(response.data);
             }
         } catch (error) {
@@ -195,7 +197,7 @@ function Cart() {
                         )}
                       </div>
                       <div className="col-md-3 col-lg-2 col-xl-2 offset-lg-1">                       
-                       <h5 className="mb-0">{item.product_details.price}</h5>
+                       <h5 className="mb-0">$ {item.product_details.price}</h5>
                       </div>
                       <div className="col-12 col-md-6 col-sm-6 col-lg-1 col-xl-1">
                       {isLoading ? (

@@ -83,15 +83,19 @@ const ShowCategory = () => {
     >
       {categories.map((category, index) => (
         <div style={{marginLeft: "25px", marginTop: "20px"}}>
-        <Link to={`/categories/${category.name}`}>
+        <Link to={`/products/?category=${category.name}`}>
         <img className='imgCateg'
           key={index}
           src={`https://res.cloudinary.com/deg0m2eu4/${category.image}`}
-          style={{width: "75%", marginLeft: "20px", marginTop: "20px"}}
+          style={{width: "75%", marginLeft: "40px ", marginTop: "20px"}}
           alt={category.name}
         />
         </Link>
+        <Link to={`/products/?category=${category.name}`}>
+
         <h3 className='text-muted' style={{ marginRight: "35px",marginTop: "20px", textAlign: "center"}}>{category.name}</h3>
+        </Link>
+
         </div>
         
       ))}

@@ -33,6 +33,7 @@ const ShowProduct = () => {
                 }
             )
             .then((res) => {
+                setIsLoading(false)
                 toast.success(res.data.message, {
                     position: toast.POSITION.TOP_RIGHT,
                     autoClose: 2000
@@ -121,6 +122,7 @@ const ShowProduct = () => {
                 }
             )
             .then((res) => {
+                setIsLoading(false);
                 toast.success(res.data.message, {
                     position: toast.POSITION.TOP_RIGHT,
                     autoClose: 2000
@@ -132,7 +134,6 @@ const ShowProduct = () => {
                         autoClose: 2000
                       })
                   }
-                  setIsLoading(false);
 
                   console.log(res.data.non_field_errors[0])
             })
@@ -195,11 +196,11 @@ const ShowProduct = () => {
                    
                 </withLoader>
             ) : (
-                <div className="products-card-info mx-auto">
+                <div className="products-card-info">
                     {products.map((product, index) => (
                         <Card
                             className="m-2 rounded shadow-lg "
-                            style={{ width: "22rem" }}
+                            style={{ width: "35rem" ,height: "90%"}}
                             key={index}
                         >
                             <Link to={`/products/${product.id}`}>
@@ -207,13 +208,14 @@ const ShowProduct = () => {
                                     className=" image mx-auto"
                                     variant="top"
                                     src={`https://res.cloudinary.com/deg0m2eu4/${product.Image}`}
+                                    
                                 />
                             </Link>
                             <Card.Body>
                                 <Card.Header className="text-center">
                                     {product.title}
                                 </Card.Header>
-                                <Card.Text className="text-center">
+                                <Card.Text className="text-center" style={{ marginTop: "20px" }}>
                                     {product.description}
                                 </Card.Text>
                                 <div className="d-flex justify-content-between">
@@ -243,13 +245,12 @@ const ShowProduct = () => {
 </withLoader>
       ) : (
              
-                                    <a
+                                    <button className="like btn " type="button" style={{backgroundColor:'#9ea18e',color:'white',cursor:'pointer'}}
                                         onClick={() =>
                                             AddToWishlist(product.id)
-                                        }
-                                    style={{cursor:'pointer'}}>
-                                        <i className="far fa-heart px-3 py-2 text-danger"></i>
-                                    </a>)}
+                                        }>
+                                        <span className="fa fa-heart"></span>
+                                    </button>)}
                                 </div>
                             </Card.Body>
                         </Card>
@@ -265,7 +266,7 @@ const ShowProduct = () => {
                         nextLabel="Next"
                         onPageChange={handlePageClick}
                         pageRangeDisplayed={5}
-                        pageCount={totalPages}
+                        pageCount={(totalPages.toFixed()) / 3}
                         previousLabel="Previous"
                         renderOnZeroPageCount={null}
                         breakClassName={"page-item"}

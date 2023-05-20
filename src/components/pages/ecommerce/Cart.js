@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/cart.css";
 import ReactPaginate from 'react-paginate';
-import { Link } from "react-router-dom";
+import { Link, redirect } from "react-router-dom";
 import '../user/styles/loader.css'
 import { MagnifyingGlass } from 'react-loader-spinner';
 import withLoader from "../user/components/loader";
@@ -12,6 +12,7 @@ import Paypal from "./paypal";
 import { Button } from "react-bootstrap";
 import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
+import Swal from "sweetalert2";
 
 
 const customStyles = {
@@ -71,14 +72,14 @@ function Cart() {
         return cartData;
     };
     
-    const handleSubmit = async (event) => {
+    const handleSubmit = (event) => {
         event.preventDefault();
         setIsSubmitting(true);
         try {
             const cartData = create_order();
             console.log(transactionsData);
             if (transactionsData.status === "COMPLETED") {
-                await axios.post(
+                axios.post(
                     "http://localhost:8000/orders/add_order/",
                     {
                         ...formData,
@@ -87,7 +88,13 @@ function Cart() {
                     {
                         withCredentials: true,
                     }
-                );
+                ).then((res) => {
+                  Swal.fire('Success', 'Order Submitted successfully', 'success').then(() => {
+                    redirect('/');
+                  })
+                  
+                })
+
                 setSubmitSuccess(true);
             } else {
                 alert("Please pay first");

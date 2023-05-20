@@ -32,7 +32,6 @@ function App() {
                     <Route path="/" element={<Home />} />
                     <Route path="/categories">
                         <Route index element={<ShowCategory />}></Route>
-                        <Route path=":id" element={<CategoryDetails />}></Route>
                     </Route>
                     <Route path="/products">
                         <Route index element={<ShowProduct />}></Route>

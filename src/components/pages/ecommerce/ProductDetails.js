@@ -122,7 +122,7 @@ const AddToWishlist = (id) => {
 			<div className="container">
 				<div className="wrapper row">
 					<div className="preview col-md-12 col-lg-6 col-sm-12">
-            <img src={`https://res.cloudinary.com/deg0m2eu4/${product.Image}`}  alt=''/>
+            <img src={`https://res.cloudinary.com/deg0m2eu4/${product.Image}`}  style={{width: "75%", height: "auto"}}  alt=''/>
 						
 					</div>
 					<div className="details col-md-6 col-lg-6 pt-5">

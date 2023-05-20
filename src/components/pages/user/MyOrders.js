@@ -180,8 +180,8 @@ function MyOrders() {
                                                         }
                                                     </td>
                                                     <td className="px-4 py-3">
-                                                        {orderCancelled !==
-                                                            true && (
+                                                        {order.status.toLowerCase() !==
+                                                            "cancelled" ? (
                                                             <button
                                                                 onClick={() =>
                                                                     cancelOrder(
@@ -191,9 +191,10 @@ function MyOrders() {
                                                                 type="submit"
                                                                 className="btn btn-danger"
                                                             >
+                                                                {console.log(order.status)}
                                                                 Cancel
                                                             </button>
-                                                        )}
+                                                        ) : (<button className="btn btn-primary" disabled>Cancelled</button>)}
                                                     </td>
                                                 </tr>
                                             );

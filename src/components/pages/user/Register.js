@@ -4,6 +4,7 @@ import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { useSignIn, useIsAuthenticated } from "react-auth-kit";
 import "../styles/register.css";
+import Swal from "sweetalert2";
 
 function Register() {
     const passwordMatch = (confirmation, state) =>
@@ -17,9 +18,9 @@ function Register() {
     const validator = new ValidatorClass([
         {
             field: "first_name",
-            method: (value) => value.length >= 5,
+            method: (value) => value.length >= 4,
             validWhen: true,
-            message: "First name must be at least 5 characters long.",
+            message: "First name must be at least 4 characters long.",
         },
         {
             field: "first_name",
@@ -65,16 +66,9 @@ function Register() {
         },
         {
             field: "phone",
-            method: "matches",
-            args: [/^\(?\d\d\d\)? ?\d\d\d-?\d\d\d\d$/],
+            method: (value) => value.length >= 9,
             validWhen: true,
-            message: "Enter valid phone number.",
-        },
-        {
-            field: "phone",
-            method: (value) => value.length >= 10,
-            validWhen: true,
-            message: "Phone number must be at least 10 digits long.",
+            message: "Phone number must be at least 9 digits long.",
         },
         {
             field: "phone",
@@ -136,6 +130,12 @@ function Register() {
             validWhen: true,
             message: "City must be at most 50 characters long.",
         },
+        {
+            field: "zip_code",
+            method: (value) => value.length === 5,
+            validWhen: true,
+            message: "zip code must be 5 digits long.",
+        },
     ]);
 
     const [state, setState] = useState({
@@ -147,6 +147,7 @@ function Register() {
         state: "",
         country: "",
         password: "",
+        zip_code: "",
         password_confirmation: "",
         validation: validator.valid(),
     });
@@ -190,15 +191,20 @@ function Register() {
                     first_name: state.first_name,
                     last_name: state.last_name,
                     email: state.email,
-                    phone: state.phone,
+                    phone_number: state.phone,
+                    zip_code: state.zip_code,
                     city: state.city,
                     state: state.state,
                     country: state.country,
                     password: state.password,
                     password2: state.password_confirmation,
                 })
-                .then((res) => console.log(res))
-                .catch((err) => console.log(err));
+                .then((res) => {
+                    Swal.fire("success", "Your account has been registered successfully", "success")
+                })
+                .catch((err) => {
+                    Swal.fire("Error",err?.response?.data?.email[0],"error");
+                });
         }
     };
 
@@ -332,7 +338,7 @@ function Register() {
                                                 Phone Number
                                             </label>
                                             <input
-                                                type="tel"
+                                                type="text"
                                                 className="form-control"
                                                 name="phone"
                                                 placeholder="Phone Number"
@@ -366,6 +372,19 @@ function Register() {
                                                 placeholder="zip code"
                                                 onChange={handleInputChange}
                                             />
+                                            <span className="help-block">
+                                                {validation.zip_code
+                                                    .message ? (
+                                                    <span className="alert alert-danger d-block p-1">
+                                                        {
+                                                            validation.zip_code
+                                                                .message
+                                                        }
+                                                    </span>
+                                                ) : (
+                                                    ""
+                                                )}
+                                            </span>
                                         </div>
                                     </div>
                                     <div>
@@ -378,6 +397,19 @@ function Register() {
                                                 placeholder="City"
                                                 onChange={handleInputChange}
                                             />
+                                            <span className="help-block">
+                                                {validation.city
+                                                    .message ? (
+                                                    <span className="alert alert-danger d-block p-1">
+                                                        {
+                                                            validation.city
+                                                                .message
+                                                        }
+                                                    </span>
+                                                ) : (
+                                                    ""
+                                                )}
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -392,6 +424,19 @@ function Register() {
                                                 placeholder="State"
                                                 onChange={handleInputChange}
                                             />
+                                            <span className="help-block">
+                                                {validation.state
+                                                    .message ? (
+                                                    <span className="alert alert-danger d-block p-1">
+                                                        {
+                                                            validation.state
+                                                                .message
+                                                        }
+                                                    </span>
+                                                ) : (
+                                                    ""
+                                                )}
+                                            </span>
                                         </div>
                                     </div>
                                     <div>
@@ -406,6 +451,19 @@ function Register() {
                                                 placeholder="Country"
                                                 onChange={handleInputChange}
                                             />
+                                            <span className="help-block">
+                                                {validation.country
+                                                    .message ? (
+                                                    <span className="alert alert-danger d-block p-1">
+                                                        {
+                                                            validation.country
+                                                                .message
+                                                        }
+                                                    </span>
+                                                ) : (
+                                                    ""
+                                                )}
+                                            </span>
                                         </div>
                                     </div>
                                 </div>

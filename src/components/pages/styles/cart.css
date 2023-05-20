@@ -18,6 +18,12 @@
   width: 30vw;
   transition: transform .7s !important;
 }
+
+
+.btnMod{
+  margin-left: 13% !important;
+  margin-bottom: 5% !important;
+}
 .orderCart:hover{
   color: white !important;
   transform: scale(1.2) !important;

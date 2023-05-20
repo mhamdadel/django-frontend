@@ -93,6 +93,9 @@ function Navbar() {
       <Link to={'products'} className="text-blueGray-600 font-bold px-3 py-2 rounded-md text-base font-medium">
         Products
       </Link>
+      <Link to={'categories'} className="text-blueGray-600 font-bold px-3 py-2 rounded-md text-base font-medium">
+        Categories
+      </Link>
       {isAuthenticated() ? (
         <>
       <Link to={'orders'} className="text-blueGray-600 font-bold px-3 py-2 rounded-md text-base font-medium">

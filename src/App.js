@@ -6,7 +6,7 @@ import {
     Outlet,
 } from "react-router-dom";
 import Home from "./components/pages/Home";
-import withLoader from './components/pages/user/components/loader';
+import withLoader from "./components/pages/user/components/loader";
 import EditableProfile from "./components/pages/user/EditableProfile";
 import Profile from "./components/pages/user/ProfileEditing";
 import Register from "./components/pages/user/Register";
@@ -24,40 +24,42 @@ import ProductDetails from "./components/pages/ecommerce/ProductDetails";
 import Cart from "./components/pages/ecommerce/Cart";
 import GetWishlistItems from "./components/pages/ecommerce/wishList";
 function App() {
-
     return (
         <div>
-
             <Router>
                 <Navbar />
                 <Routes>
                     <Route path="/" element={<Home />} />
-                    <Route path="/orders" >
-                        <Route index element={<MyOrders />}></Route>
-                        <Route path=":id" element={<OrderDetails />}></Route>
-                    </Route>
-                    <Route path="/categories" >
+                    <Route path="/categories">
                         <Route index element={<ShowCategory />}></Route>
                         <Route path=":id" element={<CategoryDetails />}></Route>
                     </Route>
-                    <Route path="/products" >
+                    <Route path="/products">
                         <Route index element={<ShowProduct />}></Route>
                         <Route path=":id" element={<ProductDetails />}></Route>
                     </Route>
-                    <Route path="/wishlist" >
-                        <Route index element={<GetWishlistItems />}></Route>
+                    <Route
+                        path="/"
+                        element={
+                            <RequireAuth loginPath="/login">
+                                <Outlet />
+                            </RequireAuth>
+                        }
+                    >
+                        <Route path="/profile" element={<Profile />} />
+
+                        <Route path="/orders">
+                            <Route index element={<MyOrders />}></Route>
+                            <Route
+                                path=":id"
+                                element={<OrderDetails />}
+                            ></Route>
+                        </Route>
+                        <Route path="/wishlist">
+                            <Route index element={<GetWishlistItems />}></Route>
+                        </Route>
+                        <Route path="/cart" element={<Cart />} />
                     </Route>
-                    <Route path="/profile" element={<Outlet />}>
-                        <Route
-                            index
-                            element={
-                                <RequireAuth loginPath="/login">
-                                    <Profile />
-                                </RequireAuth>
-                            }
-                        />
-                    </Route>
-                    <Route path="/cart" element={<Cart />} />
                     <Route path="/register" element={<Register />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="*" element={<NotFound />} />

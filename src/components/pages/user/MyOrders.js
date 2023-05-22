@@ -15,7 +15,7 @@ function MyOrders() {
 
     const getOrders = () => {
         axios
-            .get("http://localhost:8000/api/auth/orders", {
+            .get(`${process.env.REACT_APP_BACKEND_URL}/api/auth/orders`, {
                 withCredentials: true,
             })
             .then((res) => {
@@ -55,7 +55,7 @@ function MyOrders() {
     const cancelOrder = (order_id) => {
         try {
             axios.post(
-                `http://localhost:8000/orders/orders/${order_id}/cancel/ `,
+                `process.env.REACT_APP_BACKEND_URL/orders/orders/${order_id}/cancel/ `,
                 {},
                 {
                     withCredentials: true,

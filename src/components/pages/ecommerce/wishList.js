@@ -11,7 +11,7 @@ function GetWishlistItems() {
 
     useEffect(() => {
       setIsLoading(true);
-      axios.get("http://localhost:8000/wishlist/",{
+      axios.get(`${process.env.REACT_APP_BACKEND_URL}/wishlist/`,{
         withCredentials: true
       })
       .then((res)=> {
@@ -25,7 +25,7 @@ function GetWishlistItems() {
 
   const deleteFromWishlist =  (id) => {
 
-       axios.delete(`http://localhost:8000/wishlist/${id} `, {
+       axios.delete(`${process.env.REACT_APP_BACKEND_URL}/wishlist/${id} `, {
         withCredentials: true,
       })
       .then((res)=>{

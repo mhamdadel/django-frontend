@@ -21,7 +21,7 @@ const ProductDetails = () => {
 
 useEffect(  ()=>{
   setIsLoading(true);
-  axios.get(`http://localhost:8000/api/ecommerce/products/${id}`)
+  axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/ecommerce/products/${id}`)
   .then((response) => {
     setproduct(response.data);
     setIsLoading(false);
@@ -37,7 +37,7 @@ function addToCart(id) {
 
   axios
       .post(
-          `http://localhost:8000/cart/add/`,
+          `${process.env.REACT_APP_BACKEND_URL}/cart/add/`,
           { id },
           {
               withCredentials: true,
@@ -69,7 +69,7 @@ const AddToWishlist = (id) => {
   setIsLoading(true);
 
   const response = axios.post(
-      `http://localhost:8000/wishlist/add/ `,
+      `${process.env.REACT_APP_BACKEND_URL}/wishlist/add/ `,
       { id },
       {
           withCredentials: true,

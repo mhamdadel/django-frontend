@@ -187,7 +187,7 @@ function Register() {
         setSubmitted(true);
         if (validation.isValid) {
             axios
-                .post("http://localhost:8000/api/auth/register/", {
+                .post(`${process.env.REACT_APP_BACKEND_URL}/api/auth/register/`, {
                     first_name: state.first_name,
                     last_name: state.last_name,
                     email: state.email,

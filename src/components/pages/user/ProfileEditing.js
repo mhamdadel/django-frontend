@@ -20,7 +20,7 @@ function Profile() {
     const handleSaveProfile = () => {
         setIsLoading(true); 
         axios
-            .patch("http://localhost:8000/api/auth/profile/",{
+            .patch(`${process.env.REACT_APP_BACKEND_URL}/api/auth/profile/`,{
                 email: email,
                 first_name: firstName,
                 last_name: lastName,
@@ -59,7 +59,7 @@ function Profile() {
 
     useState(() => {
         axios
-            .get("http://localhost:8000/api/auth/profile", {
+            .get(`${process.env.REACT_APP_BACKEND_URL}/api/auth/profile`, {
                 withCredentials: true,
             })
             .then((res) => {

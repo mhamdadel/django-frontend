@@ -80,7 +80,7 @@ function Cart() {
             console.log(transactionsData);
             if (transactionsData.status === "COMPLETED") {
                 axios.post(
-                    "http://localhost:8000/orders/add_order/",
+                    `${process.env.REACT_APP_BACKEND_URL}/orders/add_order/`,
                     {
                         ...formData,
                         cart_data: cartData,
@@ -89,9 +89,10 @@ function Cart() {
                         withCredentials: true,
                     }
                 ).then((res) => {
-                  Swal.fire('Success', 'Order Submitted successfully', 'success').then(() => {
+                  Swal.fire('Success', 'Order Submitted successfully', 'success');
+                  setTimeout(()=> {
                     redirect('/');
-                  })
+                  }, 2000);
                   
                 })
 
@@ -108,7 +109,7 @@ function Cart() {
     const getCart = async () => {
         try {
           // setIsLoading(true)
-            const response = await axios.get("http://localhost:8000/cart/", {
+            const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/cart/`, {
                 withCredentials: true,
             });
             if (response.data) {
@@ -143,7 +144,7 @@ function Cart() {
       function handleDelete(id) {
           // console.log(id)
           setIsLoading(true);
-          axios.delete(`http://localhost:8000/cart/${id}`,{
+          axios.delete(`${process.env.REACT_APP_BACKEND_URL}/cart/${id}`,{
               withCredentials: true
           })
           .then((res)=>{
@@ -166,7 +167,7 @@ function Cart() {
     function updateCart(id,quantity){
         // console.log(quantity)
         setIsLoading(true);
-        axios.put(`http://localhost:8000/cart/${id}`,{quantity},{
+        axios.put(`${process.env.REACT_APP_BACKEND_URL}/cart/${id}`,{quantity},{
             withCredentials:true
         }).then((res)=>{
           setIsLoading(false);

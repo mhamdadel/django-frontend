@@ -13,7 +13,7 @@ function Navbar() {
   const isAuthenticated = useIsAuthenticated();
   const signOut = useSignOut();
   const signOutServer = () => {
-    axios.post('http://localhost:8000/api/auth/logout/', {}, {
+    axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/auth/logout/`, {}, {
       withCredentials: true
     })
     .then(response => {})

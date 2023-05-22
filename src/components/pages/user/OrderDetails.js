@@ -10,7 +10,7 @@ function OrderDetails() {
     const { id } = useParams();
     useEffect(() => {
         axios
-            .get(`http://localhost:8000/api/auth/orders/${id}/`, {
+            .get(`${process.env.REACT_APP_BACKEND_URL}/api/auth/orders/${id}/`, {
                 withCredentials: true,
             })
             .then((res) => {

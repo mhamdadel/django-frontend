@@ -26,7 +26,7 @@ const ShowProduct = () => {
             setIsLoading(true);
 
             const response = axios.post(
-                `http://localhost:8000/wishlist/add/ `,
+                `${process.env.REACT_APP_BACKEND_URL}/wishlist/add/ `,
                 { id },
                 {
                     withCredentials: true,
@@ -92,7 +92,7 @@ const ShowProduct = () => {
           categoryFilterDetails && (filter += "&category=" + categoryFilterDetails);
           searchProductName && (filter += "&product=" + searchProductName);
           sorting && (filter += "&sort=" + sorting);
-          const urlProducts = `http://127.0.0.1:8000/api/ecommerce/productslist/?page=${currentPage}${filter}`;
+          const urlProducts = `${process.env.REACT_APP_BACKEND_URL}/api/ecommerce/productslist/?page=${currentPage}${filter}`;
           console.log(urlProducts);
             axios
                 .get(
@@ -115,7 +115,7 @@ const ShowProduct = () => {
         setIsLoading(true);
         axios
             .post(
-                `http://localhost:8000/cart/add/`,
+                `${process.env.REACT_APP_BACKEND_URL}/cart/add/`,
                 { id },
                 {
                     withCredentials: true,
